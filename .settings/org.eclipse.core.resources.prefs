@@ -1,0 +1,4 @@
+eclipse.preferences.version=1
+encoding//WebContent/searchContact.jsp=UTF-8
+encoding//src/servlets/AddContactServlet.java=UTF-8
+encoding//src/servlets/SearchContactServlet.java=UTF-8
