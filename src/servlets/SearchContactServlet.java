@@ -5,6 +5,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -75,6 +76,13 @@ public class SearchContactServlet extends HttpServlet {
 
 				java.lang.reflect.Method method = c.getMethod("getContactBy"+choosen, String.class);
 				results = (ArrayList<Contact>) method.invoke(o, field); 
+				
+				request.setAttribute("searchResults", results);
+
+				RequestDispatcher rd = request.getRequestDispatcher("searchResult.jsp");
+				rd.forward(request, response);
+				
+				
 
 
 			} catch (ClassNotFoundException e) {

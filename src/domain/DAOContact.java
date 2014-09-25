@@ -6,6 +6,10 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.hibernate.Session;
+
+import util.HibernateUtil;
+
 public class DAOContact implements IDAOContact{
 
 	/**
@@ -15,9 +19,10 @@ public class DAOContact implements IDAOContact{
 	 * @param email
 	 * @return renvoit le nouveau contact
 	 */
-	public Contact addContact(long idContact, String firstname, String lastname, String email){
+	public Contact addContact(String firstname, String lastname, String email){
 
 		Contact contact = new Contact();
+		Contact createdContact;
 		contact.setFirstName(firstname);
 		contact.setLastName(lastname);
 		contact.setEmail(email);
@@ -36,6 +41,16 @@ public class DAOContact implements IDAOContact{
 //		} catch( Exception e ){
 //			e.printStackTrace();
 //		}
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		//démarrer une transaction
+		session.beginTransaction();
+		//persister l’objet
+		session.save(contact);
+		//recharger l’objet à partir de la session
+		createdContact=(Contact) session.load(Contact.class,
+		contact.getId());
+		//committer la transaction
+		session.getTransaction().commit();
 
 		return contact;
 	}
@@ -205,6 +220,16 @@ public class DAOContact implements IDAOContact{
 		} catch( Exception e ){
 			e.printStackTrace();
 		}*/
+		Contact contact2 = new Contact();
+		contact2.setFirstName("a");
+		contact2.setLastName("a");
+		contact2.setEmail("a");
+		contacts.add(contact2);
+		Contact contact3 = new Contact();
+		contact3.setFirstName("b");
+		contact3.setLastName("b");
+		contact3.setEmail("b");
+		contacts.add(contact3);
 		return contacts;
 	}
 

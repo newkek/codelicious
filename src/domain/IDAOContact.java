@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public interface IDAOContact {
 
 	
-	public Contact addContact(long idContact, String firstname, String lastname, String email);
+	public Contact addContact(String firstname, String lastname, String email);
 	
 	public int deleteContact(long id);
 	

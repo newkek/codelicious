@@ -40,11 +40,12 @@ public class AddContactServlet extends HttpServlet {
 		String prenom=request.getParameter("firstName");
 		String nom=request.getParameter("lastName");
 		String email=request.getParameter("email");
-		
-		long idContact=Long.valueOf(request.getParameter("idContact"));
+
 		DAOContact dao=new DAOContact();
 		
-		dao.addContact(idContact, prenom, nom, email);
+		dao.addContact( prenom, nom, email);
+		
+		
 	}
 
 }
