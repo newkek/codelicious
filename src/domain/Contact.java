@@ -1,11 +1,16 @@
 package domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Contact {
 
 	private String firstName;
 	private String lastName;
 	private String email;
 	private long id;
+	private Address address;
+	private List<PhoneNumber> phoneNumbers;
 	
 	public Contact(){
 	}
@@ -41,6 +46,22 @@ public class Contact {
 	
 	public void setId(long id){
 		this.id = id;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+	
+	public Address getAddress(){
+		return address;
+	}
+	
+	public void setPhone(){
+		this.phoneNumbers = new ArrayList<PhoneNumber>();
+	}
+
+	public void addPhone(PhoneNumber number) {
+		this.phoneNumbers.add(number);
 	}
 	
 	

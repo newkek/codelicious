@@ -4,15 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Menu principal</title>
+<title>Insert title here</title>
 </head>
 <body>
-<a href="addContact.jsp">Créer un nouveau Contact</a>
-<br/>
-<a href="removeContact.jsp">Supprimer un Contact</a>
-<br/>
-<a href="ModifyContactServlet">Modifier un Contact</a>
-<br/>
-<a href="searchContact.jsp">Rechercher un Contact</a>
+
 </body>
 </html>

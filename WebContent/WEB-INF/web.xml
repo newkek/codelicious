@@ -34,4 +34,14 @@
     <servlet-name>SearchContactServlet</servlet-name>
     <url-pattern>/SearchContactServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ModifyContactServlet</display-name>
+    <servlet-name>ModifyContactServlet</servlet-name>
+    <servlet-class>servlets.ModifyContactServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ModifyContactServlet</servlet-name>
+    <url-pattern>/ModifyContactServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

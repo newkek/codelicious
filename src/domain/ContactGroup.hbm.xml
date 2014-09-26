@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="domain">
+	<class name="ContactGroup">
+		<id name="groupId" type="long" column="ID_GROUP">
+			<generator class="native"/>
+		</id>
+		
+		<property name="groupName">
+			<column name="GROUPNAME"/>
+		</property>
+
+	</class>
+</hibernate-mapping>

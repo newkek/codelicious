@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.SystemException;
 
+import domain.Contact;
 import domain.DAOContact;
 
 /**
@@ -40,11 +43,23 @@ public class AddContactServlet extends HttpServlet {
 		String prenom=request.getParameter("firstName");
 		String nom=request.getParameter("lastName");
 		String email=request.getParameter("email");
+		String street=request.getParameter("street");
+		String city=request.getParameter("city");
+		String zip=request.getParameter("zip");
+		String country=request.getParameter("country");
+		String personnalPhone=request.getParameter("personnalPhone");
+		String businessPhone=request.getParameter("businessPhone");
+		String homePhone=request.getParameter("homePhone");
 
 		DAOContact dao=new DAOContact();
 		
-		dao.addContact( prenom, nom, email);
+		Contact contact = dao.addContact( prenom, nom, email, street, city, zip, country, personnalPhone, businessPhone, homePhone);
 		
+		System.out.println("création faite nom: "+contact.getLastName()+", prenom: "+contact.getFirstName());
+		
+		RequestDispatcher rd = request.getRequestDispatcher("Main.jsp");
+		request.setAttribute("createdResult", 1);
+		rd.forward(request, response);
 		
 	}
 

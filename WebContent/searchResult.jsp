@@ -9,6 +9,14 @@
 <title>Résultat de recherche</title>
 </head>
 <body>
+<a href="addContact.jsp">Créer un nouveau Contact</a>
+<br/>
+<a href="addContact.jsp">Supprimer un Contact</a>
+<br/>
+<a href="addContact.jsp">Modifier un Contact</a>
+<br/>
+<a href="searchContact.jsp">Rechercher un Contact</a>
+<br/>
 	<%
 	ArrayList<Contact> list = (ArrayList<Contact>) request.getAttribute("searchResults");
 	if(list.size()!=0){

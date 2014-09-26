@@ -17,38 +17,57 @@ public class DAOContact implements IDAOContact{
 	 * @param firstname
 	 * @param lastname
 	 * @param email
+	 * @param country 
+	 * @param zip 
+	 * @param city 
+	 * @param street 
+	 * @param homePhone 
+	 * @param businessPhone 
+	 * @param personnalPhone 
 	 * @return renvoit le nouveau contact
 	 */
-	public Contact addContact(String firstname, String lastname, String email){
+	public Contact addContact(String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone){
 
+		
 		Contact contact = new Contact();
-		Contact createdContact;
 		contact.setFirstName(firstname);
 		contact.setLastName(lastname);
 		contact.setEmail(email);
-		
-		System.out.println("dao contact");
+		contact.setPhone();
+		Address address = new Address();
+		address.setStreet(street);
+		address.setCity(city);
+		address.setZip(zip);
+		address.setCountry(country);
+		PhoneNumber pPhone, bPhone, hPhone;
+		if(!personnalPhone.isEmpty()){
+			pPhone = new PhoneNumber();
+			pPhone.setPhoneKind("personnalPhone");
+			pPhone.setPhoneNumber(personnalPhone);
+			contact.addPhone(pPhone);
+		}
+		if(!businessPhone.isEmpty()){
+			bPhone = new PhoneNumber();
+			bPhone.setPhoneKind("businessPhone");
+			bPhone.setPhoneNumber(businessPhone);
+			contact.addPhone(bPhone);
+		}
+		if(!homePhone.isEmpty()){
+			hPhone = new PhoneNumber();
+			hPhone.setPhoneKind("homePhone");
+			hPhone.setPhoneNumber(homePhone);
+			contact.addPhone(hPhone);
+		}
+		contact.setAddress(address);
 
-		Connection con = null;
-//		try{
-//			Class.forName(Messages.getString("driver")); 
-//			con = DriverManager.getConnection(Messages.getString("database"), Messages.getString("username"), Messages.getString("password")); 
-//			Statement stmt = con.createStatement();
-//			String request = "INSERT INTO contacts(id, firstname,lastname,email) VALUES("+idContact +", '"+firstname+"','"+lastname+"','"+email+"')";
-//			stmt.executeUpdate(request);
-//			stmt.close();   	
-//			con.close();
-//		} catch( Exception e ){
-//			e.printStackTrace();
-//		}
+
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		//démarrer une transaction
 		session.beginTransaction();
 		//persister l’objet
 		session.save(contact);
 		//recharger l’objet à partir de la session
-		createdContact=(Contact) session.load(Contact.class,
-		contact.getId());
+		contact=(Contact) session.load(Contact.class,contact.getId());
 		//committer la transaction
 		session.getTransaction().commit();
 
