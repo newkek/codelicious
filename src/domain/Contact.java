@@ -56,13 +56,12 @@ public class Contact {
 		return address;
 	}
 	
-	public void setPhone(){
-		this.phoneNumbers = new ArrayList<PhoneNumber>();
-	}
-
-	public void addPhone(PhoneNumber number) {
-		this.phoneNumbers.add(number);
+	public void setPhoneNumbers(List<PhoneNumber> number){
+		this.phoneNumbers = number;
 	}
 	
+	public List<PhoneNumber> getPhoneNumbers(){
+		return phoneNumbers;
+	}
 	
 }

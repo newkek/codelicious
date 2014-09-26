@@ -23,10 +23,11 @@
 		<many-to-one name="address" column="addressId" unique="true" 
 		cascade="all-delete-orphan" class="Address" lazy="false"/>
 		
-		<set name="phonenumbers" inverse="true" cascade="all-delete-orphan" lazy="false">
+		<list name="phoneNumbers" inverse="true" cascade="all-delete-orphan" lazy="false">
 			<key column="phoneId" />
+			<list-index column="idx"/>
 			<one-to-many class="PhoneNumber"/>
-		</set>
+		</list>
 		
 	</class>
 </hibernate-mapping>

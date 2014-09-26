@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.hibernate.Session;
 
@@ -33,31 +34,31 @@ public class DAOContact implements IDAOContact{
 		contact.setFirstName(firstname);
 		contact.setLastName(lastname);
 		contact.setEmail(email);
-		contact.setPhone();
 		Address address = new Address();
 		address.setStreet(street);
 		address.setCity(city);
 		address.setZip(zip);
 		address.setCountry(country);
-		PhoneNumber pPhone, bPhone, hPhone;
+		List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
 		if(!personnalPhone.isEmpty()){
-			pPhone = new PhoneNumber();
-			pPhone.setPhoneKind("personnalPhone");
-			pPhone.setPhoneNumber(personnalPhone);
-			contact.addPhone(pPhone);
+			PhoneNumber phone = new PhoneNumber();
+			phone.setPhoneKind("personnalPhone");
+			phone.setPhoneNumber(personnalPhone);
+			phoneNumbers.add(phone);
 		}
 		if(!businessPhone.isEmpty()){
-			bPhone = new PhoneNumber();
-			bPhone.setPhoneKind("businessPhone");
-			bPhone.setPhoneNumber(businessPhone);
-			contact.addPhone(bPhone);
+			PhoneNumber phone = new PhoneNumber();
+			phone.setPhoneKind("businessPhone");
+			phone.setPhoneNumber(businessPhone);
+			phoneNumbers.add(phone);
 		}
 		if(!homePhone.isEmpty()){
-			hPhone = new PhoneNumber();
-			hPhone.setPhoneKind("homePhone");
-			hPhone.setPhoneNumber(homePhone);
-			contact.addPhone(hPhone);
+			PhoneNumber phone = new PhoneNumber();
+			phone.setPhoneKind("homePhone");
+			phone.setPhoneNumber(homePhone);
+			phoneNumbers.add(phone);
 		}
+		contact.setPhoneNumbers(phoneNumbers);
 		contact.setAddress(address);
 
 
@@ -164,44 +165,20 @@ public class DAOContact implements IDAOContact{
 	}
 
 	/**
-	 * Renvoit la liste des contacts correspondant au prenom firrstname
+	 * Renvoit la liste des contacts correspondant au prenom firstname
 	 * @param firstname
 	 * @return
 	 */
 	public ArrayList<Contact> getContactByFirstName(String firstname){
-
-		ArrayList<Contact> contacts = new ArrayList<Contact>();
-
-		ResultSet rec = null;
-		Connection con = null;
 		
 		System.out.println("search contact by first name : "+firstname);
 		
-		/*try{
-			Class.forName(Messages.getString("driver")); 
-			con = DriverManager.getConnection(Messages.getString("database"), Messages.getString("username"), Messages.getString("password")); 
-			Statement stmt = con.createStatement();
-			rec = stmt.executeQuery("SELECT * FROM contacts WHERE firstname = "+"'"+firstname+"'"); 
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		String hq1 = "FROM Contact C WHERE C.firstName=\'"+firstname+"\'";
+		ArrayList<Contact> contacts = (ArrayList<Contact>) session.createQuery(hq1).list();
 
-			while (rec.next()) {
-				Contact contact = new Contact();
-				contact.setId(Long.parseLong(rec.getString("id"))); 
-				contact.setFirstName(rec.getString("firstname"));
-				contact.setLastName(rec.getString("lastname"));
-				contact.setEmail(rec.getString("email")); 
-				
-				contacts.add(contact);
-			}
-
-			stmt.close();
-			rec.close();
-			con.close();
-
-		} catch( Exception e ){
-			e.printStackTrace();
-		}*/
-		
-	
+		System.out.println(contacts.size());
 		return contacts;
 	}
 
