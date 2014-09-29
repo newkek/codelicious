@@ -19,4 +19,6 @@ public interface IDAOContact {
 	
 	public ArrayList<Contact> getContactByEmail(String email);
 	
+	public ArrayList<Contact> getContacts();
+	
 }

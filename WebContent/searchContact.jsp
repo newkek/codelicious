@@ -7,7 +7,19 @@
 <title>Rechercher un contact</title>
 </head>
 <body>
-	<form method="post" action="SearchContactServlet">
+	<form method="post" 
+	action="<% 
+		String type = request.getParameter("type");
+		if(type==null){
+			out.print("SearchContactServlet");
+		}else{
+			if(type.equals("modify"))
+				out.print("ModifyContactServlet");
+			if(type.equals("remove"))
+				out.print("RemoveContactServlet");
+		}
+	%>">
+	<input type="hidden" name="type" value="<%= request.getParameter("type") %>"/>
 		<table>
 			<tr>
 				<th><h2>Veuillez renseigner ici votre critère de recherche</h2></th>

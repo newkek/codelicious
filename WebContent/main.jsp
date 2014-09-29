@@ -11,8 +11,13 @@
 <br/>
 <a href="removeContact.jsp">Supprimer un Contact</a>
 <br/>
-<a href="ModifyContactServlet">Modifier un Contact</a>
+<a href="modifyContact.jsp">Modifier un Contact</a>
 <br/>
 <a href="searchContact.jsp">Rechercher un Contact</a>
+<br/>
+<h1>TEST</h1><br/>
+<a href="DisplayContactsServlet">Afficher tous les contacts</a>
+<br/>
+<a href="DeleteContactsServlet">Supprimer tous les Contacts</a>
 </body>
 </html>

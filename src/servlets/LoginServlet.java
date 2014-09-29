@@ -38,7 +38,7 @@ public class LoginServlet extends HttpServlet {
 		String password=request.getParameter("password");
 		
 		if(name.equals(password)){
-			RequestDispatcher rd = request.getRequestDispatcher("Main.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("main.jsp");
 				rd.forward(request, response);
 		}else{
 			response.sendRedirect("index.html");

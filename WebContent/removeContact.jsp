@@ -4,9 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<title>Supprimer un contact</title>
 </head>
 <body>
+<jsp:include page="main.jsp" />
+<h2>Recherchez le contact à supprimer</h2>
+<jsp:include page="searchContact.jsp" >
+	<jsp:param name="type" value="remove" />
+</jsp:include>
 
 </body>
 </html>

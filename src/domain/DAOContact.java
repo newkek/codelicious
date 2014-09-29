@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 
 import util.HibernateUtil;
@@ -171,14 +172,11 @@ public class DAOContact implements IDAOContact{
 	 */
 	public ArrayList<Contact> getContactByFirstName(String firstname){
 		
-		System.out.println("search contact by first name : "+firstname);
-		
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		String hq1 = "FROM Contact C WHERE C.firstName=\'"+firstname+"\'";
 		ArrayList<Contact> contacts = (ArrayList<Contact>) session.createQuery(hq1).list();
-
-		System.out.println(contacts.size());
+		session.getTransaction().commit();
 		return contacts;
 	}
 
@@ -262,6 +260,26 @@ public class DAOContact implements IDAOContact{
 			e.printStackTrace();
 		}*/
 		return contacts;
+	}
+
+	public ArrayList<Contact> getContacts() {
+		// TODO Auto-generated method stub
+		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		String hq1 = "FROM Contact C";
+		ArrayList<Contact> contacts = (ArrayList<Contact>) session.createQuery(hq1).list();
+		session.getTransaction().commit();
+		return contacts;
+	}
+
+	public void deleteAllContact() {
+		// TODO Auto-generated method stub
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		Query q = session.createQuery("DELETE FROM Contact");
+		q.executeUpdate();
+		session.getTransaction().commit();
 	}
 	
 

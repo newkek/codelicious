@@ -57,7 +57,7 @@ public class AddContactServlet extends HttpServlet {
 		
 		System.out.println("création faite nom: "+contact.getLastName()+", prenom: "+contact.getFirstName());
 		
-		RequestDispatcher rd = request.getRequestDispatcher("Main.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("main.jsp");
 		request.setAttribute("createdResult", 1);
 		rd.forward(request, response);
 		
