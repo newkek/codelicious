@@ -13,13 +13,20 @@
 <br/>
 	<%
 	ArrayList<Contact> list = (ArrayList<Contact>) request.getAttribute("listContacts");
-	if(list==null){
-		out.print("pas de contact trouvé\n");
-	}else if(list.size()!=0){
+	if(list.size()!=0){
+	out.print("<table style=\"width:100%\">");
+	out.print("<tr>");
+	out.print("<td>nom</td>");
+	out.print("<td>prenom</td>");
+	out.print("</tr>");
 		for(int i=0; i<list.size(); i++){
 			Contact tmp = list.get(i);
-			out.println("nom: "+tmp.getLastName()+"\nprenom: "+tmp.getFirstName());
+			out.print("<tr>");
+			out.print("<td>"+tmp.getLastName()+"</td>");
+			out.print("<td>"+tmp.getFirstName()+"</td>");
+			out.print("</tr>");
 		}
+	out.print("</table>");
 	}else{
 		out.print("pas de contact trouvé\n");
 	}

@@ -14,9 +14,40 @@
 	<%
 	ArrayList<Contact> list = (ArrayList<Contact>) request.getAttribute("searchResults");
 	if(list.size()!=0){
+		if(!(request.getParameter("type")==null)){
+			if(request.getParameter("type").equals("remove")){
+				out.print("<form method=\"post\" action=\"RemoveContactServlet\">");
+			}
+			if(request.getParameter("type").equals("modify")){
+				out.print("<form method=\"post\" action=\"ModifyContactServlet\">");
+			}
+		}
+		out.print("<table style=\"width:100%\">");
+		out.print("<tr>");
+		out.print("<td>nom</td>");
+		out.print("<td>prenom</td>");
+		out.print("</tr>");
 		for(int i=0; i<list.size(); i++){
 			Contact tmp = list.get(i);
-			out.print("nom: "+tmp.getLastName()+"\nprenom: "+tmp.getFirstName());
+			out.print("<tr>");
+			out.print("<td>"+tmp.getLastName()+"</td>");
+			out.print("<td>"+tmp.getFirstName()+"</td>");
+			if(!(request.getParameter("type")==null)){
+				/*if(request.getParameter("type").equals("modify")){
+					out.print("<td><input class\" name=\"removeContact\" value=\""+tmp.getId()+"\"/></td>");
+				}*/
+				if(request.getParameter("type").equals("remove")){
+					out.print("<td><input type=\"checkbox\" name=\"removeContact\" value=\""+tmp.getId()+"\"/></td>");
+				}
+			}
+			out.print("</tr>");
+		}
+		out.print("</table>");
+		if(!(request.getParameter("type")==null)){
+			if(request.getParameter("type").equals("remove")){
+				out.print("<input class=\"button\" type=\"submit\" value=\"Submit\"/>");
+			}
+			out.print("</form>");
 		}
 	}else{
 		out.print("pas de contact trouvé\n");

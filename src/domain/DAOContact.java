@@ -83,19 +83,13 @@ public class DAOContact implements IDAOContact{
 	 */
 	public int deleteContact(long id){
 		int success=0;
-		Connection con = null;
-//		try{
-//			Class.forName(Messages.getString("driver")); 
-//			con = DriverManager.getConnection(Messages.getString("database"), Messages.getString("username"), Messages.getString("password")); 
-//			Statement stmt = con.createStatement();
-//			String request = "DELETE FROM contacts WHERE id = "+id; 
-//			success = stmt.executeUpdate(request);
-//			stmt.close();
-//			con.close();
-//			
-//		} catch( Exception e ){
-//			e.printStackTrace();
-//		}
+		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		Query q = session.createQuery("DELETE FROM Contact WHERE id = :id");
+		q.setParameter("id", id);
+		success=q.executeUpdate();
+		session.getTransaction().commit();
 
 		return success;
 	}
