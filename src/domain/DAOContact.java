@@ -64,16 +64,28 @@ public class DAOContact implements IDAOContact{
 
 
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		//démarrer une transaction
+		//d��marrer une transaction
 		session.beginTransaction();
-		//persister l’objet
+		//persister l���objet
 		session.save(contact);
-		//recharger l’objet à partir de la session
+		//recharger l���objet �� partir de la session
 		contact=(Contact) session.load(Contact.class,contact.getId());
 		//committer la transaction
 		session.getTransaction().commit();
 
 		return contact;
+	}
+	
+	
+	public void modifyContact(String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone){
+		int success;
+		//Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		//session.beginTransaction();
+		//Query q = session.createQuery("UPDATE Contact set ");
+		//q.setParameter("id", id);
+		//success=q.executeUpdate();
+		//session.getTransaction().commit();
+		System.out.println("TODO");
 	}
 
 	/**
@@ -173,7 +185,17 @@ public class DAOContact implements IDAOContact{
 		session.getTransaction().commit();
 		return contacts;
 	}
-
+	
+	public Contact getContactById(long id){
+		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		//Contact c = (Contact) session.load(Contact.class, id);
+		String hq1 = "FROM Contact C WHERE C.id=\'"+id+"\'";
+		Contact c = (Contact) session.createQuery(hq1).list().get(0);
+		session.getTransaction().commit();
+		return c;
+	}
 
 	/**
 	 * Renvoit la liste des contacts correspondant au nom lastname

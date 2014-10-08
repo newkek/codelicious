@@ -27,15 +27,17 @@
 		out.print("<td>nom</td>");
 		out.print("<td>prenom</td>");
 		out.print("</tr>");
+		out.print("<input type=\"hidden\" name=\"step\" value=\"search\"/>");
 		for(int i=0; i<list.size(); i++){
 			Contact tmp = list.get(i);
 			out.print("<tr>");
 			out.print("<td>"+tmp.getLastName()+"</td>");
 			out.print("<td>"+tmp.getFirstName()+"</td>");
 			if(!(request.getParameter("type")==null)){
-				/*if(request.getParameter("type").equals("modify")){
-					out.print("<td><input class\" name=\"removeContact\" value=\""+tmp.getId()+"\"/></td>");
-				}*/
+				if(request.getParameter("type").equals("modify")){
+					out.print("<input type=\"hidden\" name=\"contactId\" value=\"" + tmp.getId() +"\"/>");
+					out.print("<td><input class\"Button\" type=\"submit\" name=\"modifyContact\" value=\"Modifier\"/></td>");
+				}
 				if(request.getParameter("type").equals("remove")){
 					out.print("<td><input type=\"checkbox\" name=\"removeContact\" value=\""+tmp.getId()+"\"/></td>");
 				}
@@ -45,7 +47,7 @@
 		out.print("</table>");
 		if(!(request.getParameter("type")==null)){
 			if(request.getParameter("type").equals("remove")){
-				out.print("<input class=\"button\" type=\"submit\" value=\"Submit\"/>");
+				out.print("<input class=\"button\" type=\"submit\" value=\"Supprimer\"/>");
 			}
 			out.print("</form>");
 		}
