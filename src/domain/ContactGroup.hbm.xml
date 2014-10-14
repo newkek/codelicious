@@ -5,12 +5,17 @@
 <hibernate-mapping package="domain">
 	<class name="ContactGroup">
 		<id name="groupId" type="long" column="ID_GROUP">
-			<generator class="native"/>
+			<generator class="increment"/>
 		</id>
 		
 		<property name="groupName">
 			<column name="GROUPNAME"/>
 		</property>
+		
+		<set name="contact" table="PARTICIPATION" inverse="true">
+			<key column="ID_CONTACTGROUP"/>
+			<many-to-many class="Contact" column="ID_CONTACT"/>
+		</set>
 
 	</class>
 </hibernate-mapping>
