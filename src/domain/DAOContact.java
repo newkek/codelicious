@@ -76,6 +76,20 @@ public class DAOContact implements IDAOContact{
 		return contact;
 	}
 	
+	public Contact addContact(Contact contact){
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		//d��marrer une transaction
+		session.beginTransaction();
+		//persister l���objet
+		session.save(contact);
+		//recharger l���objet �� partir de la session
+		contact=(Contact) session.load(Contact.class,contact.getId());
+		//committer la transaction
+		session.getTransaction().commit();
+
+		return contact;
+	}
+	
 	
 	public void modifyContact(String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone){
 		int success;

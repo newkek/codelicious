@@ -32,5 +32,13 @@ public class PhoneNumber {
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
+	
+	public void init(){
+		System.out.println("init phone done");
+	}
+	
+	public void cleanup(){
+		System.out.println("cleanup phone done");
+	}
 
 }

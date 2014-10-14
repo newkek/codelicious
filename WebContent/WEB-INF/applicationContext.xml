@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	<bean id="DAOC" class="domain.DAOContact"/>
+	
+	<bean id="FIRSTCONTACT" class="domain.Contact" init-method="init" destroy-method="cleanup">
+		<property name="firstName" value="alexandre"/>
+		<property name="lastName" value="baufume"/>
+		<property name="email" value="ab@mail.com"/>
+		<property name="address"><ref bean="FIRSTADDRESS"/></property>
+		<property name="phoneNumbers">
+			<list>
+				<ref bean="FIRSTPHONE"/>
+				<ref bean="FIRSTPHONEBIS"/>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="FIRSTADDRESS" class="domain.Address" init-method="init" destroy-method="cleanup">
+		<property name="zip" value="75042"/>
+		<property name="street" value="42 rue des dames"/>
+		<property name="city" value="paris"/>
+		<property name="country" value="france"/>
+	</bean>
+	
+	<bean id="FIRSTPHONE" class="domain.PhoneNumber" init-method="init" destroy-method="cleanup">
+		<property name="phoneKind" value="personnal"/>
+		<property name="phoneNumber" value="6666666666"/>
+	</bean>
+	
+	<bean id="FIRSTPHONEBIS" class="domain.PhoneNumber" init-method="init" destroy-method="cleanup">
+		<property name="phoneKind" value="home"/>
+		<property name="phoneNumber" value="9999999999"/>
+	</bean>
+	
+
+</beans>

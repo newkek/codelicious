@@ -4,6 +4,16 @@
   <welcome-file-list>
     <welcome-file>main.jsp</welcome-file>
   </welcome-file-list>
+  <listener>
+    <listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+  </listener>
+  <listener>
+    <listener-class>
+		org.springframework.web.context.request.RequestContextListener
+		</listener-class>
+  </listener>
   <servlet>
     <description></description>
     <display-name>LoginServlet</display-name>
@@ -73,5 +83,15 @@
   <servlet-mapping>
     <servlet-name>RemoveContactServlet</servlet-name>
     <url-pattern>/RemoveContactServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>InitContactsServlet</display-name>
+    <servlet-name>InitContactsServlet</servlet-name>
+    <servlet-class>servlets.InitContactsServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>InitContactsServlet</servlet-name>
+    <url-pattern>/InitContactsServlet</url-pattern>
   </servlet-mapping>
 </web-app>

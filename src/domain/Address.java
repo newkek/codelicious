@@ -49,5 +49,13 @@ public class Address {
 	public void setCountry(String country) {
 		this.country = country;
 	}
+	
+	public void init(){
+		System.out.println("init address done");
+	}
+	
+	public void cleanup(){
+		System.out.println("cleanup address done");
+	}
 
 }

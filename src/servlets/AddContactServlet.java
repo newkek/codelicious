@@ -11,8 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.SystemException;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import domain.Contact;
 import domain.DAOContact;
+import domain.IDAOContact;
 
 /**
  * Servlet implementation class AddContactServlet
@@ -50,8 +55,9 @@ public class AddContactServlet extends HttpServlet {
 		String personnalPhone=request.getParameter("personnalPhone");
 		String businessPhone=request.getParameter("businessPhone");
 		String homePhone=request.getParameter("homePhone");
+		ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 
-		DAOContact dao=new DAOContact();
+		IDAOContact dao = (IDAOContact)context.getBean("DAOC");
 		
 		Contact contact = dao.addContact( prenom, nom, email, street, city, zip, country, personnalPhone, businessPhone, homePhone);
 		

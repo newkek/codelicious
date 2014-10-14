@@ -9,8 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import domain.Contact;
 import domain.DAOContact;
+import domain.IDAOContact;
 
 /**
  * Servlet implementation class DisplayContactsServlet
@@ -31,7 +35,9 @@ public class DisplayContactsServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		DAOContact dao=new DAOContact();
+		ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+
+		IDAOContact dao = (IDAOContact)context.getBean("DAOC");
 		
 		ArrayList<Contact> contacts = dao.getContacts();
 		RequestDispatcher rd = request.getRequestDispatcher("displayContacts.jsp");

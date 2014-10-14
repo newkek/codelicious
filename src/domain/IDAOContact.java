@@ -25,5 +25,9 @@ public interface IDAOContact {
 	
 	public void modifyContact(String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone);
 
+	public void deleteAllContact();
+
+	public Contact addContact(Contact contact);
+
 	
 }

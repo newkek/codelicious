@@ -11,8 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import domain.Contact;
 import domain.DAOContact;
+import domain.IDAOContact;
 
 /**
  * Servlet implementation class ModifyContactServlet
@@ -40,11 +44,11 @@ public class ModifyContactServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("\n\n\n COUCOU" + request.getParameter("step"));		
 		if(request.getParameter("step").equals("search")){
+			ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+			IDAOContact dao = (IDAOContact)context.getBean("DAOC");
 			String id = request.getParameter("contactId");
 			System.out.println("couc");
-			DAOContact dao=new DAOContact();
 			Contact c = dao.getContactById(Long.parseLong(id));
 			request.setAttribute("getContactResults", c);
 			RequestDispatcher rd = request.getRequestDispatcher("modifyContactS.jsp");
@@ -52,8 +56,8 @@ public class ModifyContactServlet extends HttpServlet {
 			System.out.println("search step");
 		}
 		else if(request.getParameter("step").equals("modify")){
-			System.out.println("modify step");
-			DAOContact dao=new DAOContact();
+			ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+			IDAOContact dao = (IDAOContact)context.getBean("DAOC");
 			String prenom=request.getParameter("firstName");
 			String nom=request.getParameter("lastName");
 			String email=request.getParameter("email");

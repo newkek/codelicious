@@ -11,8 +11,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import domain.Contact;
 import domain.DAOContact;
+import domain.IDAOContact;
 
 /**
  * Servlet implementation class SearchContactServlet
@@ -43,6 +47,10 @@ public class SearchContactServlet extends HttpServlet {
 		String prenom=request.getParameter("firstName");
 		String nom=request.getParameter("lastName");
 		String email=request.getParameter("email");
+		
+		ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+
+		IDAOContact dao = (IDAOContact)context.getBean("DAOC");
 
 		int nbfields = 0;
 		String choosen = new String();

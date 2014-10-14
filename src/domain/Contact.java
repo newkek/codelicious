@@ -64,4 +64,12 @@ public class Contact {
 		return phoneNumbers;
 	}
 	
+	public void init() { 
+		System.out.println("init done");
+	}
+	
+	public void cleanup(){
+		System.out.println("cleanup done");
+	}
+	
 }
