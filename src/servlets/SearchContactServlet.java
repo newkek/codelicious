@@ -84,7 +84,6 @@ public class SearchContactServlet extends HttpServlet {
 
 				java.lang.reflect.Method method = c.getMethod("getContactBy"+choosen, String.class);
 				results = (ArrayList<Contact>) method.invoke(o, field); 
-				System.out.println("servlet: "+results.size());
 				request.setAttribute("searchResults", results);
 
 				RequestDispatcher rd = request.getRequestDispatcher("searchResult.jsp");

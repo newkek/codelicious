@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import util.HibernateUtil;
 
@@ -91,15 +92,49 @@ public class DAOContact implements IDAOContact{
 	}
 	
 	
-	public void modifyContact(String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone){
+	public void modifyContact(String id, String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone){
 		int success;
-		//Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		//session.beginTransaction();
-		//Query q = session.createQuery("UPDATE Contact set ");
-		//q.setParameter("id", id);
-		//success=q.executeUpdate();
-		//session.getTransaction().commit();
-		System.out.println("TODO");
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		// Query q = session.createQuery("UPDATE Contact set FIRSTNAME = '"+firstname+"' and LASTNAME = '"+lastname+"' and EMAIL = '"+email+"' and STREET = '"+street+"' and EMAIL = '"+email+"' and ");
+		// q.setParameter("id", id);
+		// success=q.executeUpdate();
+		Contact contact = new Contact();
+		contact.setFirstName(firstname);
+		contact.setLastName(lastname);
+		contact.setEmail(email);
+		Address address = new Address();
+		address.setStreet(street);
+		address.setCity(city);
+		address.setZip(zip);
+		address.setCountry(country);
+		List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
+		if(!personnalPhone.isEmpty()){
+			PhoneNumber phone = new PhoneNumber();
+			phone.setPhoneKind("personnalPhone");
+			phone.setPhoneNumber(personnalPhone);
+			phoneNumbers.add(phone);
+		}
+		if(!businessPhone.isEmpty()){
+			PhoneNumber phone = new PhoneNumber();
+			phone.setPhoneKind("businessPhone");
+			phone.setPhoneNumber(businessPhone);
+			phoneNumbers.add(phone);
+		}
+		if(!homePhone.isEmpty()){
+			PhoneNumber phone = new PhoneNumber();
+			phone.setPhoneKind("homePhone");
+			phone.setPhoneNumber(homePhone);
+			phoneNumbers.add(phone);
+		}
+		contact.setPhoneNumbers(phoneNumbers);
+		contact.setAddress(address);
+		
+		session.merge(contact);
+		
+		
+		session.getTransaction().commit();
+		System.out.println("DONE");
 	}
 
 	/**
@@ -196,6 +231,7 @@ public class DAOContact implements IDAOContact{
 		session.beginTransaction();
 		String hq1 = "FROM Contact C WHERE C.firstName=\'"+firstname+"\'";
 		ArrayList<Contact> contacts = (ArrayList<Contact>) session.createQuery(hq1).list();
+
 		session.getTransaction().commit();
 		return contacts;
 	}
@@ -218,42 +254,14 @@ public class DAOContact implements IDAOContact{
 	 */
 	public ArrayList<Contact> getContactByLastName(String lastname){
 
-		ArrayList<Contact> contacts = new ArrayList<Contact>();
-
-		ResultSet rec = null;
-		Connection con = null;
-		/*try{
-			Class.forName(Messages.getString("driver")); 
-			con = DriverManager.getConnection(Messages.getString("database"), Messages.getString("username"), Messages.getString("password")); 
-			Statement stmt = con.createStatement();
-			rec = stmt.executeQuery("SELECT * FROM contacts WHERE lastname = "+"'"+lastname+"'"); 
-
-			while (rec.next()) {
-				Contact contact = new Contact();
-				contact.setId(Long.parseLong(rec.getString("id"))); 
-				contact.setFirstName(rec.getString("firstname")); 
-				contact.setLastName(rec.getString("lastname")); 
-				contact.setEmail(rec.getString("email")); 
-				contacts.add(contact);
-			}
-
-			stmt.close();
-			rec.close();
-			con.close();
-
-		} catch( Exception e ){
-			e.printStackTrace();
-		}*/
-		Contact contact2 = new Contact();
-		contact2.setFirstName("a");
-		contact2.setLastName("a");
-		contact2.setEmail("a");
-		contacts.add(contact2);
-		Contact contact3 = new Contact();
-		contact3.setFirstName("b");
-		contact3.setLastName("b");
-		contact3.setEmail("b");
-		contacts.add(contact3);
+		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		
+		ArrayList<Contact> contacts = (ArrayList<Contact>) session.createCriteria(Contact.class)
+				.add(Restrictions.like("lastName", lastname)).list();
+		
+		session.getTransaction().commit();
 		return contacts;
 	}
 
@@ -263,32 +271,14 @@ public class DAOContact implements IDAOContact{
 	 * @return
 	 */
 	public ArrayList<Contact> getContactByEmail(String email){
-		ArrayList<Contact> contacts = new ArrayList<Contact>();
-
-		ResultSet rec = null;
-		Connection con = null;
-		/*try{
-			Class.forName(Messages.getString("driver")); 
-			con = DriverManager.getConnection(Messages.getString("database"), Messages.getString("username"), Messages.getString("password")); 
-			Statement stmt = con.createStatement();
-			rec = stmt.executeQuery("SELECT * FROM contacts WHERE email = "+"'"+email+"'"); 
-
-			while (rec.next()) {
-				Contact contact = new Contact();
-				contact.setId(Long.parseLong(rec.getString("id")));
-				contact.setFirstName(rec.getString("firstname"));
-				contact.setLastName(rec.getString("lastname")); 
-				contact.setEmail(rec.getString("email"));
-				contacts.add(contact);
-			}
-
-			stmt.close();
-			rec.close();
-			con.close();
-
-		} catch( Exception e ){
-			e.printStackTrace();
-		}*/
+		
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		session.beginTransaction();
+		
+		ArrayList<Contact> contacts = (ArrayList<Contact>) session.createCriteria(Contact.class)
+				.add(Restrictions.like("email", email)).list();
+		
+		session.getTransaction().commit();
 		return contacts;
 	}
 

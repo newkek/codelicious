@@ -15,6 +15,10 @@
 				<th><h2>Veuillez renseigner ici les nouvelles informations de ce contact</h2></th>
 				<% 
 					out.print("<tr>");
+					out.print("<td><i>ID: "+c.getId()+"</i></td>");
+					out.print("</tr>");
+					
+					out.print("<tr>");
 					out.print("<td><i>First Name: <input type=\"text\" name=\"firstName\" size=\"25\" value=\""+ c.getFirstName()+"\"></i></td>");
 					out.print("</tr>");
 					
@@ -49,6 +53,8 @@
 					out.print("<tr>");
 					out.print("<td><i>Personnal phone: <input type=\"text\" name=\"personnalPhone\" size=\"25\" value=\""+ phoneNumbers.size()+"\"></i></td>");
 					out.print("</tr>");
+					
+					request.setAttribute("id", c.getId());
 					
 				%>
 				<tr>
