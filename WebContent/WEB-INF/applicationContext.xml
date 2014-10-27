@@ -13,10 +13,10 @@
 		<property name="email" value="ab@mail.com"/>
 		<property name="address"><ref bean="FIRSTADDRESS"/></property>
 		<property name="phoneNumbers">
-			<list>
+			<set>
 				<ref bean="FIRSTPHONE"/>
 				<ref bean="FIRSTPHONEBIS"/>
-			</list>
+			</set>
 		</property>
 	</bean>
 	
@@ -25,16 +25,19 @@
 		<property name="street" value="42 rue des dames"/>
 		<property name="city" value="paris"/>
 		<property name="country" value="france"/>
+		
 	</bean>
 	
 	<bean id="FIRSTPHONE" class="domain.PhoneNumber" init-method="init" destroy-method="cleanup">
 		<property name="phoneKind" value="personnal"/>
 		<property name="phoneNumber" value="6666666666"/>
+		<property name="contact"><ref bean="FIRSTCONTACT"/></property>
 	</bean>
 	
 	<bean id="FIRSTPHONEBIS" class="domain.PhoneNumber" init-method="init" destroy-method="cleanup">
 		<property name="phoneKind" value="home"/>
 		<property name="phoneNumber" value="9999999999"/>
+		<property name="contact"><ref bean="FIRSTCONTACT"/></property>
 	</bean>
 	
 

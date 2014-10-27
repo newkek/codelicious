@@ -3,15 +3,18 @@
 	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="domain">
-<class name="PhoneNumber">
-<id name="id" type="long" column="ID_PHONENUMBER">
-<generator class="native"/>
-</id>
-<property name="phoneKind">
-<column name="PHONEKIND"/>
-</property>
-<property name="phoneNumber">
-<column name="PHONENUMBER"/>
-</property>
-</class>
+	<class name="PhoneNumber">
+		<id name="id" type="long" column="ID_PHONE">
+			<generator class="native" />
+		</id>
+		<many-to-one name="contact" class="Contact">
+            <column name="ID_CONTACT" not-null="true" />
+        </many-to-one>
+		<property name="phoneKind">
+			<column name="PHONEKIND" />
+		</property>
+		<property name="phoneNumber">
+			<column name="PHONENUMBER" />
+		</property>
+	</class>
 </hibernate-mapping>

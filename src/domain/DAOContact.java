@@ -5,7 +5,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -41,27 +43,32 @@ public class DAOContact implements IDAOContact{
 		address.setCity(city);
 		address.setZip(zip);
 		address.setCountry(country);
-		List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
+		contact.setAddress(address);
+		Set<PhoneNumber> phoneNumbers = new HashSet<PhoneNumber>();
 		if(!personnalPhone.isEmpty()){
 			PhoneNumber phone = new PhoneNumber();
 			phone.setPhoneKind("personnalPhone");
 			phone.setPhoneNumber(personnalPhone);
+			phone.setContact(contact);
 			phoneNumbers.add(phone);
 		}
 		if(!businessPhone.isEmpty()){
 			PhoneNumber phone = new PhoneNumber();
 			phone.setPhoneKind("businessPhone");
 			phone.setPhoneNumber(businessPhone);
+			phone.setContact(contact);
 			phoneNumbers.add(phone);
 		}
 		if(!homePhone.isEmpty()){
 			PhoneNumber phone = new PhoneNumber();
 			phone.setPhoneKind("homePhone");
 			phone.setPhoneNumber(homePhone);
+			phone.setContact(contact);
 			phoneNumbers.add(phone);
 		}
+		
 		contact.setPhoneNumbers(phoneNumbers);
-		contact.setAddress(address);
+		
 
 
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -95,46 +102,48 @@ public class DAOContact implements IDAOContact{
 	public void modifyContact(String id, String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone){
 		int success;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
+		session.getTransaction().begin();
 		// Query q = session.createQuery("UPDATE Contact set FIRSTNAME = '"+firstname+"' and LASTNAME = '"+lastname+"' and EMAIL = '"+email+"' and STREET = '"+street+"' and EMAIL = '"+email+"' and ");
 		// q.setParameter("id", id);
 		// success=q.executeUpdate();
-		Contact contact = new Contact();
+		String hq1 = "FROM Contact C WHERE C.id=\'"+id+"\'";
+		Contact contact = (Contact) session.createQuery(hq1).list().get(0); 
+		//Contact contact = (Contact) session.load(Contact.class, id);
 		contact.setFirstName(firstname);
 		contact.setLastName(lastname);
 		contact.setEmail(email);
-		Address address = new Address();
+		Address address = contact.getAddress();
 		address.setStreet(street);
 		address.setCity(city);
 		address.setZip(zip);
 		address.setCountry(country);
-		List<PhoneNumber> phoneNumbers = new ArrayList<PhoneNumber>();
-		if(!personnalPhone.isEmpty()){
-			PhoneNumber phone = new PhoneNumber();
-			phone.setPhoneKind("personnalPhone");
-			phone.setPhoneNumber(personnalPhone);
-			phoneNumbers.add(phone);
-		}
-		if(!businessPhone.isEmpty()){
-			PhoneNumber phone = new PhoneNumber();
-			phone.setPhoneKind("businessPhone");
-			phone.setPhoneNumber(businessPhone);
-			phoneNumbers.add(phone);
-		}
-		if(!homePhone.isEmpty()){
-			PhoneNumber phone = new PhoneNumber();
-			phone.setPhoneKind("homePhone");
-			phone.setPhoneNumber(homePhone);
-			phoneNumbers.add(phone);
-		}
+		Set<PhoneNumber> phoneNumbers = contact.getPhoneNumbers();
+		if(personnalPhone!=null)
+			if(!personnalPhone.isEmpty()){
+				PhoneNumber phone = new PhoneNumber();
+				phone.setPhoneKind("personnalPhone");
+				phone.setPhoneNumber(personnalPhone);
+				phoneNumbers.add(phone);
+			}
+		if(businessPhone!=null)
+			if(!businessPhone.isEmpty()){
+				PhoneNumber phone = new PhoneNumber();
+				phone.setPhoneKind("businessPhone");
+				phone.setPhoneNumber(businessPhone);
+				phoneNumbers.add(phone);
+			}
+		if(homePhone!=null)
+			if(!homePhone.isEmpty()){
+				PhoneNumber phone = new PhoneNumber();
+				phone.setPhoneKind("homePhone");
+				phone.setPhoneNumber(homePhone);
+				phoneNumbers.add(phone);
+			}
 		contact.setPhoneNumbers(phoneNumbers);
 		contact.setAddress(address);
 		
 		session.merge(contact);
-		
-		
 		session.getTransaction().commit();
-		System.out.println("DONE");
 	}
 
 	/**

@@ -59,6 +59,7 @@ public class ModifyContactServlet extends HttpServlet {
 			ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 			IDAOContact dao = (IDAOContact)context.getBean("DAOC");
 			String id=request.getParameter("id");
+			System.out.println("id : "+id);
 			String prenom=request.getParameter("firstName");
 			String nom=request.getParameter("lastName");
 			String email=request.getParameter("email");
@@ -66,14 +67,16 @@ public class ModifyContactServlet extends HttpServlet {
 			String city=request.getParameter("city");
 			String zip=request.getParameter("zip");
 			String country=request.getParameter("country");
-			String personnalPhone=new String();
+			String personnalPhone=request.getParameter("personnalPhone");
 			//personnalPhone=request.getParameter("personnalPhone");
-			String businessPhone=new String("coucou");
+			String businessPhone=request.getParameter("businessPhone");
 			//businessPhone=request.getParameter("businessPhone");
-			String homePhone=new String();
+			String homePhone=request.getParameter("homePhone");
 			//homePhone=request.getParameter("homePhone");
 			dao.modifyContact(id, prenom, nom, email, street, city, zip, country, personnalPhone, businessPhone, homePhone);
-			
+			RequestDispatcher rd = request.getRequestDispatcher("modifiedContact.jsp");
+			request.setAttribute("modifiedResult", "1");
+			rd.forward(request, response);
 		}
 	}
 

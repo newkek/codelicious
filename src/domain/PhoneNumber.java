@@ -4,6 +4,7 @@ public class PhoneNumber {
 	private long id;
 	private String phoneKind;
 	private String phoneNumber;
+	private Contact contact;
 	
 	public PhoneNumber(){
 		
@@ -40,5 +41,14 @@ public class PhoneNumber {
 	public void cleanup(){
 		System.out.println("cleanup phone done");
 	}
+
+	public Contact getContact() {
+		return contact;
+	}
+
+	public void setContact(Contact contact) {
+		this.contact = contact;
+	}
+
 
 }

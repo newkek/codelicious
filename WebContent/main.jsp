@@ -15,6 +15,7 @@
 <br/>
 <a href="searchContact.jsp">Rechercher un Contact</a>
 <br/>
+
 <h1>TEST</h1><br/>
 <a href="InitContactsServlet">Init des deux contacts</a>
 <br/>

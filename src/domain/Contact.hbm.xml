@@ -3,25 +3,37 @@
 	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping package="domain">
-<class name="Contact">
-<id name="id" type="long" column="ID_CONTACT">
-<generator class="increment"/>
-</id>
-<property name="firstName">
-<column name="FIRSTNAME"/>
-</property>
-<property name="lastName">
-<column name="LASTNAME"/>
-</property>
-<property name="email">
-<column name="EMAIL"/>
-</property>
-<many-to-one name="address" column="addressId" unique="true"
-cascade="all-delete-orphan" class="Address" lazy="false"/>
-<list name="phoneNumbers" inverse="true" cascade="all-delete-orphan" lazy="false">
-<key column="phoneId" />
-<list-index column="idx"/>
-<one-to-many class="PhoneNumber"/>
-</list>
-</class>
+	<class name="Contact">
+		<id name="id" type="long" column="ID_CONTACT">
+			<generator class="increment" />
+		</id>
+		<property name="firstName">
+			<column name="FIRSTNAME" />
+		</property>
+		<property name="lastName">
+			<column name="LASTNAME" />
+		</property>
+		<property name="email">
+			<column name="EMAIL" />
+		</property>
+
+		<many-to-one name="address" column="ID_ADDRESS" unique="true"
+			cascade="all-delete-orphan" class="Address" not-null="true" lazy="false" />
+			
+		 
+		<!--<list name="phoneNumbers" inverse="true" cascade="all-delete-orphan" lazy="false">
+			<key column="ID_C" />
+			<list-index column="idx" />
+			<one-to-many class="PhoneNumber" />
+		</list> 
+		-->
+		
+		 <set name="phoneNumbers" table="PhoneNumber" inverse="true" cascade="all-delete-orphan" lazy="false"> 
+			<key column="ID_CONTACT" not-null="true"/> 
+			<one-to-many class="PhoneNumber"/> 
+		</set>
+
+		 
+
+	</class>
 </hibernate-mapping>

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=US-ASCII"
     pageEncoding="US-ASCII"%>
-    <%@ page import="java.util.List,domain.Contact,domain.Address,domain.PhoneNumber" %>
+    <%@ page import="java.util.Set,java.util.Iterator,domain.Contact,domain.Address,domain.PhoneNumber" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -48,18 +48,23 @@
 					out.print("<td><i>Country: <input type=\"text\" name=\"country\" size=\"25\" value=\""+ a.getCountry()+"\"></i></td>");
 					out.print("</tr>");
 					
-					List<PhoneNumber> phoneNumbers = (List<PhoneNumber>) c.getPhoneNumbers();
+					Set<PhoneNumber> phoneNumbers = (Set<PhoneNumber>) c.getPhoneNumbers();
 					
-					out.print("<tr>");
-					out.print("<td><i>Personnal phone: <input type=\"text\" name=\"personnalPhone\" size=\"25\" value=\""+ phoneNumbers.size()+"\"></i></td>");
-					out.print("</tr>");
+					Iterator iterator = phoneNumbers.iterator();
+					while(iterator.hasNext()){
+					 	PhoneNumber phone = (PhoneNumber) iterator.next();
+					  	out.print("<tr>");
+						out.print("<td><i>"+phone.getPhoneKind()+": <input type=\"text\" name=\""+phone.getPhoneKind()+"\" size=\"25\" value=\""+phone.getPhoneNumber()+"\"></i></td>");
+						out.print("</tr>");
+					}
 					
-					request.setAttribute("id", c.getId());
+					
 					
 				%>
 				<tr>
 					<td>
 					<input type="hidden" name="step" value="modify"/>
+					<input type ="hidden" name="id" value="<%=c.getId()%>"/>
 					<input class="button" type="submit" value="Submit" /><input class="button" type="reset" value="Reset">
 					</td>
 				</tr>
