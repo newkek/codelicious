@@ -123,6 +123,7 @@ public class DAOContact implements IDAOContact{
 				PhoneNumber phone = new PhoneNumber();
 				phone.setPhoneKind("personnalPhone");
 				phone.setPhoneNumber(personnalPhone);
+				phone.setContact(contact);
 				phoneNumbers.add(phone);
 			}
 		if(businessPhone!=null)
@@ -130,6 +131,7 @@ public class DAOContact implements IDAOContact{
 				PhoneNumber phone = new PhoneNumber();
 				phone.setPhoneKind("businessPhone");
 				phone.setPhoneNumber(businessPhone);
+				phone.setContact(contact);
 				phoneNumbers.add(phone);
 			}
 		if(homePhone!=null)
@@ -137,6 +139,7 @@ public class DAOContact implements IDAOContact{
 				PhoneNumber phone = new PhoneNumber();
 				phone.setPhoneKind("homePhone");
 				phone.setPhoneNumber(homePhone);
+				phone.setContact(contact);
 				phoneNumbers.add(phone);
 			}
 		contact.setPhoneNumbers(phoneNumbers);
@@ -156,9 +159,11 @@ public class DAOContact implements IDAOContact{
 		
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
-		Query q = session.createQuery("DELETE FROM Contact WHERE id = :id");
-		q.setParameter("id", id);
-		success=q.executeUpdate();
+		Contact contact = (Contact) session.get(Contact.class, id);
+		//Query q = session.createQuery("DELETE FROM Contact WHERE id = :id");
+		//q.setParameter("id", id);
+		//success=q.executeUpdate();
+		session.delete(contact);
 		session.getTransaction().commit();
 
 		return success;
