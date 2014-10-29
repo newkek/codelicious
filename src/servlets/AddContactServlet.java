@@ -3,6 +3,8 @@ package servlets;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -55,11 +57,12 @@ public class AddContactServlet extends HttpServlet {
 		String personnalPhone=request.getParameter("personnalPhone");
 		String businessPhone=request.getParameter("businessPhone");
 		String homePhone=request.getParameter("homePhone");
+		String[] contactGroups = request.getParameterValues("ContactGroup");
 		ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 
 		IDAOContact dao = (IDAOContact)context.getBean("DAOC");
 		
-		Contact contact = dao.addContact( prenom, nom, email, street, city, zip, country, personnalPhone, businessPhone, homePhone);
+		Contact contact = dao.addContact( prenom, nom, email, street, city, zip, country, personnalPhone, businessPhone, homePhone, contactGroups);
 		
 		System.out.println("création faite nom: "+contact.getLastName()+", prenom: "+contact.getFirstName());
 		

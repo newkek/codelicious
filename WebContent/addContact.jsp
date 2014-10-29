@@ -44,6 +44,7 @@
 				<tr>
 					<td><i>Amis:<input type="checkbox" name="ContactGroup" value="friend"></i></td>
 					<td><i>Famille:<input type="checkbox" name="ContactGroup" value="family"></i></td>
+					<td><i>Travail:<input type="checkbox" name="ContactGroup" value="work"></i></td>
 				</tr>
 				<tr>
 					<td><input class="button" type="submit" value="Submit" /><input class="button" type="reset" value="Reset"></td>

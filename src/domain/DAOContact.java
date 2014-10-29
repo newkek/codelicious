@@ -5,7 +5,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -31,7 +33,7 @@ public class DAOContact implements IDAOContact{
 	 * @param personnalPhone 
 	 * @return renvoit le nouveau contact
 	 */
-	public Contact addContact(String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone){
+	public Contact addContact(String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone, String[] contactGroups){
 
 		
 		Contact contact = new Contact();
@@ -66,8 +68,18 @@ public class DAOContact implements IDAOContact{
 			phone.setContact(contact);
 			phoneNumbers.add(phone);
 		}
-		
 		contact.setPhoneNumbers(phoneNumbers);
+		
+		Set<ContactGroup> tempcontactGroups = new HashSet<ContactGroup>();
+		for(int i=0;i<contactGroups.length; i++){
+			ContactGroup group = new ContactGroup();
+			group.setGroupName(contactGroups[i]);
+			Set<Contact> temp = group.getContacts();
+			temp.add(contact);
+			group.setContacts(temp);
+			tempcontactGroups.add(group);
+		}
+		contact.setContactGroups(tempcontactGroups);
 		
 
 
@@ -75,6 +87,10 @@ public class DAOContact implements IDAOContact{
 		//d��marrer une transaction
 		session.beginTransaction();
 		//persister l���objet
+		/*Iterator<ContactGroup> iterator = tempcontactGroups.iterator();
+		while(iterator.hasNext()){
+			session.save(iterator.next());
+		}*/
 		session.save(contact);
 		//recharger l���objet �� partir de la session
 		contact=(Contact) session.load(Contact.class,contact.getId());
@@ -89,6 +105,10 @@ public class DAOContact implements IDAOContact{
 		//d��marrer une transaction
 		session.beginTransaction();
 		//persister l���objet
+		/*Iterator<ContactGroup> iterator = contact.getContactGroups().iterator();
+		while(iterator.hasNext()){
+			session.save(iterator.next());
+		}*/
 		session.save(contact);
 		//recharger l���objet �� partir de la session
 		contact=(Contact) session.load(Contact.class,contact.getId());
@@ -118,33 +138,82 @@ public class DAOContact implements IDAOContact{
 		address.setZip(zip);
 		address.setCountry(country);
 		Set<PhoneNumber> phoneNumbers = contact.getPhoneNumbers();
-		if(personnalPhone!=null)
-			if(!personnalPhone.isEmpty()){
-				PhoneNumber phone = new PhoneNumber();
-				phone.setPhoneKind("personnalPhone");
-				phone.setPhoneNumber(personnalPhone);
-				phone.setContact(contact);
-				phoneNumbers.add(phone);
-			}
-		if(businessPhone!=null)
-			if(!businessPhone.isEmpty()){
-				PhoneNumber phone = new PhoneNumber();
-				phone.setPhoneKind("businessPhone");
-				phone.setPhoneNumber(businessPhone);
-				phone.setContact(contact);
-				phoneNumbers.add(phone);
-			}
-		if(homePhone!=null)
-			if(!homePhone.isEmpty()){
-				PhoneNumber phone = new PhoneNumber();
-				phone.setPhoneKind("homePhone");
-				phone.setPhoneNumber(homePhone);
-				phone.setContact(contact);
-				phoneNumbers.add(phone);
-			}
-		contact.setPhoneNumbers(phoneNumbers);
-		contact.setAddress(address);
+		Iterator<PhoneNumber> iterator = phoneNumbers.iterator();
+		HashMap<String,PhoneNumber> map = new HashMap<String, PhoneNumber>();
+		while(iterator.hasNext()){
+			PhoneNumber phone = iterator.next();
+			map.put(phone.getPhoneKind(), phone);
+		}
 		
+		if(personnalPhone!=null){
+			if(!personnalPhone.isEmpty()){
+				if(map.containsKey("personnalPhone")){
+					if(!map.get("personnalPhone").getPhoneNumber().equals(personnalPhone)){
+						phoneNumbers.remove(map.get("personnalPhone"));
+						PhoneNumber phone = new PhoneNumber();
+						phone.setPhoneKind("personnalPhone");
+						phone.setPhoneNumber(personnalPhone);
+						phone.setContact(contact);
+						phoneNumbers.add(phone);
+					}
+				}else{
+					PhoneNumber phone = new PhoneNumber();
+					phone.setPhoneKind("personnalPhone");
+					phone.setPhoneNumber(personnalPhone);
+					phone.setContact(contact);
+					phoneNumbers.add(phone);
+				}
+					
+			}else if(map.containsKey("personnalPhone")){
+				phoneNumbers.remove(map.get("personnalPhone"));
+			}
+		}
+		if(businessPhone!=null){
+			if(!businessPhone.isEmpty()){
+				if(map.containsKey("businessPhone")){
+					if(!map.get("businessPhone").getPhoneNumber().equals(businessPhone)){
+						phoneNumbers.remove(map.get("businessPhone"));
+						PhoneNumber phone = new PhoneNumber();
+						phone.setPhoneKind("businessPhone");
+						phone.setPhoneNumber(businessPhone);
+						phone.setContact(contact);
+						phoneNumbers.add(phone);
+					}
+				}else{
+					PhoneNumber phone = new PhoneNumber();
+					phone.setPhoneKind("businessPhone");
+					phone.setPhoneNumber(businessPhone);
+					phone.setContact(contact);
+					phoneNumbers.add(phone);
+				}
+			}else if(map.containsKey("businessPhone")){
+				phoneNumbers.remove(map.get("businessPhone"));
+			}
+		}
+		if(homePhone!=null){
+			if(!homePhone.isEmpty()){
+				if(map.containsKey("homePhone")){
+					if(!map.get("homePhone").getPhoneNumber().equals(homePhone)){
+						phoneNumbers.remove(map.get("homePhone"));
+						PhoneNumber phone = new PhoneNumber();
+						phone.setPhoneKind("homePhone");
+						phone.setPhoneNumber(homePhone);
+						phone.setContact(contact);
+						phoneNumbers.add(phone);
+					}
+				}else{
+					PhoneNumber phone = new PhoneNumber();
+					phone.setPhoneKind("homePhone");
+					phone.setPhoneNumber(homePhone);
+					phone.setContact(contact);
+					phoneNumbers.add(phone);
+				}
+			}else if(map.containsKey("homePhone")){
+				phoneNumbers.remove(map.get("homePhone"));
+			}
+		}
+		//contact.setPhoneNumbers(phoneNumbers);
+		//contact.setAddress(address);
 		session.merge(contact);
 		session.getTransaction().commit();
 	}
@@ -258,6 +327,7 @@ public class DAOContact implements IDAOContact{
 		String hq1 = "FROM Contact C WHERE C.id=\'"+id+"\'";
 		Contact c = (Contact) session.createQuery(hq1).list().get(0);
 		session.getTransaction().commit();
+		System.out.println(c.getPhoneNumbers().size());
 		return c;
 	}
 

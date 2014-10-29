@@ -13,6 +13,7 @@ public class Contact {
 	private long id;
 	private Address address;
 	private Set<PhoneNumber> phoneNumbers = new HashSet<PhoneNumber>();
+	private Set<ContactGroup> contactGroups = new HashSet<ContactGroup>();
 	
 	public Contact(){
 	}
@@ -72,6 +73,14 @@ public class Contact {
 	
 	public void cleanup(){
 		System.out.println("cleanup done");
+	}
+
+	public Set<ContactGroup> getContactGroups() {
+		return contactGroups;
+	}
+
+	public void setContactGroups(Set<ContactGroup> contactGroups) {
+		this.contactGroups = contactGroups;
 	}
 	
 }

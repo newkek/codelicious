@@ -48,12 +48,10 @@ public class ModifyContactServlet extends HttpServlet {
 			ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 			IDAOContact dao = (IDAOContact)context.getBean("DAOC");
 			String id = request.getParameter("contactId");
-			System.out.println("couc");
 			Contact c = dao.getContactById(Long.parseLong(id));
 			request.setAttribute("getContactResults", c);
 			RequestDispatcher rd = request.getRequestDispatcher("modifyContactS.jsp");
 			rd.forward(request, response);
-			System.out.println("search step");
 		}
 		else if(request.getParameter("step").equals("modify")){
 			ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());

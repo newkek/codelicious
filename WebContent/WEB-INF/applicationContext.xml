@@ -18,6 +18,12 @@
 				<ref bean="FIRSTPHONEBIS"/>
 			</set>
 		</property>
+		<property name="contactGroups">
+			<set>
+				<ref bean="FIRSTGROUP"/>
+				<ref bean="FIRSTGROUPBIS"/>
+			</set>
+		</property>
 	</bean>
 	
 	<bean id="FIRSTADDRESS" class="domain.Address" init-method="init" destroy-method="cleanup">
@@ -29,15 +35,33 @@
 	</bean>
 	
 	<bean id="FIRSTPHONE" class="domain.PhoneNumber" init-method="init" destroy-method="cleanup">
-		<property name="phoneKind" value="personnal"/>
+		<property name="phoneKind" value="personnalPhone"/>
 		<property name="phoneNumber" value="6666666666"/>
 		<property name="contact"><ref bean="FIRSTCONTACT"/></property>
 	</bean>
 	
 	<bean id="FIRSTPHONEBIS" class="domain.PhoneNumber" init-method="init" destroy-method="cleanup">
-		<property name="phoneKind" value="home"/>
+		<property name="phoneKind" value="homePhone"/>
 		<property name="phoneNumber" value="9999999999"/>
 		<property name="contact"><ref bean="FIRSTCONTACT"/></property>
+	</bean>
+	
+	<bean id="FIRSTGROUP" class="domain.ContactGroup" init-method="init" destroy-method="cleanup">
+		<property name="groupName" value="family"/>
+		<property name="contacts">
+			<set>
+				<ref bean="FIRSTCONTACT"/>
+			</set>
+		</property>
+	</bean>
+	
+	<bean id="FIRSTGROUPBIS" class="domain.ContactGroup" init-method="init" destroy-method="cleanup">
+		<property name="groupName" value="work"/>
+		<property name="contacts">
+			<set>
+				<ref bean="FIRSTCONTACT"/>
+			</set>
+		</property>
 	</bean>
 	
 
