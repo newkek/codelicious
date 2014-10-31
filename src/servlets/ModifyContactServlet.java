@@ -66,12 +66,10 @@ public class ModifyContactServlet extends HttpServlet {
 			String zip=request.getParameter("zip");
 			String country=request.getParameter("country");
 			String personnalPhone=request.getParameter("personnalPhone");
-			//personnalPhone=request.getParameter("personnalPhone");
 			String businessPhone=request.getParameter("businessPhone");
-			//businessPhone=request.getParameter("businessPhone");
 			String homePhone=request.getParameter("homePhone");
-			//homePhone=request.getParameter("homePhone");
-			dao.modifyContact(id, prenom, nom, email, street, city, zip, country, personnalPhone, businessPhone, homePhone);
+			String[] contactGroups = request.getParameterValues("ContactGroup");
+			dao.modifyContact(id, prenom, nom, email, street, city, zip, country, personnalPhone, businessPhone, homePhone, contactGroups);
 			RequestDispatcher rd = request.getRequestDispatcher("modifiedContact.jsp");
 			request.setAttribute("modifiedResult", "1");
 			rd.forward(request, response);

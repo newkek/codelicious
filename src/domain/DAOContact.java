@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -119,7 +120,7 @@ public class DAOContact implements IDAOContact{
 	}
 	
 	
-	public void modifyContact(String id, String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone){
+	public void modifyContact(String id, String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone, String[] contactGroups){
 		int success;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.getTransaction().begin();
@@ -212,6 +213,41 @@ public class DAOContact implements IDAOContact{
 				phoneNumbers.remove(map.get("homePhone"));
 			}
 		}
+		
+		Set<ContactGroup> tempContactGroups = contact.getContactGroups();
+		Iterator<ContactGroup> iteratorGroup = tempContactGroups.iterator();
+		boolean test=false;
+		Set<String> notCreated = new HashSet<String>();
+		Collections.addAll(notCreated, contactGroups);
+		while(iteratorGroup.hasNext()){
+			ContactGroup temp = iteratorGroup.next();
+			
+			for(int i=0;i<contactGroups.length; i++){
+				
+				if(temp.getGroupName().equals(contactGroups[i])){
+					notCreated.remove(contactGroups[i]);
+					test=true;
+					break;
+				}
+			}
+			if(!test){
+				temp.getContacts().remove(contact);
+				iteratorGroup.remove();
+			}
+		}
+		
+		Iterator<String> iteratorNotCreated = notCreated.iterator();
+		while(iteratorNotCreated.hasNext()){
+			String name = iteratorNotCreated.next();
+			ContactGroup group = new ContactGroup();
+			group.setGroupName(name);
+			Set<Contact> temp = group.getContacts();
+			temp.add(contact);
+			group.setContacts(temp);
+			tempContactGroups.add(group);
+			System.out.println("nom groupe: "+group.getGroupName());
+		}
+
 		//contact.setPhoneNumbers(phoneNumbers);
 		//contact.setAddress(address);
 		session.merge(contact);

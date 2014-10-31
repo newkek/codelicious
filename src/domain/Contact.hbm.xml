@@ -33,7 +33,7 @@
 			<one-to-many class="PhoneNumber"/> 
 		</set>
 
-		<set name="contactGroups" table="PARTICIPATION" cascade="save-update">
+		<set name="contactGroups" table="PARTICIPATION" cascade="save-update" lazy="false">
 			<key column="ID_CONTACT"/>
 			<many-to-many class="ContactGroup" column="ID_CONTACTGROUP"/>
 		</set>
