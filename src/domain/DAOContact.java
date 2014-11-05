@@ -13,6 +13,8 @@ import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.StatelessSession;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
 import util.HibernateUtil;
@@ -123,12 +125,8 @@ public class DAOContact implements IDAOContact{
 		int success;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.getTransaction().begin();
-		// Query q = session.createQuery("UPDATE Contact set FIRSTNAME = '"+firstname+"' and LASTNAME = '"+lastname+"' and EMAIL = '"+email+"' and STREET = '"+street+"' and EMAIL = '"+email+"' and ");
-		// q.setParameter("id", id);
-		// success=q.executeUpdate();
 		String hq1 = "FROM Contact C WHERE C.id=\'"+id+"\'";
 		Contact contact = (Contact) session.createQuery(hq1).list().get(0); 
-		//Contact contact = (Contact) session.load(Contact.class, id);
 		contact.setFirstName(firstname);
 		contact.setLastName(lastname);
 		contact.setEmail(email);
@@ -212,8 +210,7 @@ public class DAOContact implements IDAOContact{
 				phoneNumbers.remove(map.get("homePhone"));
 			}
 		}
-		//contact.setPhoneNumbers(phoneNumbers);
-		//contact.setAddress(address);
+
 		session.merge(contact);
 		session.getTransaction().commit();
 	}
@@ -386,6 +383,60 @@ public class DAOContact implements IDAOContact{
 		session.getTransaction().commit();
 	}
 	
-
+	
+	public void addManyContacts(){
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Transaction tx = session.beginTransaction();
+		for(int i=0;i<100000; i++){
+			Contact contact = new Contact();
+			contact.setFirstName("firstname"+Integer.toString(i));
+			contact.setLastName("lastnamename"+Integer.toString(i));
+			contact.setEmail("email"+Integer.toString(i));
+			Address address = new Address();
+			address.setStreet("street"+Integer.toString(i));
+			address.setCity("city"+Integer.toString(i));
+			address.setZip("zip"+Integer.toString(i));
+			address.setCountry("country"+Integer.toString(i));
+			contact.setAddress(address);
+			Set<PhoneNumber> phoneNumbers = new HashSet<PhoneNumber>();
+			/*if(!personnalPhone.isEmpty()){
+				PhoneNumber phone = new PhoneNumber();
+				phone.setPhoneKind("personnalPhone");
+				phone.setPhoneNumber(personnalPhone);
+				phone.setContact(contact);
+				phoneNumbers.add(phone);
+			}
+			if(!businessPhone.isEmpty()){
+				PhoneNumber phone = new PhoneNumber();
+				phone.setPhoneKind("businessPhone");
+				phone.setPhoneNumber(businessPhone);
+				phone.setContact(contact);
+				phoneNumbers.add(phone);
+			}
+			if(!homePhone.isEmpty()){
+				PhoneNumber phone = new PhoneNumber();
+				phone.setPhoneKind("homePhone");
+				phone.setPhoneNumber(homePhone);
+				phone.setContact(contact);
+				phoneNumbers.add(phone);
+			}
+			contact.setPhoneNumbers(phoneNumbers);
+			*/
+			/*Set<ContactGroup> tempcontactGroups = new HashSet<ContactGroup>();
+			for(int i=0;i<contactGroups.length; i++){
+				ContactGroup group = new ContactGroup();
+				group.setGroupName(contactGroups[i]);
+				Set<Contact> temp = group.getContacts();
+				temp.add(contact);
+				group.setContacts(temp);
+				tempcontactGroups.add(group);
+			}
+			contact.setContactGroups(tempcontactGroups);*/
+			System.out.println("adding contact "+i);
+			session.save(contact);
+		}
+		tx.commit();
+		session.close();
+	}
 
 }

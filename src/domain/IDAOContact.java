@@ -28,6 +28,8 @@ public interface IDAOContact {
 	public void deleteAllContact();
 
 	public Contact addContact(Contact contact);
+	
+	public void addManyContacts();
 
 	
 }

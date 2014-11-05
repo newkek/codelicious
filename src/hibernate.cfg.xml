@@ -28,6 +28,8 @@
         <!-- Pretty format le SQL généré -->
         <property name="hibernate.format_sql">true</property>
         
+        <property name="hibernate.jdbc.batch_size">20</property>
+        
         <!-- liens vers les fichiers de mapping, indiquez le chemin à partir de src -->
 		<mapping resource="domain/Contact.hbm.xml"/>
 		<mapping resource="domain/ContactGroup.hbm.xml"/>
