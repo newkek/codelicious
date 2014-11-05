@@ -49,6 +49,7 @@ public class ModifyContactServlet extends HttpServlet {
 			IDAOContact dao = (IDAOContact)context.getBean("DAOC");
 			String id = request.getParameter("contactId");
 			Contact c = dao.getContactById(Long.parseLong(id));
+			System.out.println("version servlet phase 1: "+c.version);
 			request.setAttribute("getContactResults", c);
 			RequestDispatcher rd = request.getRequestDispatcher("modifyContactS.jsp");
 			rd.forward(request, response);

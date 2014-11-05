@@ -17,10 +17,6 @@
 				<th><h2>Veuillez renseigner ici les nouvelles informations de ce contact</h2></th>
 				 
 					<tr>
-					<td><i>ID: <%= c.getId()%></i></td>
-					</tr>
-					
-					<tr>
 					<td><i>First Name: <input type="text" name="firstName" size="25" value="<%=c.getFirstName()%>"></i></td>
 					</tr>
 					

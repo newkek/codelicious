@@ -71,16 +71,7 @@ public class DAOContact implements IDAOContact{
 		}
 		contact.setPhoneNumbers(phoneNumbers);
 		
-		Set<ContactGroup> tempcontactGroups = new HashSet<ContactGroup>();
-		for(int i=0;i<contactGroups.length; i++){
-			ContactGroup group = new ContactGroup();
-			group.setGroupName(contactGroups[i]);
-			Set<Contact> temp = group.getContacts();
-			temp.add(contact);
-			group.setContacts(temp);
-			tempcontactGroups.add(group);
-		}
-		contact.setContactGroups(tempcontactGroups);
+		
 		
 
 
@@ -92,6 +83,23 @@ public class DAOContact implements IDAOContact{
 		while(iterator.hasNext()){
 			session.save(iterator.next());
 		}*/
+		
+		Set<ContactGroup> tempcontactGroups = new HashSet<ContactGroup>();
+		for(int i=0;i<contactGroups.length; i++){
+			ContactGroup group = (ContactGroup) session.createCriteria(ContactGroup.class)
+					.add(Restrictions.like("groupName", contactGroups[i]) )
+					.uniqueResult();
+			if(group == null){
+				group = new ContactGroup();
+				group.setGroupName(contactGroups[i]);
+			}
+			Set<Contact> temp = group.getContacts();
+			temp.add(contact);
+			group.setContacts(temp);
+			tempcontactGroups.add(group);
+		}
+		contact.setContactGroups(tempcontactGroups);
+		
 		session.save(contact);
 		//recharger l���objet �� partir de la session
 		contact=(Contact) session.load(Contact.class,contact.getId());
@@ -127,9 +135,11 @@ public class DAOContact implements IDAOContact{
 		// Query q = session.createQuery("UPDATE Contact set FIRSTNAME = '"+firstname+"' and LASTNAME = '"+lastname+"' and EMAIL = '"+email+"' and STREET = '"+street+"' and EMAIL = '"+email+"' and ");
 		// q.setParameter("id", id);
 		// success=q.executeUpdate();
-		String hq1 = "FROM Contact C WHERE C.id=\'"+id+"\'";
-		Contact contact = (Contact) session.createQuery(hq1).list().get(0); 
+		//String hq1 = "FROM Contact C WHERE C.id=\'"+id+"\'";
+		//Contact contact = (Contact) session.createQuery(hq1).list().get(0); 
 		//Contact contact = (Contact) session.load(Contact.class, id);
+		Contact contact = (Contact) session.load(Contact.class, Long.parseLong(id));
+		System.out.println("version:"+contact.version);
 		contact.setFirstName(firstname);
 		contact.setLastName(lastname);
 		contact.setEmail(email);
@@ -239,8 +249,13 @@ public class DAOContact implements IDAOContact{
 		Iterator<String> iteratorNotCreated = notCreated.iterator();
 		while(iteratorNotCreated.hasNext()){
 			String name = iteratorNotCreated.next();
-			ContactGroup group = new ContactGroup();
-			group.setGroupName(name);
+			ContactGroup group = (ContactGroup) session.createCriteria(ContactGroup.class)
+					.add(Restrictions.like("groupName", name) )
+					.uniqueResult();
+			if(group == null){
+				group = new ContactGroup();
+				group.setGroupName(name);
+			}
 			Set<Contact> temp = group.getContacts();
 			temp.add(contact);
 			group.setContacts(temp);
@@ -250,7 +265,7 @@ public class DAOContact implements IDAOContact{
 
 		//contact.setPhoneNumbers(phoneNumbers);
 		//contact.setAddress(address);
-		session.merge(contact);
+		session.saveOrUpdate(contact);
 		session.getTransaction().commit();
 	}
 
