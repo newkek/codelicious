@@ -20,6 +20,8 @@
 <h1>TEST</h1><br/>
 <a href="InitContactsServlet">Init des deux contacts</a>
 <br/>
+<a href="batchContact.jsp">Tests de batch processing</a>
+<br/>
 <a href="DisplayContactsServlet">Afficher tous les contacts</a>
 <br/>
 <a href="DeleteContactsServlet">Supprimer tous les Contacts</a>

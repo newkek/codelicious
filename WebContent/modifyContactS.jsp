@@ -11,8 +11,9 @@
 	<form method="post" action="ModifyContactServlet">
 		<table>
 			<tr>
-				<% Contact c = (Contact) request.getAttribute("getContactResults"); 
-				   Address a = c.getAddress();
+				<% //Contact c = (Contact) request.getAttribute("getContactResults");
+					Contact c = (Contact)session.getAttribute("contact");
+				   	Address a = c.getAddress();
 				%>
 				<th><h2>Veuillez renseigner ici les nouvelles informations de ce contact</h2></th>
 				 

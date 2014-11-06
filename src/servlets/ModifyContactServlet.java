@@ -6,10 +6,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -49,7 +51,10 @@ public class ModifyContactServlet extends HttpServlet {
 			IDAOContact dao = (IDAOContact)context.getBean("DAOC");
 			String id = request.getParameter("contactId");
 			Contact c = dao.getContactById(Long.parseLong(id));
-			System.out.println("version servlet phase 1: "+c.version);
+			HttpSession session = request.getSession(true);
+			session.setAttribute("contact", c);
+			ServletContext sc = getServletContext();
+			sc.setAttribute("contact", c);
 			request.setAttribute("getContactResults", c);
 			RequestDispatcher rd = request.getRequestDispatcher("modifyContactS.jsp");
 			rd.forward(request, response);
@@ -57,6 +62,10 @@ public class ModifyContactServlet extends HttpServlet {
 		else if(request.getParameter("step").equals("modify")){
 			ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 			IDAOContact dao = (IDAOContact)context.getBean("DAOC");
+			
+			HttpSession session = request.getSession(false);
+			
+			Contact contact = (Contact) session.getAttribute("contact");
 			String id=request.getParameter("id");
 			System.out.println("id : "+id);
 			String prenom=request.getParameter("firstName");
@@ -70,7 +79,7 @@ public class ModifyContactServlet extends HttpServlet {
 			String businessPhone=request.getParameter("businessPhone");
 			String homePhone=request.getParameter("homePhone");
 			String[] contactGroups = request.getParameterValues("ContactGroup");
-			dao.modifyContact(id, prenom, nom, email, street, city, zip, country, personnalPhone, businessPhone, homePhone, contactGroups);
+			dao.modifyContact(contact, id, prenom, nom, email, street, city, zip, country, personnalPhone, businessPhone, homePhone, contactGroups);
 			RequestDispatcher rd = request.getRequestDispatcher("modifiedContact.jsp");
 			request.setAttribute("modifiedResult", "1");
 			rd.forward(request, response);

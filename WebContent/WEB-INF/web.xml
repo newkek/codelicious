@@ -94,4 +94,24 @@
     <servlet-name>InitContactsServlet</servlet-name>
     <url-pattern>/InitContactsServlet</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>BatchServlet</display-name>
+    <servlet-name>BatchServlet</servlet-name>
+    <servlet-class>servlets.BatchServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BatchServlet</servlet-name>
+    <url-pattern>/BatchServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>BatchContactServlet</display-name>
+    <servlet-name>BatchContactServlet</servlet-name>
+    <servlet-class>servlets.BatchContactServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BatchContactServlet</servlet-name>
+    <url-pattern>/BatchContactServlet</url-pattern>
+  </servlet-mapping>
 </web-app>
