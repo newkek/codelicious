@@ -7,13 +7,13 @@ import java.util.Set;
 
 public class Contact {
 
-	private String firstName;
-	private String lastName;
-	private String email;
-	private long id;
-	private Address address;
-	private Set<PhoneNumber> phoneNumbers = new HashSet<PhoneNumber>();
-	private Set<ContactGroup> contactGroups = new HashSet<ContactGroup>();
+	protected String firstName;
+	protected String lastName;
+	protected String email;
+	protected long id;
+	protected Address address;
+	protected Set<PhoneNumber> phoneNumbers = new HashSet<PhoneNumber>();
+	protected Set<ContactGroup> contactGroups = new HashSet<ContactGroup>();
 	public int version;
 	
 	public Contact(){

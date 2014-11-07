@@ -1,68 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 
-	<bean id="DAOC" class="domain.DAOContact"/>
-	
-	<bean id="FIRSTCONTACT" class="domain.Contact" init-method="init" destroy-method="cleanup">
-		<property name="firstName" value="alexandre"/>
-		<property name="lastName" value="baufume"/>
-		<property name="email" value="ab@mail.com"/>
-		<property name="address"><ref bean="FIRSTADDRESS"/></property>
+	<bean id="DAOC" class="domain.DAOContact" />
+
+	<bean id="FIRSTCONTACT" class="domain.Contact" init-method="init"
+		destroy-method="cleanup">
+		<property name="firstName" value="alexandre" />
+		<property name="lastName" value="baufume" />
+		<property name="email" value="ab@mail.com" />
+		<property name="address">
+			<ref bean="FIRSTADDRESS" />
+		</property>
 		<property name="phoneNumbers">
 			<set>
-				<ref bean="FIRSTPHONE"/>
-				<ref bean="FIRSTPHONEBIS"/>
+				<ref bean="FIRSTPHONE" />
+				<ref bean="FIRSTPHONEBIS" />
 			</set>
 		</property>
 		<property name="contactGroups">
 			<set>
-				<ref bean="FIRSTGROUP"/>
-				<ref bean="FIRSTGROUPBIS"/>
+				<ref bean="FIRSTGROUP" />
+				<ref bean="FIRSTGROUPBIS" />
 			</set>
 		</property>
 	</bean>
-	
-	<bean id="FIRSTADDRESS" class="domain.Address" init-method="init" destroy-method="cleanup">
-		<property name="zip" value="75042"/>
-		<property name="street" value="42 rue des dames"/>
-		<property name="city" value="paris"/>
-		<property name="country" value="france"/>
-		
+
+	<bean id="FIRSTADDRESS" class="domain.Address" init-method="init"
+		destroy-method="cleanup">
+		<property name="zip" value="75042" />
+		<property name="street" value="42 rue des dames" />
+		<property name="city" value="paris" />
+		<property name="country" value="france" />
+
 	</bean>
-	
-	<bean id="FIRSTPHONE" class="domain.PhoneNumber" init-method="init" destroy-method="cleanup">
-		<property name="phoneKind" value="personnalPhone"/>
-		<property name="phoneNumber" value="6666666666"/>
-		<property name="contact"><ref bean="FIRSTCONTACT"/></property>
+
+	<bean id="FIRSTPHONE" class="domain.PhoneNumber" init-method="init"
+		destroy-method="cleanup">
+		<property name="phoneKind" value="personnalPhone" />
+		<property name="phoneNumber" value="6666666666" />
+		<property name="contact">
+			<ref bean="FIRSTCONTACT" />
+		</property>
 	</bean>
-	
-	<bean id="FIRSTPHONEBIS" class="domain.PhoneNumber" init-method="init" destroy-method="cleanup">
-		<property name="phoneKind" value="homePhone"/>
-		<property name="phoneNumber" value="9999999999"/>
-		<property name="contact"><ref bean="FIRSTCONTACT"/></property>
+
+	<bean id="FIRSTPHONEBIS" class="domain.PhoneNumber" init-method="init"
+		destroy-method="cleanup">
+		<property name="phoneKind" value="homePhone" />
+		<property name="phoneNumber" value="9999999999" />
+		<property name="contact">
+			<ref bean="FIRSTCONTACT" />
+		</property>
 	</bean>
-	
-	<bean id="FIRSTGROUP" class="domain.ContactGroup" init-method="init" destroy-method="cleanup">
-		<property name="groupName" value="family"/>
+
+	<bean id="FIRSTGROUP" class="domain.ContactGroup" init-method="init"
+		destroy-method="cleanup">
+		<property name="groupName" value="family" />
 		<property name="contacts">
 			<set>
-				<ref bean="FIRSTCONTACT"/>
+				<ref bean="FIRSTCONTACT" />
 			</set>
 		</property>
 	</bean>
-	
-	<bean id="FIRSTGROUPBIS" class="domain.ContactGroup" init-method="init" destroy-method="cleanup">
-		<property name="groupName" value="work"/>
+
+	<bean id="FIRSTGROUPBIS" class="domain.ContactGroup" init-method="init"
+		destroy-method="cleanup">
+		<property name="groupName" value="work" />
 		<property name="contacts">
 			<set>
-				<ref bean="FIRSTCONTACT"/>
+				<ref bean="FIRSTCONTACT" />
 			</set>
 		</property>
 	</bean>
+
+	<bean id="SECONDCONTACT" class="domain.Company" init-method="init"
+		destroy-method="cleanup">
+		<constructor-arg type="java.lang.String">
+			<value>kevin</value>
+		</constructor-arg>
+		<constructor-arg type="java.lang.String">
+			<value>toujourskevin</value>
+		</constructor-arg>
+		<constructor-arg type="java.lang.String">
+			<value>kevin@kevin.com</value>
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="SECONDADDRESS" />
+		</constructor-arg>
+		<constructor-arg type="int">
+			<value>42</value>
+		</constructor-arg>
+	</bean>
 	
+	<bean id="SECONDADDRESS" class="domain.Address" init-method="init"
+		destroy-method="cleanup">
+		<property name="zip" value="75009" />
+		<property name="street" value="42 42 42 42" />
+		<property name="city" value="la lune" />
+		<property name="country" value="nop" />
+
+	</bean>
+
 
 </beans>

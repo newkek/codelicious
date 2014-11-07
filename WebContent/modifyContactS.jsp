@@ -15,7 +15,13 @@
 					Contact c = (Contact)session.getAttribute("contact");
 				   	Address a = c.getAddress();
 				%>
-				<th><h2>Veuillez renseigner ici les nouvelles informations de ce contact</h2></th>
+				<th><h2><%	if(request.getAttribute("restart").equals("true")){ 
+								out.print("Erreur: Le contact a ete modifie, verifiez les modifications"); 
+							}else{ 
+								out.print("Veuillez renseigner ici les nouvelles informations de ce contact");
+							} %>
+					</h2>
+				</th>
 				 
 					<tr>
 					<td><i>First Name: <input type="text" name="firstName" size="25" value="<%=c.getFirstName()%>"></i></td>

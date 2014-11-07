@@ -18,6 +18,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import domain.Contact;
+import domain.Company;
 import domain.DAOContact;
 import domain.IDAOContact;
 
@@ -58,14 +59,16 @@ public class AddContactServlet extends HttpServlet {
 		String businessPhone=request.getParameter("businessPhone");
 		String homePhone=request.getParameter("homePhone");
 		String[] contactGroups = request.getParameterValues("ContactGroup");
+		String numSiret = request.getParameter("numSiret");
 		ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 
 		IDAOContact dao = (IDAOContact)context.getBean("DAOC");
-		
-		Contact contact = dao.addContact( prenom, nom, email, street, city, zip, country, personnalPhone, businessPhone, homePhone, contactGroups);
-		
-		System.out.println("création faite nom: "+contact.getLastName()+", prenom: "+contact.getFirstName());
-		
+		if(numSiret.isEmpty()){
+			Contact contact = dao.addContact( prenom, nom, email, street, city, zip, country, personnalPhone, businessPhone, homePhone, contactGroups);
+		}else{
+			Company company = dao.addCompany( prenom, nom, email, street, city, zip, country, personnalPhone, businessPhone, homePhone, contactGroups, numSiret);
+		}
+
 		RequestDispatcher rd = request.getRequestDispatcher("main.jsp");
 		request.setAttribute("createdResult", "1");
 		rd.forward(request, response);

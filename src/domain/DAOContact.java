@@ -11,6 +11,7 @@ import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.StaleObjectStateException;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 
@@ -107,6 +108,82 @@ public class DAOContact implements IDAOContact{
 		return contact;
 	}
 	
+	public Company addCompany(String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone, String[] contactGroups, String numSiret){
+
+		
+		Company contact = new Company();
+		contact.setFirstName(firstname);
+		contact.setLastName(lastname);
+		contact.setEmail(email);
+		contact.setNumSiret(Integer.parseInt(numSiret));
+		Address address = new Address();
+		address.setStreet(street);
+		address.setCity(city);
+		address.setZip(zip);
+		address.setCountry(country);
+		contact.setAddress(address);
+		Set<PhoneNumber> phoneNumbers = new HashSet<PhoneNumber>();
+		if(!personnalPhone.isEmpty()){
+			PhoneNumber phone = new PhoneNumber();
+			phone.setPhoneKind("personnalPhone");
+			phone.setPhoneNumber(personnalPhone);
+			phone.setContact(contact);
+			phoneNumbers.add(phone);
+		}
+		if(!businessPhone.isEmpty()){
+			PhoneNumber phone = new PhoneNumber();
+			phone.setPhoneKind("businessPhone");
+			phone.setPhoneNumber(businessPhone);
+			phone.setContact(contact);
+			phoneNumbers.add(phone);
+		}
+		if(!homePhone.isEmpty()){
+			PhoneNumber phone = new PhoneNumber();
+			phone.setPhoneKind("homePhone");
+			phone.setPhoneNumber(homePhone);
+			phone.setContact(contact);
+			phoneNumbers.add(phone);
+		}
+		contact.setPhoneNumbers(phoneNumbers);
+		
+		
+		
+
+
+		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		//d��marrer une transaction
+		session.beginTransaction();
+		//persister l���objet
+		/*Iterator<ContactGroup> iterator = tempcontactGroups.iterator();
+		while(iterator.hasNext()){
+			session.save(iterator.next());
+		}*/
+		
+		Set<ContactGroup> tempcontactGroups = new HashSet<ContactGroup>();
+		for(int i=0;i<contactGroups.length; i++){
+			ContactGroup group = (ContactGroup) session.createCriteria(ContactGroup.class)
+					.add(Restrictions.like("groupName", contactGroups[i]) )
+					.uniqueResult();
+			if(group == null){
+				group = new ContactGroup();
+				group.setGroupName(contactGroups[i]);
+			}
+			Set<Contact> temp = group.getContacts();
+			temp.add(contact);
+			group.setContacts(temp);
+			tempcontactGroups.add(group);
+		}
+		contact.setContactGroups(tempcontactGroups);
+		
+		session.save(contact);
+		//recharger l���objet �� partir de la session
+		contact=(Company) session.load(Company.class,contact.getId());
+		//committer la transaction
+		session.getTransaction().commit();
+
+		return contact;
+	}
+	
 	public Contact addContact(Contact contact){
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		//d��marrer une transaction
@@ -126,7 +203,7 @@ public class DAOContact implements IDAOContact{
 	}
 	
 	
-	public void modifyContact(String id, String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone, String[] contactGroups){
+	public boolean modifyContact(String id, String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone, String[] contactGroups){
 		int success;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.getTransaction().begin();
@@ -264,8 +341,9 @@ public class DAOContact implements IDAOContact{
 		//contact.setAddress(address);
 		session.saveOrUpdate(contact);
 		session.getTransaction().commit();
+		return true;
 	}
-	public void modifyContact(Contact contact, String id, String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone, String[] contactGroups){
+	public boolean modifyContact(Contact contact, String id, String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone, String[] contactGroups){
 		int success;
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.getTransaction().begin();
@@ -396,7 +474,13 @@ public class DAOContact implements IDAOContact{
 		//contact.setPhoneNumbers(phoneNumbers);
 		//contact.setAddress(address);
 		session.saveOrUpdate(contact);
-		session.getTransaction().commit();
+		try{
+			session.getTransaction().commit();
+		}catch(StaleObjectStateException e){
+			session.getTransaction().rollback();
+			return false;
+		}
+		return true;
 	}
 	/**
 	 * Suppresion d'un contact a partir de son identifiant

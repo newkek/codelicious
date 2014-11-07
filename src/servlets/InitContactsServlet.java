@@ -37,8 +37,9 @@ public class InitContactsServlet extends HttpServlet {
 		ApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 		IDAOContact dao = (IDAOContact)context.getBean("DAOC");
 		Contact contact = (Contact)context.getBean("FIRSTCONTACT");
-		
+		Contact contact2 = (Contact)context.getBean("SECONDCONTACT");
 		dao.addContact(contact);
+		dao.addContact(contact2);
 		
 		System.out.println("init servlet done");
 		response.sendRedirect("main.jsp");

@@ -56,6 +56,7 @@ public class ModifyContactServlet extends HttpServlet {
 			ServletContext sc = getServletContext();
 			sc.setAttribute("contact", c);
 			request.setAttribute("getContactResults", c);
+			request.setAttribute("restart", "false");
 			RequestDispatcher rd = request.getRequestDispatcher("modifyContactS.jsp");
 			rd.forward(request, response);
 		}
@@ -79,10 +80,21 @@ public class ModifyContactServlet extends HttpServlet {
 			String businessPhone=request.getParameter("businessPhone");
 			String homePhone=request.getParameter("homePhone");
 			String[] contactGroups = request.getParameterValues("ContactGroup");
-			dao.modifyContact(contact, id, prenom, nom, email, street, city, zip, country, personnalPhone, businessPhone, homePhone, contactGroups);
-			RequestDispatcher rd = request.getRequestDispatcher("modifiedContact.jsp");
-			request.setAttribute("modifiedResult", "1");
-			rd.forward(request, response);
+			if(dao.modifyContact(contact, id, prenom, nom, email, street, city, zip, country, personnalPhone, businessPhone, homePhone, contactGroups)){
+				RequestDispatcher rd = request.getRequestDispatcher("modifiedContact.jsp");
+				request.setAttribute("modifiedResult", "1");
+				rd.forward(request, response);
+			}else{
+				Contact c = dao.getContactById(Long.parseLong(id));
+				session.setAttribute("contact", c);
+				ServletContext sc = getServletContext();
+				sc.setAttribute("contact", c);
+				request.setAttribute("getContactResults", c);
+				request.setAttribute("restart", "true");
+				RequestDispatcher rd = request.getRequestDispatcher("modifyContactS.jsp");
+				rd.forward(request, response);
+			}
+			
 		}
 	}
 

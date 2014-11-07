@@ -47,6 +47,9 @@
 					<td><i>Travail:<input type="checkbox" name="ContactGroup" value="work"></i></td>
 				</tr>
 				<tr>
+					<td><i>Numero Siret si entreprise: <input type="text" name="numSiret" size="25"></i></td>
+				</tr>
+				<tr>
 					<td><input class="button" type="submit" value="Submit" /><input class="button" type="reset" value="Reset"></td>
 				</tr>
 			

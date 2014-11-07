@@ -7,6 +7,8 @@ public interface IDAOContact {
 	
 	public Contact 				addContact(String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone, String[] contactGroups);
 	
+	public Company				addCompany(String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone, String[] contactGroups, String numSiret);
+	
 	public int 					deleteContact(long id);
 	
 	public Contact 				getContact(long id);
@@ -23,9 +25,9 @@ public interface IDAOContact {
 	
 	public ArrayList<Contact> 	getContacts();
 	
-	public void 				modifyContact(String id, String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone, String[] contactGroups);
+	public boolean 				modifyContact(String id, String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone, String[] contactGroups);
 	
-	public void 				modifyContact(Contact c, String id, String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone, String[] contactGroups);
+	public boolean 				modifyContact(Contact c, String id, String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone, String[] contactGroups);
 
 	public void 				deleteAllContact();
 

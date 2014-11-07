@@ -9,6 +9,11 @@ public class PhoneNumber {
 	public PhoneNumber(){
 		
 	}
+	
+	public PhoneNumber(String phoneKind, String phoneNumber){
+		this.phoneKind = phoneKind;
+		this.phoneNumber = phoneNumber;
+	}
 
 	public long getId() {
 		return id;

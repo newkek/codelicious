@@ -38,6 +38,11 @@
 			<key column="ID_CONTACT"/>
 			<many-to-many class="ContactGroup" column="ID_CONTACTGROUP"/>
 		</set>
+		
+		<joined-subclass name="Company" extends="Person">
+                <key column="ID_CONTACT" />
+                <property name="numSiret" column="NUM_SIRET" />
+        </joined-subclass>
 
 	</class>
 </hibernate-mapping>
