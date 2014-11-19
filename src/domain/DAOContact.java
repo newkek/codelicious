@@ -1,6 +1,10 @@
 package domain;
 
 import java.sql.Connection;
+
+import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -17,7 +21,7 @@ import org.hibernate.criterion.Restrictions;
 
 import util.HibernateUtil;
 
-public class DAOContact implements IDAOContact{
+public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 	/**
 	 * Rajoute un contact dans la base de donnees.
@@ -33,6 +37,8 @@ public class DAOContact implements IDAOContact{
 	 * @param personnalPhone 
 	 * @return renvoit le nouveau contact
 	 */
+	
+		
 	public Contact addContact(String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone, String[] contactGroups){
 
 		
@@ -74,16 +80,17 @@ public class DAOContact implements IDAOContact{
 		
 
 
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		/*Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		//d��marrer une transaction
 		session.beginTransaction();
+		*/
 		//persister l���objet
 		/*Iterator<ContactGroup> iterator = tempcontactGroups.iterator();
 		while(iterator.hasNext()){
 			session.save(iterator.next());
 		}*/
 		
-		Set<ContactGroup> tempcontactGroups = new HashSet<ContactGroup>();
+		/*Set<ContactGroup> tempcontactGroups = new HashSet<ContactGroup>();
 		for(int i=0;i<contactGroups.length; i++){
 			ContactGroup group = (ContactGroup) session.createCriteria(ContactGroup.class)
 					.add(Restrictions.like("groupName", contactGroups[i]) )
@@ -98,12 +105,13 @@ public class DAOContact implements IDAOContact{
 			tempcontactGroups.add(group);
 		}
 		contact.setContactGroups(tempcontactGroups);
-		
-		session.save(contact);
+		session.close();
+		*/
+		this.getHibernateTemplate().save(contact);
 		//recharger l���objet �� partir de la session
-		contact=(Contact) session.load(Contact.class,contact.getId());
+		//contact=(Contact) session.load(Contact.class,contact.getId());
 		//committer la transaction
-		session.getTransaction().commit();
+		//session.getTransaction().commit();
 
 		return contact;
 	}
@@ -175,7 +183,7 @@ public class DAOContact implements IDAOContact{
 		}
 		contact.setContactGroups(tempcontactGroups);
 		
-		session.save(contact);
+		this.getHibernateTemplate().save(contact);
 		//recharger l���objet �� partir de la session
 		contact=(Company) session.load(Company.class,contact.getId());
 		//committer la transaction
