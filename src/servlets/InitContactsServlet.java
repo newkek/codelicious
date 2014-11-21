@@ -11,7 +11,6 @@ import org.hibernate.Session;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import util.HibernateUtil;
 import domain.Contact;
 import domain.IDAOContact;
 

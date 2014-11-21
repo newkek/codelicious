@@ -2,7 +2,7 @@ package domain;
 
 import java.sql.Connection;
 
-import org.springframework.orm.hibernate4.support.HibernateDaoSupport;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
@@ -11,15 +11,16 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.StaleObjectStateException;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 
-import util.HibernateUtil;
 
 public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
@@ -157,16 +158,19 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		
 		
 
-
+		/*
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		//d��marrer une transaction
 		session.beginTransaction();
+		*/
+		
+		
 		//persister l���objet
 		/*Iterator<ContactGroup> iterator = tempcontactGroups.iterator();
 		while(iterator.hasNext()){
 			session.save(iterator.next());
 		}*/
-		
+		/*
 		Set<ContactGroup> tempcontactGroups = new HashSet<ContactGroup>();
 		for(int i=0;i<contactGroups.length; i++){
 			ContactGroup group = (ContactGroup) session.createCriteria(ContactGroup.class)
@@ -182,37 +186,37 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			tempcontactGroups.add(group);
 		}
 		contact.setContactGroups(tempcontactGroups);
+		*/
 		
 		this.getHibernateTemplate().save(contact);
-		//recharger l���objet �� partir de la session
-		contact=(Company) session.load(Company.class,contact.getId());
-		//committer la transaction
-		session.getTransaction().commit();
 
 		return contact;
 	}
 	
 	public Contact addContact(Contact contact){
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		/*Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		//d��marrer une transaction
 		session.beginTransaction();
+		*/
 		//persister l���objet
 		/*Iterator<ContactGroup> iterator = contact.getContactGroups().iterator();
 		while(iterator.hasNext()){
 			session.save(iterator.next());
 		}*/
+		/*
 		session.save(contact);
 		//recharger l���objet �� partir de la session
 		contact=(Contact) session.load(Contact.class,contact.getId());
 		//committer la transaction
-		session.getTransaction().commit();
+		session.getTransaction().commit();*/
+		this.getHibernateTemplate().save(contact);
 
 		return contact;
 	}
 	
 	
 	public boolean modifyContact(String id, String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone, String[] contactGroups){
-		int success;
+		int success;/*
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.getTransaction().begin();
 		// Query q = session.createQuery("UPDATE Contact set FIRSTNAME = '"+firstname+"' and LASTNAME = '"+lastname+"' and EMAIL = '"+email+"' and STREET = '"+street+"' and EMAIL = '"+email+"' and ");
@@ -348,13 +352,15 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		//contact.setPhoneNumbers(phoneNumbers);
 		//contact.setAddress(address);
 		session.saveOrUpdate(contact);
-		session.getTransaction().commit();
+		session.getTransaction().commit();*/
 		return true;
 	}
+	
+	
 	public boolean modifyContact(Contact contact, String id, String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone, String[] contactGroups){
 		int success;
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.getTransaction().begin();
+		//Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		/*session.getTransaction().begin();
 		System.out.println("The name"+contact.getLastName());
 		contact.setFirstName(firstname);
 		contact.setLastName(lastname);
@@ -461,7 +467,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 				iteratorGroup.remove();
 			}
 		}
-		
+		/*
 		Iterator<String> iteratorNotCreated = notCreated.iterator();
 		while(iteratorNotCreated.hasNext()){
 			String name = iteratorNotCreated.next();
@@ -487,7 +493,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		}catch(StaleObjectStateException e){
 			session.getTransaction().rollback();
 			return false;
-		}
+		}*/
 		return true;
 	}
 	/**
@@ -498,6 +504,8 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	public int deleteContact(long id){
 		int success=0;
 		
+		Contact contact = (Contact)this.getHibernateTemplate().get(Contact.class,  id);
+		/*
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		Contact contact = (Contact) session.get(Contact.class, id);
@@ -506,7 +514,8 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		//success=q.executeUpdate();
 		session.delete(contact);
 		session.getTransaction().commit();
-
+		*/
+		this.getHibernateTemplate().delete(contact);
 		return success;
 	}
 
@@ -582,17 +591,16 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	 */
 	public ArrayList<Contact> getContactByFirstName(String firstname){
 		
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-		session.beginTransaction();
-		String hq1 = "FROM Contact C WHERE C.firstName=\'"+firstname+"\'";
-		ArrayList<Contact> contacts = (ArrayList<Contact>) session.createQuery(hq1).list();
+		
+		//String hq1 = "FROM Contact C WHERE C.firstName=\'"+firstname+"\'";
+		ArrayList<Contact> contacts = (ArrayList<Contact>) this.getHibernateTemplate().find("FROM Contact C WHERE C.firstName=?",firstname);
 
-		session.getTransaction().commit();
 		return contacts;
 	}
 	
 	public Contact getContactById(long id){
-		
+		Contact c = (Contact)this.getHibernateTemplate().get(Contact.class, id);
+		/*
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		//Contact c = (Contact) session.load(Contact.class, id);
@@ -600,6 +608,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		Contact c = (Contact) session.createQuery(hq1).list().get(0);
 		session.getTransaction().commit();
 		System.out.println(c.getPhoneNumbers().size());
+		*/
 		return c;
 	}
 
@@ -610,14 +619,19 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	 */
 	public ArrayList<Contact> getContactByLastName(String lastname){
 
-		
+		/*
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
+		*/
 		
-		ArrayList<Contact> contacts = (ArrayList<Contact>) session.createCriteria(Contact.class)
-				.add(Restrictions.like("lastName", lastname)).list();
+		/*ArrayList<Contact> contacts = (ArrayList<Contact>) session.createCriteria(Contact.class)
+				.add(Restrictions.like("lastName", lastname)).list();*/
 		
-		session.getTransaction().commit();
+		ArrayList<Contact> contacts = (ArrayList<Contact>) this.getHibernateTemplate().findByCriteria(
+		        DetachedCriteria.forClass(Contact.class)
+		        .add(Restrictions.eq("lastname", lastname)));
+		
+		//session.getTransaction().commit();
 		return contacts;
 	}
 
@@ -627,39 +641,52 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	 * @return
 	 */
 	public ArrayList<Contact> getContactByEmail(String email){
-		
+		/*
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		
 		ArrayList<Contact> contacts = (ArrayList<Contact>) session.createCriteria(Contact.class)
 				.add(Restrictions.like("email", email)).list();
+		*/
+		ArrayList<Contact> contacts = (ArrayList<Contact>) this.getHibernateTemplate().findByCriteria(
+		        DetachedCriteria.forClass(Contact.class)
+		        .add(Restrictions.like("email", email+"%")));
 		
-		session.getTransaction().commit();
+		//session.getTransaction().commit();
 		return contacts;
 	}
 
 	public ArrayList<Contact> getContacts() {
 		// TODO Auto-generated method stub
-		
+		/*
 		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		String hq1 = "FROM Contact C";
 		ArrayList<Contact> contacts = (ArrayList<Contact>) session.createQuery(hq1).list();
-		session.getTransaction().commit();
+		session.getTransaction().commit();*/
+		
+		ArrayList<Contact> contacts = (ArrayList<Contact>) this.getHibernateTemplate().find("FROM Contact C");
+		
 		return contacts;
 	}
 
 	public void deleteAllContact() {
 		// TODO Auto-generated method stub
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+		List<Contact> contacts = (ArrayList<Contact>) this.getHibernateTemplate().find("FROM Contact C");
+		this.getHibernateTemplate().deleteAll(contacts);
+
+		
+		/*Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 		session.beginTransaction();
 		Query q = session.createQuery("DELETE FROM Contact");
 		q.executeUpdate();
-		session.getTransaction().commit();
+		session.getTransaction().commit();*/
 	}
 	
 	public void addManyContacts(){
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		
+		Session session = this.getHibernateTemplate().getSessionFactory().getCurrentSession();
 		Transaction tx = session.beginTransaction();
 		for(int i=0;i<100000; i++){
 			Contact contact = new Contact();

@@ -3,6 +3,7 @@
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xmlns:aop="http://www.springframework.org/schema/aop"
 xmlns:tx="http://www.springframework.org/schema/tx"
+xmlns:util="http://www.springframework.org/schema/util"
 xsi:schemaLocation="
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
@@ -122,13 +123,18 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
 	</bean>
 	
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="mySessionFactory"/> 
+	</bean> 
+	
+	
 	<bean id="myDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"/> 
 		<property name="url" value="jdbc:mysql://localhost/codelicious"/> 
 		<property name="username" value="root"/>
     </bean>
 
-	<bean id="mySessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+	<bean id="mySessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
         <property name="dataSource" ref="myDataSource"/>
         <property name="mappingResources">
             <list>
@@ -139,22 +145,69 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
             </list>
         </property>
         <property name="hibernateProperties">
-            <value>
-                hibernate.dialect=org.hibernate.dialect.MySQLDialect
-            </value>
+        	<props>
+	        	<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<!-- <prop key="hibernate.current_session_context_class">thread</prop>  -->
+				<prop key="hibernate.jdbc.batch_size">20</prop>
+        		<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>				
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.SingletonEhCacheRegionFactory</prop>
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.cache.use_query_cache">true</prop>
+				<prop key="hibernate.generate_statistics">true</prop>
+        	</props>
         </property>
     </bean>
     
-    <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-		<property name="sessionFactory" ref="mySessionFactory"/> 
-	</bean>
-
+    <!-- Hibernate Template -->
+    <bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+        <property name="sessionFactory" ref="mySessionFactory"></property>
+        <property name="cacheQueries" value="true" />
+        <property name="queryCacheRegion" value="REF_DATA"></property>
+    </bean>
 
 	<bean id="DAOC" class="domain.DAOContact">
 		<property name="sessionFactory" ref="mySessionFactory"/> 
 	</bean>
 	
+	<bean id="jmxExporter" class="org.springframework.jmx.export.MBeanExporter" lazy-init="false">
+		
+        <property name="beans">
+			<map>
+				<entry key="Hibernate:application=Statistics" value-ref="hibernateStatisticsBean" />
+			</map>
+		</property>
+	</bean>
+
+	<bean id="hibernateStatisticsBean" class="org.hibernate.jmx.StatisticsService">
+		<property name="statisticsEnabled" value="true" />
+		<property name="sessionFactory" ref="mySessionFactory"/>
+	</bean>
 	
+	<!-- JMX for ehcache -->
+    <bean id="managementService"
+            class="net.sf.ehcache.management.ManagementService"
+            init-method="init"
+            destroy-method="dispose">
+ 
+            <constructor-arg ref="cacheManager"/>
+            <constructor-arg ref="mbeanServer"/>
+            <constructor-arg index="2" value="true"/>
+            <constructor-arg index="3" value="true"/>
+            <constructor-arg index="4" value="true"/>
+            <constructor-arg index="5" value="true"/>
+ 
+    </bean>
+ 
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+      <property name="configLocation" value="classpath:ehcache.xml"/>
+      <property name="shared" value="true"/>
+    </bean>
+ 
+    <bean id="mbeanServer" class="org.springframework.jmx.support.MBeanServerFactoryBean">
+      <property name="locateExistingServerIfPossible" value="true"/>
+	</bean>
 	
 
 </beans>
