@@ -460,7 +460,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		
 		Set<ContactGroup> listContactGroups = contact.getContactGroups();
 		
-		boolean formGroupIsInContact=false;
+		boolean formGroupIsInContactsGroup=false;
 		
 		Set<String> notCreated = new HashSet<String>();
 		
@@ -478,16 +478,16 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 				for(int i=0;i<contactGroups.length; i++){
 					
 					if(curContactGroup.getGroupName().equals(contactGroups[i])){
-						//
+						
 						notCreated.remove(contactGroups[i]);//group not to be added
 						
-						formGroupIsInContact=true;
+						formGroupIsInContactsGroup=true;
 						
 						break;
 					}
 				}
 				
-				if(!formGroupIsInContact){
+				if(!formGroupIsInContactsGroup){
 					//group has been removed from the contact 
 					curContactGroup.getContacts().remove(contact);
 				
