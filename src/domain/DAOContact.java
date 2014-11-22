@@ -454,30 +454,47 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			}
 		}
 		
-		Set<ContactGroup> tempContactGroups = contact.getContactGroups();
-		//Iterator<ContactGroup> iteratorGroup = tempContactGroups.iterator();
-		boolean test=false;
+		
+
+		
+		
+		Set<ContactGroup> listContactGroups = contact.getContactGroups();
+		
+		boolean formGroupIsInContact=false;
+		
 		Set<String> notCreated = new HashSet<String>();
 		
 		if(contactGroups != null){
 			
 			Collections.addAll(notCreated, contactGroups);
-			Iterator<ContactGroup> iteratorGroup = tempContactGroups.iterator();
-			while(iteratorGroup.hasNext()){
-				ContactGroup temp = iteratorGroup.next();
+			
+			Iterator<ContactGroup> theContactIteratorGroup = listContactGroups.iterator();
+			
+			
+			while(theContactIteratorGroup.hasNext()){
+				
+				ContactGroup curContactGroup = theContactIteratorGroup.next();
 				
 				for(int i=0;i<contactGroups.length; i++){
 					
-					if(temp.getGroupName().equals(contactGroups[i])){
-						notCreated.remove(contactGroups[i]);
-						test=true;
+					if(curContactGroup.getGroupName().equals(contactGroups[i])){
+						//
+						notCreated.remove(contactGroups[i]);//group not to be added
+						
+						formGroupIsInContact=true;
+						
 						break;
 					}
 				}
-				if(!test){
-					temp.getContacts().remove(contact);
-					iteratorGroup.remove();
+				
+				if(!formGroupIsInContact){
+					//group has been removed from the contact 
+					curContactGroup.getContacts().remove(contact);
+				
+					theContactIteratorGroup.remove();
+					
 				}
+			
 			}
 			
 			Iterator<String> iteratorNotCreated = notCreated.iterator();
@@ -500,12 +517,12 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 				Set<Contact> temp = group.getContacts();
 				temp.add(contact);
 				group.setContacts(temp);
-				tempContactGroups.add(group);
+				listContactGroups.add(group);
 				System.out.println("nom groupe: "+group.getGroupName());
 			}
 		}
 		else{
-			Iterator<ContactGroup> iteratorGroup = tempContactGroups.iterator();
+			Iterator<ContactGroup> iteratorGroup = listContactGroups.iterator();
 			while(iteratorGroup.hasNext()){
 				ContactGroup temp = iteratorGroup.next();
 				
@@ -517,17 +534,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		
 		this.getHibernateTemplate().saveOrUpdate(contact);
 		
-		//contact.setPhoneNumbers(phoneNumbers);
-		//contact.setAddress(address);
-		/*
-		session.saveOrUpdate(contact);
-		try{
-			session.getTransaction().commit();
-		}catch(StaleObjectStateException e){
-			
-			session.getTransaction().rollback();
-			return false;
-		}*/
+		
 		return true;
 	}
 	/**
