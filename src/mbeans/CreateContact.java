@@ -1,4 +1,4 @@
-package src.mbeans;
+package mbeans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.Set;
 
 import javax.faces.bean.ManagedBean;
 
-import src.util.AppContextSingleton;
+import utils.AppContextSingleton;
 import domain.IDAOContact;
 
 @ManagedBean(name = "addContact")
@@ -29,7 +29,7 @@ public class CreateContact implements Serializable {
 	private String street;
 	private String city;
 	private String country;
-	private String personalPhone;
+	private String personnalPhone;
 	private String businessPhone;
 	private String homePhone;
 	private List<String> contactGroups = new ArrayList<String>();
@@ -106,12 +106,12 @@ public class CreateContact implements Serializable {
 		this.country = country;
 	}
 
-	public String getPersonalPhone() {
-		return personalPhone;
+	public String getPersonnalPhone() {
+		return personnalPhone;
 	}
 
-	public void setPersonalPhone(String personalPhone) {
-		this.personalPhone = personalPhone;
+	public void setPersonnalPhone(String personnalPhone) {
+		this.personnalPhone = personnalPhone;
 	}
 
 	public String getBusinessPhone() {
@@ -144,11 +144,11 @@ public class CreateContact implements Serializable {
 				.getBean("DAOC");
 		if (numSiret.isEmpty()) {
 			dao.addContact(firstName, lastName, email, street, city, zip,
-					country, personalPhone, businessPhone, homePhone,
+					country, personnalPhone, businessPhone, homePhone,
 					contactGroups);
 		} else {
 			dao.addCompany(firstName, lastName, email, street, city, zip,
-					country, personalPhone, businessPhone, homePhone,
+					country, personnalPhone, businessPhone, homePhone,
 					contactGroups, numSiret);
 		}
 

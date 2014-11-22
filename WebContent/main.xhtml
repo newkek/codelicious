@@ -1,34 +1,29 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core">
 
-<head>
+<h:head>
 	<title>Menu principal</title>
-</head>
+</h:head>
 <body>
-	<h:commandButton value="Ajouter un Contact" action="addContact"/>
-	<br />
-	<h:commandButton value="Supprimer un Contact" action="removeContact"/>
-	<br />
-	<h:commandButton value="Modifier un Contact" action="modifyContact"/>
-	<br />
-	<h:commandButton value="Rechercher un Contact" action="searchContact"/>
-	<br />
-	<h:commandButton value="Afficher tous les contacts" action="displayAllContacts"/>
-	<br />
-	<h:commandButton value="Afficher tous les groupes" action="displayAllGroups"/>
-	<br />
+	<h:form>
+		<h:commandButton value="Ajouter un Contact" action="addContact" />
+		<h:commandButton value="Supprimer un Contact" action="removeContact" />
+		<h:commandButton value="Modifier un Contact" action="modifyContact" />
+		<h:commandButton value="Rechercher un Contact" action="searchContact" />
+		<h:commandButton value="Afficher tous les contacts"
+			action="displayContacts" />
+		<h:commandButton value="Afficher tous les groupes"
+			action="displayGroups" />
 
-	<h1>Lien de développement</h1>
-	<br />
-	<h:commandButton value="Initialisation" action="init"/>
-	<br />
-	<h:commandButton value="Tests de batch processing" action="batch"/>
-	<br />
-	<h:commandButton value="Supprimer tous les Contacts" action="removeAllContacts"/>
-	<br />
+		<h1>Lien de développement</h1>
+		<h:commandButton value="Initialisation" action="#{list.init}" />
+		<h:commandButton value="Tests de batch processing" action="batch" />
+		<h:commandButton value="Supprimer tous les Contacts"
+			action="removeAllContacts" />
+	</h:form>
 </body>
 
 </html>

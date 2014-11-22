@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head />
+<body>
+
+	<h:form>
+		<h:commandButton value="Ajouter un Contact" action="addContact" />
+		<h:commandButton value="Supprimer un Contact" action="removeContact" />
+		<h:commandButton value="Modifier un Contact" action="modifyContact" />
+		<h:commandButton value="Rechercher un Contact" action="searchContact" />
+		<h:commandButton value="Afficher tous les contacts"
+			action="displayAllContacts" />
+		<h:commandButton value="Afficher tous les groupes"
+			action="displayAllGroups" />
+
+		<h1>Lien de développement</h1>
+		<h:commandButton value="Initialisation" action="#{list.init}" />
+		<h:commandButton value="Tests de batch processing" action="batch" />
+		<h:commandButton value="Supprimer tous les Contacts"
+			action="removeAllContacts" />
+	</h:form>
+
+	<h:dataTable id="table1" value="#{list.contacts}" var="contact"
+		border="1">
+		<f:facet name="header">
+			<h:outputText value="Liste de Contact" />
+		</f:facet>
+		<h:column>
+			<f:facet name="header">
+				<h:outputText value="Id" />
+			</f:facet>
+			<h:outputText value="#{contact.id}" />
+		</h:column>
+		<h:column>
+			<f:facet name="header">
+				<h:outputText value="Prénom" />
+			</f:facet>
+			<h:outputText value="#{contact.firstName}" />
+		</h:column>
+		<h:column>
+			<f:facet name="header">
+				<h:outputText value="Nom" />
+			</f:facet>
+			<h:outputText value="#{contact.lastName}" />
+		</h:column>
+		<h:column>
+			<f:facet name="header">
+				<h:outputText value="Email" />
+			</f:facet>
+			<h:outputText value="#{contact.email}" />
+		</h:column>
+	</h:dataTable>
+</body>
+</html>
