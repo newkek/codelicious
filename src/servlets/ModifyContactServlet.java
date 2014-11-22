@@ -83,6 +83,7 @@ public class ModifyContactServlet extends HttpServlet {
 			if(dao.modifyContact(contact, id, prenom, nom, email, street, city, zip, country, personnalPhone, businessPhone, homePhone, contactGroups)){
 				RequestDispatcher rd = request.getRequestDispatcher("modifiedContact.jsp");
 				request.setAttribute("modifiedResult", "1");
+				dao.getGroups();
 				rd.forward(request, response);
 			}else{
 				Contact c = dao.getContactById(Long.parseLong(id));
@@ -94,6 +95,7 @@ public class ModifyContactServlet extends HttpServlet {
 				RequestDispatcher rd = request.getRequestDispatcher("modifyContactS.jsp");
 				rd.forward(request, response);
 			}
+
 			
 		}
 	}

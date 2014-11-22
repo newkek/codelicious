@@ -8,17 +8,7 @@
 </head>
 <body>
 	<form method="post" 
-	action="SearchContactServlet"<% /*
-		String type = request.getParameter("type");
-		if(type==null){
-			out.print("SearchContactServlet");
-		}else{
-			if(type.equals("modify"))
-				out.print("ModifyContactServlet");
-			if(type.equals("remove"))
-				out.print("RemoveContactServlet");
-		}*/ %>
-	">
+	action="SearchContactServlet">
 	<input type="hidden" name="type" value="<%= request.getParameter("type") %>"/>
 		<table>
 			<tr>

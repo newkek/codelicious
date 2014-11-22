@@ -26,5 +26,15 @@
 <br/>
 <a href="DeleteContactsServlet">Supprimer tous les Contacts</a>
 <br/>
+
+<%
+	if(request.getAttribute("response")!=null){
+	 	out.println("<br/>"+request.getAttribute("response"));
+	 	request.setAttribute("response", null);
+	}
+
+	
+%>
+
 </body>
 </html>

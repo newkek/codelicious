@@ -2,11 +2,13 @@ package servlets;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -37,11 +39,21 @@ public class InitContactsServlet extends HttpServlet {
 		IDAOContact dao = (IDAOContact)context.getBean("DAOC");
 		Contact contact = (Contact)context.getBean("FIRSTCONTACT");
 		Contact contact2 = (Contact)context.getBean("SECONDCONTACT");
-		dao.addContact(contact);
-		dao.addContact(contact2);
-		
-		System.out.println("init servlet done");
-		response.sendRedirect("main.jsp");
+		try{
+			dao.addContact(contact);
+			dao.addContact(contact2);
+			System.out.println("Init servlet done");
+			request.setAttribute("response", "Initialized");
+		}
+		catch(Exception e){
+			System.out.println("Contacts already initialized");
+			request.setAttribute("response", "Already initialized");
+		}
+
+		RequestDispatcher rd = request.getRequestDispatcher("main.jsp");
+		rd.forward(request, response);
+
+		//response.sendRedirect("main.jsp");
 		
 	}
 

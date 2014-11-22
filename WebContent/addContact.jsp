@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" %>
+    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -41,6 +42,7 @@
 				<tr>
 					<td><i>Home phone: <input type="text" name="homePhone" size="25"></i></td>
 				</tr>
+				
 				<tr>
 					<td><i>Amis:<input type="checkbox" name="ContactGroup" value="friend"></i></td>
 					<td><i>Famille:<input type="checkbox" name="ContactGroup" value="family"></i></td>

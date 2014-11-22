@@ -57,6 +57,19 @@ public class SearchContactServlet extends HttpServlet {
 		String field = new String();
 		ArrayList<Contact> results = new ArrayList<Contact>();
 		
+		if (prenom.isEmpty() && nom.isEmpty() && email.isEmpty()){
+			//error, the client filled multiple fields
+			System.out.println("error fields null");
+			response.sendRedirect("searchContact.jsp");
+		}else{
+			results = dao.getContact(prenom, nom, email);
+			request.setAttribute("searchResults", results);
+
+			RequestDispatcher rd = request.getRequestDispatcher("searchResult.jsp");
+			rd.forward(request, response);
+		}
+		
+		/*
 		if (!prenom.isEmpty()){
 			nbfields += 1;
 			choosen = "FirstName";
@@ -115,6 +128,7 @@ public class SearchContactServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+		*/
 	}
 }
 
