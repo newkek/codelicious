@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<head>
+<title>Créer un nouveau contact</title>
+</head>
+<body>
+	<h:form>
+		<table>
+			<tr>
+				<th>
+					<h2>Veuillez renseigner ici les informations de votre nouveau
+						contact</h2>
+				</th>
+			<tr>
+				<td><i>Prénom: <h:inputText value="#{addContact.firstName}"
+							size="25"></i></td>
+			</tr>
+			<tr>
+				<td><i>Nom: <h:inputText value="#{addContact.lastName}"
+							size="25"></i></td>
+			</tr>
+			<tr>
+				<td><i>email: <h:inputText value="#{addContact.email}"
+							size="25"></i></td>
+			</tr>
+			<tr>
+				<td><i>N° et Rue: <h:inputText value="#{addContact.street}"
+							size="25"></i></td>
+			</tr>
+			<tr>
+				<td><i>Ville: <h:inputText value="#{addContact.city}"
+							size="25"></i></td>
+			</tr>
+			<tr>
+				<td><i>Code postal: <h:inputText value="#{addContact.zip}"
+							size="25"></i></td>
+			</tr>
+			<tr>
+				<td><i>Pays: <h:inputText value="#{addContact.country}"
+							size="25"></i></td>
+			</tr>
+			<tr>
+				<td><i>Téléphone mobile: <h:inputText
+							value="#{addContact.personnalPhone}" size="25"></i></td>
+			</tr>
+			<tr>
+				<td><i>Téléphone professionnel: <h:inputText
+							value="#{addContact.businessPhone}" size="25"></i></td>
+			</tr>
+			<tr>
+				<td><i>Téléphone personnel: <h:inputText
+							value="#{addContact.homePhone}" size="25"></i></td>
+			</tr>
+			<tr>
+				<h:selectManyCheckbox value="#{addContact.contactGroups}">
+					<f:selectItems value="#{list.groups}" />
+				</h:selectManyCheckbox>
+			</tr>
+			<tr>
+				<td><i>Numero Siret si entreprise: <h:inputText
+							value="#{addContact.numSiret}" size="25"></i></td>
+			</tr>
+			<tr>
+				<td><h:commandButton value="Valider" action="#{addContact.create}" /> 
+					<h:commandButton value="Annuler" action="main" /></td>
+			</tr>
+
+		</table>
+		</form>
+</body>
+</html>

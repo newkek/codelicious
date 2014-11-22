@@ -1,6 +1,8 @@
 package domain;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 
 public interface IDAOContact{
@@ -9,6 +11,10 @@ public interface IDAOContact{
 	public Contact 				addContact(String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone, String[] contactGroups);
 	
 	public Company				addCompany(String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone, String[] contactGroups, String numSiret);
+
+	public Contact 				addContact(String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone, List<String> contactGroups);
+	
+	public Company				addCompany(String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone, List<String> contactGroups, String numSiret);
 	
 	public int 					deleteContact(long id);
 	
@@ -35,4 +41,5 @@ public interface IDAOContact{
 	public Contact 				addContact(Contact contact);
 
 	public void 				addManyContacts();
+
 }

@@ -742,4 +742,21 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		tx.commit();
 	}
 
+	public Contact addContact(String firstname, String lastname, String email,
+			String street, String city, String zip, String country,
+			String personnalPhone, String businessPhone, String homePhone,
+			List<String> contactGroups) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Company addCompany(String firstname, String lastname, String email,
+			String street, String city, String zip, String country,
+			String personnalPhone, String businessPhone, String homePhone,
+			List<String> contactGroups, String numSiret) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 }
