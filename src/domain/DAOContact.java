@@ -2,6 +2,7 @@ package domain;
 
 import java.sql.Connection;
 
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -542,6 +543,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	 * @param id
 	 * @return vrai si la suppression a bien ete effectuee
 	 */
+	
 	public int deleteContact(long id){
 		int success=0;
 		
@@ -560,11 +562,15 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		return success;
 	}
 
+
 	/**
 	 * Recuperation d'un contact a partir de son identifiant
 	 * @param id
 	 * @return
 	 */
+
+
+
 	public ArrayList<Contact> getContact(String firstname, String lastname, String email){
 		
 		DetachedCriteria critere = DetachedCriteria.forClass(Contact.class);
@@ -625,12 +631,11 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	 * @return
 	 */
 	public ArrayList<Contact> getContactByFirstName(String firstname){
-		
-		
 		//String hq1 = "FROM Contact C WHERE C.firstName=\'"+firstname+"\'";
+
 		ArrayList<Contact> contacts = (ArrayList<Contact>) this.getHibernateTemplate().findByCriteria(
-						        DetachedCriteria.forClass(Contact.class)
-						        .add(Restrictions.eq("firstName", firstname)));
+		        DetachedCriteria.forClass(Contact.class)
+		        .add(Restrictions.eq("firstName", firstname)));
 
 		return contacts;
 	}
@@ -666,7 +671,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		
 		ArrayList<Contact> contacts = (ArrayList<Contact>) this.getHibernateTemplate().findByCriteria(
 		        DetachedCriteria.forClass(Contact.class)
-		        .add(Restrictions.eq("lastname", lastname)));
+		        .add(Restrictions.eq("lastName", lastname)));
 		
 		//session.getTransaction().commit();
 		return contacts;
@@ -789,5 +794,22 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		}
 		
 	}
+
+	public Contact addContact(String firstname, String lastname, String email,
+			String street, String city, String zip, String country,
+			String personnalPhone, String businessPhone, String homePhone,
+			List<String> contactGroups) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Company addCompany(String firstname, String lastname, String email,
+			String street, String city, String zip, String country,
+			String personnalPhone, String businessPhone, String homePhone,
+			List<String> contactGroups, String numSiret) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

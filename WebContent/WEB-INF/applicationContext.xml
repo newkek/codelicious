@@ -25,6 +25,8 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
             <tx:method name="del*" propagation="REQUIRED" read-only="false" />
     </tx:attributes>
 	</tx:advice>
+	
+	<bean class="utils.AppContextSingleton"/>
 
 	<bean id="FIRSTCONTACT" class="domain.Contact" init-method="init"
 		destroy-method="cleanup">
