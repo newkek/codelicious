@@ -2,6 +2,7 @@ package domain;
 
 import java.sql.Connection;
 
+import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -519,36 +520,26 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		return success;
 	}
 
-	/**
-	 * Recuperation d'un contact a partir de son identifiant
-	 * @param id
-	 * @return
-	 */
-	public Contact getContact(long id){
-		ResultSet rec = null;
-		Contact contact = new Contact();
-		Connection con = null;
-//		try{
-//			Class.forName(Messages.getString("driver")); 
-//			con = DriverManager.getConnection(Messages.getString("database"), Messages.getString("username"), Messages.getString("password")); 
-//			Statement stmt = con.createStatement();
-//			rec = stmt.executeQuery("SELECT * FROM contacts WHERE id = "+id); 
-//
-//			while (rec.next()) {
-//				contact.setId(Long.parseLong(rec.getString("id"))); 
-//				contact.setFirstName(rec.getString("firstname")); 
-//				contact.setLastName(rec.getString("lastname")); 
-//				contact.setEmail(rec.getString("email")); 
-//			}
-//
-//			stmt.close();
-//			rec.close();
-//			con.close();
-//
-//		} catch( Exception e ){
-//			e.printStackTrace();
-//		}
-		return contact;
+
+	public ArrayList<Contact> getContact(String firstname, String lastname, String email){
+		
+		DetachedCriteria critere = DetachedCriteria.forClass(Contact.class);
+		
+		if (!firstname.isEmpty()){
+			critere.add(Restrictions.eq("firstName", firstname));
+		}
+		if (!lastname.isEmpty()){
+			critere.add(Restrictions.eq("lastName", lastname));
+		}
+		if (!email.isEmpty()){
+			critere.add(Restrictions.eq("email", email));
+		}
+		
+		ArrayList<Contact> contacts = (ArrayList<Contact>) this.getHibernateTemplate().findByCriteria(critere);
+		
+		System.out.println(contacts.size());
+		
+		return contacts;
 	}
 
 	/**
@@ -590,11 +581,19 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	 * @return
 	 */
 	public ArrayList<Contact> getContactByFirstName(String firstname){
-		
-		
 		//String hq1 = "FROM Contact C WHERE C.firstName=\'"+firstname+"\'";
-		ArrayList<Contact> contacts = (ArrayList<Contact>) this.getHibernateTemplate().find("FROM Contact C WHERE C.firstName=?",firstname);
-
+		
+		//ArrayList<Contact> contacts = (ArrayList<Contact>) this.getHibernateTemplate().findByExample(contact);
+		//ArrayList<Contact> contacts = (ArrayList<Contact>) this.getHibernateTemplate().findByExample(contact);
+		/*
+		HibernateTemplate hibT = this.getHibernateTemplate();
+		String query = "FROM Contact C WHERE C.firstName = "+firstname;
+		contacts = (ArrayList<Contact>) hibT.find(query);
+		*/
+		//contacts = (ArrayList<Contact>) this.getHibernateTemplate().find("FROM Contact C WHERE C.firstName = "+firstname);
+		ArrayList<Contact> contacts = (ArrayList<Contact>) this.getHibernateTemplate().findByCriteria(
+		        DetachedCriteria.forClass(Contact.class)
+		        .add(Restrictions.eq("firstName", firstname)));
 		return contacts;
 	}
 	
@@ -629,7 +628,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		
 		ArrayList<Contact> contacts = (ArrayList<Contact>) this.getHibernateTemplate().findByCriteria(
 		        DetachedCriteria.forClass(Contact.class)
-		        .add(Restrictions.eq("lastname", lastname)));
+		        .add(Restrictions.eq("lastName", lastname)));
 		
 		//session.getTransaction().commit();
 		return contacts;
