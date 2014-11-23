@@ -1,0 +1,35 @@
+<ui:composition template="/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:define name="title">
+        Recherchez un contact
+    </ui:define>
+	
+	<ui:define name="content">
+	<h:form>
+		<table>
+			
+				<th><h2>Veuillez renseigner ici votre critère de recherche</h2></th>
+			
+				<tr>
+					<td><i>Recherche par First Name: <h:inputText value="#{searchContact.firstName}" size="25"/></i></td>
+				</tr>
+				<tr>
+					<td><i>Recherche par Last Name: <h:inputText value="#{searchContact.lastName}" size="25"/></i></td>
+				</tr>
+				<tr>
+					<td><i>Recherche par Email: <h:inputText value="#{searchContact.email}" size="25"/></i></td>
+				</tr>
+				<tr>
+				<td>
+					<h:commandButton value="Valider" action="#{searchContact.search}" /> 
+					<h:commandButton value="Annuler" action="main" /></td>
+				</tr>
+			
+		</table>
+	</h:form>
+	</ui:define>
+</ui:composition>

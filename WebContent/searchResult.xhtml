@@ -5,15 +5,17 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<ui:define name="title">
-        Liste des contacts
+        Résultat de recherche
     </ui:define>
+
 	
 	<ui:define name="content">
-			#{list.resetContacts()}	
-			<h:dataTable id="table1" value="#{list.contacts}" var="contact"
+		<h:form>
+		<table>
+			<ui:repeat id="table1" value="#{searchContact.searchResult}" var="contact"
 				border="1">
 				<f:facet name="header">
-					<h:outputText value="Liste de Contact" />
+					<h:outputText value="Liste des résultats" />
 				</f:facet>
 				<h:column>
 					<f:facet name="header">
@@ -39,7 +41,21 @@
 					</f:facet>
 					<h:outputText value="#{contact.email}" />
 				</h:column>
-			</h:dataTable>
-		
+				
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Supprimer ?" />
+					</f:facet>
+					<h:commandButton value="Supprimer" action="searchContact.delete">
+						<!-- <f:setPropertyActionListener target="#{searchContact.contactToDelete}"
+							value="#{contact.id}"/> -->
+							<!-- <f:param name="contactToDelete" value="#{contact.id}" /> -->
+					</h:commandButton>
+
+				</h:column>
+			</ui:repeat>
+			</table>
+		</h:form>
+
 	</ui:define>
 </ui:composition>

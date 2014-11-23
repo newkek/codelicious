@@ -23,7 +23,6 @@ public class ListUtil {
 	private ContactGroup selectedGroup;
 	private Contact selectedContact;
 	private List<Contact> contactsFromSelectedGroup = new ArrayList<Contact>();
-	private boolean test=false;
 
 	public List<String> getGroups() {
 		IDAOContact dao = (IDAOContact) AppContextSingleton.getContext()
@@ -44,6 +43,7 @@ public class ListUtil {
 	public void resetContacts(){
 		ApplicationContext context = AppContextSingleton.getContext();
 		IDAOContact dao = (IDAOContact)context.getBean("DAOC");
+		System.out.println("ResetContacts called");
 		this.contacts = dao.getContacts();
 	}
 	
@@ -64,9 +64,8 @@ public class ListUtil {
 		ApplicationContext context = AppContextSingleton.getContext();
 		IDAOContact dao = (IDAOContact)context.getBean("DAOC");
 		this.groups2 = dao.getGroups();
-		if(this.selectedGroup!=null){
-			System.out.println(this.selectedGroup.getGroupName());
-		}
+		
+		System.out.println("ResetGroups Called");
 		
 	}
 	
@@ -94,9 +93,6 @@ public class ListUtil {
 	}
 
 	public List<ContactGroup> getGroups2() {
-		if(!test){
-			this.resetGroups();
-		}
 		return groups2;
 	}
 
@@ -105,11 +101,11 @@ public class ListUtil {
 	}
 
 	public ContactGroup getSelectedGroup() {
-		System.out.println(this.selectedGroup.getGroupName());
 		return this.selectedGroup;
 	}
 
 	public void setSelectedGroup(ContactGroup selectedGroup) {
+		System.out.println("setselectedgroup");
 		this.selectedGroup = selectedGroup;
 	}
 

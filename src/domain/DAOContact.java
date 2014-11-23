@@ -558,8 +558,8 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		ArrayList<Contact> contacts = (ArrayList<Contact>) this
 				.getHibernateTemplate().findByCriteria(critere);
 
-		System.out.println("dao.getContact "+contacts.size());
-
+		System.out.println("dao.getContact "+contacts.size() + contacts.get(0).getLastName());
+		
 		return contacts;
 	}
 
