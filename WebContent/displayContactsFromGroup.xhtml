@@ -9,14 +9,13 @@
     </ui:define>
 
 	<ui:define name="content">
-	<!--#{list.resetContactsFromGroup()}
 		<h:form>
 
-			 <h:dataTable id="table1" value="#{list.contactsFromSelectedGroup}"
+			 <h:dataTable id="table1" value="#{displayCFG.contacts}"
 				var="contact" border="1">
 				<f:facet name="header">
 					<h:outputText
-						value="Contacts du groupe #{list.selectedGroup.groupName}" />
+						value="Contacts du groupe #{displayCFG.group.groupName}" />
 				</f:facet>
 				<h:column>
 					<f:facet name="header">
@@ -44,17 +43,15 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="Afficher détail" />
+						<h:outputText value="Modifier Contact" />
 					</f:facet>
-					<h:commandButton value="Contact" action="displayContact">
-						<f:setPropertyActionListener target="#{list.selectedContact}"
-							value="#{contact}" />
+					<h:commandButton value="Contact" action="modifyContact">
+						<f:param name="selectedContactId" value="#{contact.id}"/>
 					</h:commandButton>
-
 				</h:column>
 			</h:dataTable>
 			
 		</h:form>
-		-->
+		
 	</ui:define>
 </ui:composition>

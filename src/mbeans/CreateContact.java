@@ -11,15 +11,14 @@ import java.util.Set;
 import javax.faces.bean.ManagedBean;
 
 import utils.AppContextSingleton;
+import domain.ContactGroup;
 import domain.IDAOContact;
 
 @ManagedBean(name = "addContact")
 public class CreateContact implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6338203704087131134L;
+
+	private static final long serialVersionUID = 1L;
 	private String firstName;
 	private String lastName;
 	private String email;
@@ -33,6 +32,17 @@ public class CreateContact implements Serializable {
 	private String businessPhone;
 	private String homePhone;
 	private List<String> contactGroups = new ArrayList<String>();
+	private List<String> allGroups = new ArrayList<String>();
+	
+	public CreateContact(){
+		IDAOContact dao = (IDAOContact) AppContextSingleton.getContext()
+				.getBean("DAOC");
+		ArrayList<ContactGroup> contactGroups = dao.getGroups();
+		
+		for (ContactGroup contactGroup : contactGroups) {
+            this.allGroups.add(contactGroup.getGroupName());
+        }
+	}
 
 	public String getFirstName() {
 		return firstName;
@@ -136,6 +146,10 @@ public class CreateContact implements Serializable {
 
 	public void setContactGroups(List<String> contactGroups) {
 		this.contactGroups = contactGroups;
+	}
+	
+	public List<String> getAllGroups(){
+		return allGroups;
 	}
 
 	public String create() {
