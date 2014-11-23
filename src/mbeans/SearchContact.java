@@ -56,7 +56,7 @@ public class SearchContact implements Serializable {
 		//dao calls
 		this.searchResult = dao.getContact(firstName, lastName, email);
 		
-		System.out.println("search bean result : "+ searchResult.get(0).getLastName());
+		//System.out.println("search bean result : "+ searchResult.get(0).getLastName());
 		return ("searchResult");
 	}
 	

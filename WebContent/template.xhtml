@@ -3,14 +3,42 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
 
 <h:head>
 	<title><ui:insert name="title">Default title</ui:insert></title>
 </h:head>
 <h:body>
 	<div id="header"></div>
+	
+	
 	<div id="menu">
+		<b:navBar brand="Codelicious" brandHref="main.xhtml">
+	    <b:navbarLinks>
+	        <b:navLink value="Ajout" href="addContact.jsf"></b:navLink>
+	        <b:navLink value="Link" href="#"></b:navLink>
+	        <b:navLink value="Link" href="#"></b:navLink>
+	        <b:dropMenu value="Dropdown">
+	            <b:navLink value="Action" href="#"></b:navLink>
+	            <b:navLink value="Another action" href="#"></b:navLink>
+	            <b:navLink value="Something else here" href="#"></b:navLink>
+	            <b:navLink></b:navLink>
+	            <b:navLink header="Nav header"></b:navLink>
+	            <b:navLink value="Separated link" href="#"></b:navLink>
+	            <b:navLink value="One more separated link" href="#"></b:navLink>
+	        </b:dropMenu>
+	    </b:navbarLinks>
+	    <h:form class="navbar-form navbar-left" role="search" >
+			<div class="form-group">
+				<h:inputText class="form-control" a:placeholder="Recherche rapide" value="#{fastContactSearch.criteria}"/>
+			</div>
+			<h:commandButton class="btn btn-default" action="#{fastContactSearch.search}" value="Submit"/>
+		</h:form>
+		</b:navBar>
+	
 		<h:form>
 		<h:commandButton value="Ajouter un Contact" action="addContact" />
 		<h:commandButton value="Supprimer un Contact" action="removeContact" />
@@ -25,12 +53,18 @@
 		<h:commandButton value="Tests de batch processing" action="batch" />
 		<h:commandButton value="Supprimer tous les Contacts"
 			action="removeAllContacts" />
-	</h:form>
+		</h:form>
+		
 	</div>
+	
+	
+	
+	
 	<div id="content">
 		<ui:insert name="content">Default content</ui:insert>
 	</div>
 	<div id="footer"></div>
+	
 	
 </h:body>
 

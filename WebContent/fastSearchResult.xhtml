@@ -2,20 +2,20 @@
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:b="http://bootsfaces.net/ui">
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 	<ui:define name="title">
-        Liste des contacts
+        Résultat de recherche
     </ui:define>
+
 	
 	<ui:define name="content">
-
 		<h:form>
-			<h:dataTable id="table1" value="#{displayContacts.contacts}"
-				var="contact" border="1">
+		<table>
+			<ui:repeat id="table1" value="#{fastContactSearch.searchResult}" var="contact"
+				border="1">
 				<f:facet name="header">
-					<h:outputText value="Liste de Contact" />
+					<h:outputText value="Liste des résultats" />
 				</f:facet>
 				<h:column>
 					<f:facet name="header">
@@ -41,15 +41,21 @@
 					</f:facet>
 					<h:outputText value="#{contact.email}" />
 				</h:column>
+				
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="Afficher détails" />
+						<h:outputText value="Supprimer ?" />
 					</f:facet>
-					<h:commandButton value="Modify" action="modifyContact">
-						<f:param name="selectedContactId" value="#{contact.id}"/>
+					<h:commandButton value="Supprimer" action="searchContact.delete">
+						<!-- <f:setPropertyActionListener target="#{searchContact.contactToDelete}"
+							value="#{contact.id}"/> -->
+							<!-- <f:param name="contactToDelete" value="#{contact.id}" /> -->
 					</h:commandButton>
+
 				</h:column>
-			</h:dataTable>
+			</ui:repeat>
+			</table>
 		</h:form>
+
 	</ui:define>
 </ui:composition>

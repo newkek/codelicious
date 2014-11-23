@@ -1,14 +1,14 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition template="/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:b="http://bootsfaces.net/ui">
 
-<h:head>
-	<title>Menu principal</title>
-</h:head>
+<ui:define name="title">
+        Page Principale 
+</ui:define>
+
 <h:body>
 	<h:form>
 		<h:commandButton value="Ajouter un Contact" action="addContact" />
@@ -16,7 +16,7 @@
 		<h:commandButton value="Afficher tous les contacts"
 			action="displayContacts" />
 		<h:commandButton value="Afficher tous les groupes"
-			action="displayGroups" />
+			action="displayGroups" />	
 
 		<h1>Lien de développement</h1>
 		<h:commandButton value="Initialisation" action="#{list.init}" />
@@ -27,4 +27,4 @@
 
 </h:body>
 
-</html>
+</ui:composition>
