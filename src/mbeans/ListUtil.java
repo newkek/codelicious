@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
@@ -15,6 +16,7 @@ import domain.ContactGroup;
 
 
 @ManagedBean(name = "list")
+@ViewScoped
 public class ListUtil {
 
 	private List<String> groups = new ArrayList<String>();

@@ -29,7 +29,7 @@ public class CreateContact implements Serializable {
 	private String street;
 	private String city;
 	private String country;
-	private String personnalPhone;
+	private String personalPhone;
 	private String businessPhone;
 	private String homePhone;
 	private List<String> contactGroups = new ArrayList<String>();
@@ -106,12 +106,12 @@ public class CreateContact implements Serializable {
 		this.country = country;
 	}
 
-	public String getPersonnalPhone() {
-		return personnalPhone;
+	public String getpersonalPhone() {
+		return personalPhone;
 	}
 
-	public void setPersonnalPhone(String personnalPhone) {
-		this.personnalPhone = personnalPhone;
+	public void setpersonalPhone(String personalPhone) {
+		this.personalPhone = personalPhone;
 	}
 
 	public String getBusinessPhone() {
@@ -144,11 +144,11 @@ public class CreateContact implements Serializable {
 				.getBean("DAOC");
 		if (numSiret.isEmpty()) {
 			dao.addContact(firstName, lastName, email, street, city, zip,
-					country, personnalPhone, businessPhone, homePhone,
+					country, personalPhone, businessPhone, homePhone,
 					contactGroups);
 		} else {
 			dao.addCompany(firstName, lastName, email, street, city, zip,
-					country, personnalPhone, businessPhone, homePhone,
+					country, personalPhone, businessPhone, homePhone,
 					contactGroups, numSiret);
 		}
 

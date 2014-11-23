@@ -35,6 +35,10 @@ public interface IDAOContact{
 	public boolean 				modifyContact(String id, String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone, String[] contactGroups);
 	
 	public boolean 				modifyContact(Contact c, String id, String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone, String[] contactGroups);
+	
+	public boolean				modifyContact(Contact c, String id, String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone, List<String> contactGroups);
+	
+	public boolean				modifyContact(Contact c, String id, String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone, List<String> contactGroups, String numSiret);
 
 	public void 				deleteAllContact();
 

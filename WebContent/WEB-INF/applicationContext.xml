@@ -61,7 +61,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
 	<bean id="FIRSTPHONE" class="domain.PhoneNumber" init-method="init"
 		destroy-method="cleanup">
-		<property name="phoneKind" value="personnalPhone" />
+		<property name="phoneKind" value="personalPhone" />
 		<property name="phoneNumber" value="6666666666" />
 		<property name="contact">
 			<ref bean="FIRSTCONTACT" />

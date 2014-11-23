@@ -36,13 +36,13 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	 * @param street
 	 * @param homePhone
 	 * @param businessPhone
-	 * @param personnalPhone
+	 * @param personalPhone
 	 * @return renvoit le nouveau contact
 	 */
 
 	public Contact addContact(String firstname, String lastname, String email,
 			String street, String city, String zip, String country,
-			String personnalPhone, String businessPhone, String homePhone,
+			String personalPhone, String businessPhone, String homePhone,
 			String[] contactGroups) {
 
 		Contact contact = new Contact();
@@ -56,10 +56,10 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		address.setCountry(country);
 		contact.setAddress(address);
 		Set<PhoneNumber> phoneNumbers = new HashSet<PhoneNumber>();
-		if (!personnalPhone.isEmpty()) {
+		if (!personalPhone.isEmpty()) {
 			PhoneNumber phone = new PhoneNumber();
-			phone.setPhoneKind("personnalPhone");
-			phone.setPhoneNumber(personnalPhone);
+			phone.setPhoneKind("personalPhone");
+			phone.setPhoneNumber(personalPhone);
 			phone.setContact(contact);
 			phoneNumbers.add(phone);
 		}
@@ -129,7 +129,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 	public Company addCompany(String firstname, String lastname, String email,
 			String street, String city, String zip, String country,
-			String personnalPhone, String businessPhone, String homePhone,
+			String personalPhone, String businessPhone, String homePhone,
 			String[] contactGroups, String numSiret) {
 
 		Company contact = new Company();
@@ -144,10 +144,10 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		address.setCountry(country);
 		contact.setAddress(address);
 		Set<PhoneNumber> phoneNumbers = new HashSet<PhoneNumber>();
-		if (!personnalPhone.isEmpty()) {
+		if (!personalPhone.isEmpty()) {
 			PhoneNumber phone = new PhoneNumber();
-			phone.setPhoneKind("personnalPhone");
-			phone.setPhoneNumber(personnalPhone);
+			phone.setPhoneKind("personalPhone");
+			phone.setPhoneNumber(personalPhone);
 			phone.setContact(contact);
 			phoneNumbers.add(phone);
 		}
@@ -219,7 +219,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 	public boolean modifyContact(String id, String firstname, String lastname,
 			String email, String street, String city, String zip,
-			String country, String personnalPhone, String businessPhone,
+			String country, String personalPhone, String businessPhone,
 			String homePhone, String[] contactGroups) {
 		int success;/*
 					 * Session session =
@@ -248,22 +248,22 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 					 * while(iterator.hasNext()){ PhoneNumber phone =
 					 * iterator.next(); map.put(phone.getPhoneKind(), phone); }
 					 * 
-					 * if(personnalPhone!=null){ if(!personnalPhone.isEmpty()){
-					 * if(map.containsKey("personnalPhone")){
-					 * if(!map.get("personnalPhone"
-					 * ).getPhoneNumber().equals(personnalPhone)){
-					 * phoneNumbers.remove(map.get("personnalPhone"));
+					 * if(personalPhone!=null){ if(!personalPhone.isEmpty()){
+					 * if(map.containsKey("personalPhone")){
+					 * if(!map.get("personalPhone"
+					 * ).getPhoneNumber().equals(personalPhone)){
+					 * phoneNumbers.remove(map.get("personalPhone"));
 					 * PhoneNumber phone = new PhoneNumber();
-					 * phone.setPhoneKind("personnalPhone");
-					 * phone.setPhoneNumber(personnalPhone);
+					 * phone.setPhoneKind("personalPhone");
+					 * phone.setPhoneNumber(personalPhone);
 					 * phone.setContact(contact); phoneNumbers.add(phone); }
 					 * }else{ PhoneNumber phone = new PhoneNumber();
-					 * phone.setPhoneKind("personnalPhone");
-					 * phone.setPhoneNumber(personnalPhone);
+					 * phone.setPhoneKind("personalPhone");
+					 * phone.setPhoneNumber(personalPhone);
 					 * phone.setContact(contact); phoneNumbers.add(phone); }
 					 * 
-					 * }else if(map.containsKey("personnalPhone")){
-					 * phoneNumbers.remove(map.get("personnalPhone")); } }
+					 * }else if(map.containsKey("personalPhone")){
+					 * phoneNumbers.remove(map.get("personalPhone")); } }
 					 * if(businessPhone!=null){ if(!businessPhone.isEmpty()){
 					 * if(map.containsKey("businessPhone")){
 					 * if(!map.get("businessPhone"
@@ -333,7 +333,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 	public boolean modifyContact(Contact contact, String id, String firstname,
 			String lastname, String email, String street, String city,
-			String zip, String country, String personnalPhone,
+			String zip, String country, String personalPhone,
 			String businessPhone, String homePhone, String[] contactGroups) {
 		int success;
 
@@ -354,28 +354,28 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			map.put(phone.getPhoneKind(), phone);
 		}
 
-		if (personnalPhone != null) {
-			if (!personnalPhone.isEmpty()) {
-				if (map.containsKey("personnalPhone")) {
-					if (!map.get("personnalPhone").getPhoneNumber()
-							.equals(personnalPhone)) {
-						phoneNumbers.remove(map.get("personnalPhone"));
+		if (personalPhone != null) {
+			if (!personalPhone.isEmpty()) {
+				if (map.containsKey("personalPhone")) {
+					if (!map.get("personalPhone").getPhoneNumber()
+							.equals(personalPhone)) {
+						phoneNumbers.remove(map.get("personalPhone"));
 						PhoneNumber phone = new PhoneNumber();
-						phone.setPhoneKind("personnalPhone");
-						phone.setPhoneNumber(personnalPhone);
+						phone.setPhoneKind("personalPhone");
+						phone.setPhoneNumber(personalPhone);
 						phone.setContact(contact);
 						phoneNumbers.add(phone);
 					}
 				} else {
 					PhoneNumber phone = new PhoneNumber();
-					phone.setPhoneKind("personnalPhone");
-					phone.setPhoneNumber(personnalPhone);
+					phone.setPhoneKind("personalPhone");
+					phone.setPhoneNumber(personalPhone);
 					phone.setContact(contact);
 					phoneNumbers.add(phone);
 				}
 
-			} else if (map.containsKey("personnalPhone")) {
-				phoneNumbers.remove(map.get("personnalPhone"));
+			} else if (map.containsKey("personalPhone")) {
+				phoneNumbers.remove(map.get("personalPhone"));
 			}
 		}
 		if (businessPhone != null) {
@@ -504,6 +504,192 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		}
 
 		this.getHibernateTemplate().saveOrUpdate(contact);
+
+		return true;
+	}
+	
+	
+	public boolean modifyContact(Contact contact, String id, String firstname,
+			String lastname, String email, String street, String city,
+			String zip, String country, String personalPhone,
+			String businessPhone, String homePhone, List<String> contactGroups) {
+		int success;
+		
+		
+
+		System.out.println("The name" + contact.getLastName());
+		contact.setFirstName(firstname);
+		contact.setLastName(lastname);
+		contact.setEmail(email);
+		Address address = contact.getAddress();
+		address.setStreet(street);
+		address.setCity(city);
+		address.setZip(zip);
+		address.setCountry(country);
+		Set<PhoneNumber> phoneNumbers = contact.getPhoneNumbers();
+		Iterator<PhoneNumber> iterator = phoneNumbers.iterator();
+		HashMap<String, PhoneNumber> map = new HashMap<String, PhoneNumber>();
+		while (iterator.hasNext()) {
+			PhoneNumber phone = iterator.next();
+			map.put(phone.getPhoneKind(), phone);
+		}
+
+		if (personalPhone != null) {
+			if (!personalPhone.isEmpty()) {
+				if (map.containsKey("personalPhone")) {
+					if (!map.get("personalPhone").getPhoneNumber()
+							.equals(personalPhone)) {
+						phoneNumbers.remove(map.get("personalPhone"));
+						PhoneNumber phone = new PhoneNumber();
+						phone.setPhoneKind("personalPhone");
+						phone.setPhoneNumber(personalPhone);
+						phone.setContact(contact);
+						phoneNumbers.add(phone);
+					}
+				} else {
+					PhoneNumber phone = new PhoneNumber();
+					phone.setPhoneKind("personalPhone");
+					phone.setPhoneNumber(personalPhone);
+					phone.setContact(contact);
+					phoneNumbers.add(phone);
+				}
+
+			} else if (map.containsKey("personalPhone")) {
+				phoneNumbers.remove(map.get("personalPhone"));
+			}
+		}
+		if (businessPhone != null) {
+			if (!businessPhone.isEmpty()) {
+				if (map.containsKey("businessPhone")) {
+					if (!map.get("businessPhone").getPhoneNumber()
+							.equals(businessPhone)) {
+						phoneNumbers.remove(map.get("businessPhone"));
+						PhoneNumber phone = new PhoneNumber();
+						phone.setPhoneKind("businessPhone");
+						phone.setPhoneNumber(businessPhone);
+						phone.setContact(contact);
+						phoneNumbers.add(phone);
+					}
+				} else {
+					PhoneNumber phone = new PhoneNumber();
+					phone.setPhoneKind("businessPhone");
+					phone.setPhoneNumber(businessPhone);
+					phone.setContact(contact);
+					phoneNumbers.add(phone);
+				}
+			} else if (map.containsKey("businessPhone")) {
+				phoneNumbers.remove(map.get("businessPhone"));
+			}
+		}
+		if (homePhone != null) {
+			if (!homePhone.isEmpty()) {
+				if (map.containsKey("homePhone")) {
+					if (!map.get("homePhone").getPhoneNumber()
+							.equals(homePhone)) {
+						phoneNumbers.remove(map.get("homePhone"));
+						PhoneNumber phone = new PhoneNumber();
+						phone.setPhoneKind("homePhone");
+						phone.setPhoneNumber(homePhone);
+						phone.setContact(contact);
+						phoneNumbers.add(phone);
+					}
+				} else {
+					PhoneNumber phone = new PhoneNumber();
+					phone.setPhoneKind("homePhone");
+					phone.setPhoneNumber(homePhone);
+					phone.setContact(contact);
+					phoneNumbers.add(phone);
+				}
+			} else if (map.containsKey("homePhone")) {
+				phoneNumbers.remove(map.get("homePhone"));
+			}
+		}
+
+		Set<ContactGroup> listContactGroups = contact.getContactGroups();
+
+		boolean formGroupIsInContactsGroup = false;
+
+		Set<String> notCreated = new HashSet<String>();
+		
+		
+
+		if (contactGroups != null) {
+
+			notCreated.addAll(contactGroups);
+
+			Iterator<ContactGroup> theContactIteratorGroup = listContactGroups
+					.iterator();
+
+			while (theContactIteratorGroup.hasNext()) {
+
+				ContactGroup curContactGroup = theContactIteratorGroup.next();
+
+				for (int i = 0; i < contactGroups.size(); i++) {
+
+					if (curContactGroup.getGroupName().equals(contactGroups.get(i))) {
+
+						notCreated.remove(contactGroups.get(i));// group not to be
+															// added
+
+						formGroupIsInContactsGroup = true;
+
+						break;
+					}
+				}
+
+				if (!formGroupIsInContactsGroup) {
+					// group has been removed from the contact
+					ContactGroup temp = (ContactGroup)this.getHibernateTemplate().get(ContactGroup.class, curContactGroup.getGroupId());
+					temp.getContacts().remove(contact);
+					this.getHibernateTemplate().saveOrUpdate(temp);
+					//curContactGroup.getContacts().remove(contact);
+
+					theContactIteratorGroup.remove();
+
+				}
+
+			}
+
+			Iterator<String> iteratorNotCreated = notCreated.iterator();
+			while (iteratorNotCreated.hasNext()) {
+				String name = iteratorNotCreated.next();
+				// ContactGroup group = (ContactGroup)
+				// session.createCriteria(ContactGroup.class)
+				// .add(Restrictions.like("groupName", name) )
+				// .uniqueResult();
+				ArrayList<ContactGroup> listgroups = (ArrayList<ContactGroup>) this
+						.getHibernateTemplate().findByCriteria(
+								DetachedCriteria.forClass(ContactGroup.class)
+										.add(Restrictions.like("groupName",
+												name)));
+				ContactGroup group = null;
+				if (listgroups.size() != 0) {
+					System.out.println("PAS DE GROUPS");
+					group = (ContactGroup) listgroups.get(0);
+				}
+
+				if (group == null) {
+					group = new ContactGroup();
+					group.setGroupName(name);
+				}
+				Set<Contact> temp = group.getContacts();
+				temp.add(contact);
+				group.setContacts(temp);
+				listContactGroups.add(group);
+				System.out.println("nom groupe: " + group.getGroupName());
+			}
+		} else {
+			Iterator<ContactGroup> iteratorGroup = listContactGroups.iterator();
+			while (iteratorGroup.hasNext()) {
+				ContactGroup temp = iteratorGroup.next();
+
+				temp.getContacts().remove(contact);
+				iteratorGroup.remove();
+			}
+		}
+		this.getHibernateTemplate().merge(contact);
+		
+		//this.getHibernateTemplate().saveOrUpdate(contact);
 
 		return true;
 	}
@@ -741,9 +927,9 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			contact.setAddress(address);
 			Set<PhoneNumber> phoneNumbers = new HashSet<PhoneNumber>();
 			/*
-			 * if(!personnalPhone.isEmpty()){ PhoneNumber phone = new
-			 * PhoneNumber(); phone.setPhoneKind("personnalPhone");
-			 * phone.setPhoneNumber(personnalPhone); phone.setContact(contact);
+			 * if(!personalPhone.isEmpty()){ PhoneNumber phone = new
+			 * PhoneNumber(); phone.setPhoneKind("personalPhone");
+			 * phone.setPhoneNumber(personalPhone); phone.setContact(contact);
 			 * phoneNumbers.add(phone); } if(!businessPhone.isEmpty()){
 			 * PhoneNumber phone = new PhoneNumber();
 			 * phone.setPhoneKind("businessPhone");
@@ -785,7 +971,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 	public Contact addContact(String firstname, String lastname, String email,
 			String street, String city, String zip, String country,
-			String personnalPhone, String businessPhone, String homePhone,
+			String personalPhone, String businessPhone, String homePhone,
 			List<String> contactGroups) {
 		// TODO Auto-generated method stub
 		Contact contact = new Contact();
@@ -799,10 +985,10 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		address.setCountry(country);
 		contact.setAddress(address);
 		Set<PhoneNumber> phoneNumbers = new HashSet<PhoneNumber>();
-		if (!personnalPhone.isEmpty()) {
+		if (!personalPhone.isEmpty()) {
 			PhoneNumber phone = new PhoneNumber();
-			phone.setPhoneKind("personnalPhone");
-			phone.setPhoneNumber(personnalPhone);
+			phone.setPhoneKind("personalPhone");
+			phone.setPhoneNumber(personalPhone);
 			phone.setContact(contact);
 			phoneNumbers.add(phone);
 		}
@@ -872,7 +1058,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 	public Company addCompany(String firstname, String lastname, String email,
 			String street, String city, String zip, String country,
-			String personnalPhone, String businessPhone, String homePhone,
+			String personalPhone, String businessPhone, String homePhone,
 			List<String> contactGroups, String numSiret) {
 		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
@@ -888,10 +1074,10 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		address.setCountry(country);
 		contact.setAddress(address);
 		Set<PhoneNumber> phoneNumbers = new HashSet<PhoneNumber>();
-		if (!personnalPhone.isEmpty()) {
+		if (!personalPhone.isEmpty()) {
 			PhoneNumber phone = new PhoneNumber();
-			phone.setPhoneKind("personnalPhone");
-			phone.setPhoneNumber(personnalPhone);
+			phone.setPhoneKind("personalPhone");
+			phone.setPhoneNumber(personalPhone);
 			phone.setContact(contact);
 			phoneNumbers.add(phone);
 		}
@@ -962,6 +1148,193 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		ContactGroup group = (ContactGroup)this.getHibernateTemplate().get(ContactGroup.class, id);
 		System.out.println("dao.getGroup "+group.getContacts().size());
 		return group;
+	}
+
+	public boolean modifyContact(Contact contact, String id, String firstname,
+			String lastname, String email, String street, String city,
+			String zip, String country, String personalPhone,
+			String businessPhone, String homePhone, List<String> contactGroups,
+			String numSiret) {
+		// TODO Auto-generated method stub
+		System.out.println("The name" + contact.getLastName());
+		contact.setFirstName(firstname);
+		contact.setLastName(lastname);
+		contact.setEmail(email);
+		if(contact instanceof Company){
+			((Company) contact).setNumSiret(Integer.parseInt(numSiret));
+		}
+		Address address = contact.getAddress();
+		address.setStreet(street);
+		address.setCity(city);
+		address.setZip(zip);
+		address.setCountry(country);
+		Set<PhoneNumber> phoneNumbers = contact.getPhoneNumbers();
+		Iterator<PhoneNumber> iterator = phoneNumbers.iterator();
+		HashMap<String, PhoneNumber> map = new HashMap<String, PhoneNumber>();
+		while (iterator.hasNext()) {
+			PhoneNumber phone = iterator.next();
+			map.put(phone.getPhoneKind(), phone);
+		}
+
+		if (personalPhone != null) {
+			if (!personalPhone.isEmpty()) {
+				if (map.containsKey("personalPhone")) {
+					if (!map.get("personalPhone").getPhoneNumber()
+							.equals(personalPhone)) {
+						phoneNumbers.remove(map.get("personalPhone"));
+						PhoneNumber phone = new PhoneNumber();
+						phone.setPhoneKind("personalPhone");
+						phone.setPhoneNumber(personalPhone);
+						phone.setContact(contact);
+						phoneNumbers.add(phone);
+					}
+				} else {
+					PhoneNumber phone = new PhoneNumber();
+					phone.setPhoneKind("personalPhone");
+					phone.setPhoneNumber(personalPhone);
+					phone.setContact(contact);
+					phoneNumbers.add(phone);
+				}
+
+			} else if (map.containsKey("personalPhone")) {
+				phoneNumbers.remove(map.get("personalPhone"));
+			}
+		}
+		if (businessPhone != null) {
+			if (!businessPhone.isEmpty()) {
+				if (map.containsKey("businessPhone")) {
+					if (!map.get("businessPhone").getPhoneNumber()
+							.equals(businessPhone)) {
+						phoneNumbers.remove(map.get("businessPhone"));
+						PhoneNumber phone = new PhoneNumber();
+						phone.setPhoneKind("businessPhone");
+						phone.setPhoneNumber(businessPhone);
+						phone.setContact(contact);
+						phoneNumbers.add(phone);
+					}
+				} else {
+					PhoneNumber phone = new PhoneNumber();
+					phone.setPhoneKind("businessPhone");
+					phone.setPhoneNumber(businessPhone);
+					phone.setContact(contact);
+					phoneNumbers.add(phone);
+				}
+			} else if (map.containsKey("businessPhone")) {
+				phoneNumbers.remove(map.get("businessPhone"));
+			}
+		}
+		if (homePhone != null) {
+			if (!homePhone.isEmpty()) {
+				if (map.containsKey("homePhone")) {
+					if (!map.get("homePhone").getPhoneNumber()
+							.equals(homePhone)) {
+						phoneNumbers.remove(map.get("homePhone"));
+						PhoneNumber phone = new PhoneNumber();
+						phone.setPhoneKind("homePhone");
+						phone.setPhoneNumber(homePhone);
+						phone.setContact(contact);
+						phoneNumbers.add(phone);
+					}
+				} else {
+					PhoneNumber phone = new PhoneNumber();
+					phone.setPhoneKind("homePhone");
+					phone.setPhoneNumber(homePhone);
+					phone.setContact(contact);
+					phoneNumbers.add(phone);
+				}
+			} else if (map.containsKey("homePhone")) {
+				phoneNumbers.remove(map.get("homePhone"));
+			}
+		}
+
+		Set<ContactGroup> listContactGroups = contact.getContactGroups();
+
+		boolean formGroupIsInContactsGroup = false;
+
+		Set<String> notCreated = new HashSet<String>();
+		
+		
+
+		if (contactGroups != null) {
+
+			notCreated.addAll(contactGroups);
+
+			Iterator<ContactGroup> theContactIteratorGroup = listContactGroups
+					.iterator();
+
+			while (theContactIteratorGroup.hasNext()) {
+
+				ContactGroup curContactGroup = theContactIteratorGroup.next();
+
+				for (int i = 0; i < contactGroups.size(); i++) {
+
+					if (curContactGroup.getGroupName().equals(contactGroups.get(i))) {
+
+						notCreated.remove(contactGroups.get(i));// group not to be
+															// added
+
+						formGroupIsInContactsGroup = true;
+
+						break;
+					}
+				}
+
+				if (!formGroupIsInContactsGroup) {
+					// group has been removed from the contact
+					ContactGroup temp = (ContactGroup)this.getHibernateTemplate().get(ContactGroup.class, curContactGroup.getGroupId());
+					temp.getContacts().remove(contact);
+					this.getHibernateTemplate().merge(temp);
+					//curContactGroup.getContacts().remove(contact);
+
+					theContactIteratorGroup.remove();
+
+				}
+
+			}
+
+			/*
+			Iterator<String> iteratorNotCreated = notCreated.iterator();
+			while (iteratorNotCreated.hasNext()) {
+				String name = iteratorNotCreated.next();
+				// ContactGroup group = (ContactGroup)
+				// session.createCriteria(ContactGroup.class)
+				// .add(Restrictions.like("groupName", name) )
+				// .uniqueResult();
+				ArrayList<ContactGroup> listgroups = (ArrayList<ContactGroup>) this
+						.getHibernateTemplate().findByCriteria(
+								DetachedCriteria.forClass(ContactGroup.class)
+										.add(Restrictions.like("groupName",
+												name)));
+				ContactGroup group = null;
+				if (listgroups.size() != 0) {
+					System.out.println("PAS DE GROUPS");
+					group = (ContactGroup) listgroups.get(0);
+				}
+
+				if (group == null) {
+					group = new ContactGroup();
+					group.setGroupName(name);
+				}
+				Set<Contact> temp = group.getContacts();
+				temp.add(contact);
+				group.setContacts(temp);
+				listContactGroups.add(group);
+				System.out.println("nom groupe: " + group.getGroupName());
+			}
+		} else {
+			Iterator<ContactGroup> iteratorGroup = listContactGroups.iterator();
+			while (iteratorGroup.hasNext()) {
+				ContactGroup temp = iteratorGroup.next();
+
+				temp.getContacts().remove(contact);
+				iteratorGroup.remove();
+			}*/
+		}
+		this.getHibernateTemplate().merge(contact);
+		
+		//this.getHibernateTemplate().saveOrUpdate(contact);
+
+		return true;
 	}
 
 }

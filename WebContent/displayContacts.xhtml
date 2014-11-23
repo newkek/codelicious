@@ -9,9 +9,9 @@
     </ui:define>
 
 	<ui:define name="content">
-		#{list.resetContacts()}
-			<h:dataTable id="table1" value="#{list.contacts}" var="contact"
-				border="1">
+		<h:form>
+			<h:dataTable id="table1" value="#{displayContacts.contacts}"
+				var="contact" border="1">
 				<f:facet name="header">
 					<h:outputText value="Liste de Contact" />
 				</f:facet>
@@ -39,7 +39,15 @@
 					</f:facet>
 					<h:outputText value="#{contact.email}" />
 				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Afficher détails" />
+					</f:facet>
+					<h:commandButton value="Modify" action="modifyContact">
+						<f:param name="selectedContactId" value="#{contact.id}"/>
+					</h:commandButton>
+				</h:column>
 			</h:dataTable>
-		
+		</h:form>
 	</ui:define>
 </ui:composition>
