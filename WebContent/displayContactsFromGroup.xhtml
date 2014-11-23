@@ -1,0 +1,55 @@
+<ui:composition template="/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+	<ui:define name="title">
+        Liste des contacts
+    </ui:define>
+
+	<ui:define name="content">
+		<h:form>
+			<h:dataTable id="table1" value="#{list.contactsFromSelectedGroup}"
+				var="contact" border="1">
+				<f:facet name="header">
+					<h:outputText value="Contacts du groupe #{list.selectedGroup.groupName}" />
+				</f:facet>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="id" />
+					</f:facet>
+					<h:outputText value="#{contact.id}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Nom" />
+					</f:facet>
+					<h:outputText value="#{contact.lastName}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Prénom" />
+					</f:facet>
+					<h:outputText value="#{contact.firstName}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Email" />
+					</f:facet>
+					<h:outputText value="#{contact.email}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Afficher détail" />
+					</f:facet>
+					<h:commandButton value="Contact" action="displayContact">
+						<f:setPropertyActionListener target="#{list.selectedContact}"
+							value="#{contact}" />
+					</h:commandButton>
+
+				</h:column>
+			</h:dataTable>
+		</h:form>
+	</ui:define>
+</ui:composition>

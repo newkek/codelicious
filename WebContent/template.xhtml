@@ -6,10 +6,12 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
-	<title>Menu principal</title>
+	<title><ui:insert name="title">Default title</ui:insert></title>
 </h:head>
 <h:body>
-	<h:form>
+	<div id="header"></div>
+	<div id="menu">
+		<h:form>
 		<h:commandButton value="Ajouter un Contact" action="addContact" />
 		<h:commandButton value="Supprimer un Contact" action="removeContact" />
 		<h:commandButton value="Modifier un Contact" action="modifyContact" />
@@ -18,13 +20,18 @@
 			action="displayContacts" />
 		<h:commandButton value="Afficher tous les groupes"
 			action="displayGroups" />
-
 		<h1>Lien de développement</h1>
 		<h:commandButton value="Initialisation" action="#{list.init}" />
 		<h:commandButton value="Tests de batch processing" action="batch" />
 		<h:commandButton value="Supprimer tous les Contacts"
 			action="removeAllContacts" />
 	</h:form>
+	</div>
+	<div id="content">
+		<ui:insert name="content">Default content</ui:insert>
+	</div>
+	<div id="footer"></div>
+	
 </h:body>
 
 </html>

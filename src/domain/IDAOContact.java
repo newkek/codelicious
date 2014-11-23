@@ -43,5 +43,7 @@ public interface IDAOContact{
 	public void 				addManyContacts();
 	
 	public ArrayList<ContactGroup> getGroups();
+	
+	public ContactGroup getGroup(long id);
 
 }

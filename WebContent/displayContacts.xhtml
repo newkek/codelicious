@@ -2,9 +2,10 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head />
-<body>
+<h:body>
 
 	<h:form>
 		<h:commandButton value="Ajouter un Contact" action="addContact" />
@@ -12,9 +13,9 @@
 		<h:commandButton value="Modifier un Contact" action="modifyContact" />
 		<h:commandButton value="Rechercher un Contact" action="searchContact" />
 		<h:commandButton value="Afficher tous les contacts"
-			action="displayAllContacts" />
+			action="displayContacts" />
 		<h:commandButton value="Afficher tous les groupes"
-			action="displayAllGroups" />
+			action="displayGroups" />
 
 		<h1>Lien de développement</h1>
 		<h:commandButton value="Initialisation" action="#{list.init}" />
@@ -53,5 +54,5 @@
 			<h:outputText value="#{contact.email}" />
 		</h:column>
 	</h:dataTable>
-</body>
+</h:body>
 </html>

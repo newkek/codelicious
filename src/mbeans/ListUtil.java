@@ -18,7 +18,11 @@ import domain.ContactGroup;
 public class ListUtil {
 
 	private List<String> groups = new ArrayList<String>();
+	private List<ContactGroup> groups2 = new ArrayList<ContactGroup>();
 	private List<Contact> contacts = new ArrayList<Contact>();
+	private ContactGroup selectedGroup;
+	private Contact selectedContact;
+	private List<Contact> contactsFromSelectedGroup = new ArrayList<Contact>();
 
 	public List<String> getGroups() {
 		IDAOContact dao = (IDAOContact) AppContextSingleton.getContext()
@@ -62,6 +66,54 @@ public class ListUtil {
 		catch(Exception e){
 			System.out.println("Contacts already initialized");
 		}
+	}
+
+	public List<ContactGroup> getGroups2() {
+		IDAOContact dao = (IDAOContact) AppContextSingleton.getContext()
+				.getBean("DAOC");
+		groups2 = dao.getGroups();
+		
+		return groups2;
+	}
+
+	public void setGroups2(List<ContactGroup> groups2) {
+		this.groups2 = groups2;
+	}
+	
+	public String members(){
+		return "displayContactsFromGroup";
+	}
+
+	public ContactGroup getSelectedGroup() {
+		return selectedGroup;
+	}
+
+	public void setSelectedGroup(ContactGroup selectedGroup) {
+		this.selectedGroup = selectedGroup;
+	}
+
+	public Contact getSelectedContact() {
+		return selectedContact;
+	}
+
+	public void setSelectedContact(Contact selectedContact) {
+		this.selectedContact = selectedContact;
+	}
+	
+	public List<Contact> getContactsFromSelectedGroup(){
+		ArrayList<Contact> list = new ArrayList<Contact>();
+		ApplicationContext context = AppContextSingleton.getContext();
+		IDAOContact dao = (IDAOContact)context.getBean("DAOC");
+
+		ContactGroup group = dao.getGroup(this.selectedGroup.getGroupId());
+		System.out.println("list.getContactsFromS... 1       "+group.getContacts().size());
+		this.contactsFromSelectedGroup.addAll(group.getContacts());
+		System.out.println("list.getContactsFromS... 2       "+this.contactsFromSelectedGroup.size());
+		return this.contactsFromSelectedGroup;
+	}
+	
+	public void setContactsFromSelectedGroup(List<Contact> contactFromSelectedGroup){
+		this.contactsFromSelectedGroup = contactFromSelectedGroup;
 	}
 
 }

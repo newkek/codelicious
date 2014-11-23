@@ -558,7 +558,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		ArrayList<Contact> contacts = (ArrayList<Contact>) this
 				.getHibernateTemplate().findByCriteria(critere);
 
-		System.out.println(contacts.size());
+		System.out.println("dao.getContact "+contacts.size());
 
 		return contacts;
 	}
@@ -955,6 +955,13 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		// session.getTransaction().commit();
 
 		return contact;
+	}
+
+	public ContactGroup getGroup(long id) {
+		// TODO Auto-generated method stub
+		ContactGroup group = (ContactGroup)this.getHibernateTemplate().get(ContactGroup.class, id);
+		System.out.println("dao.getGroup "+group.getContacts().size());
+		return group;
 	}
 
 }
