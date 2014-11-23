@@ -9,11 +9,14 @@
     </ui:define>
 
 	<ui:define name="content">
+	#{list.resetContactsFromGroup()}
 		<h:form>
+
 			<h:dataTable id="table1" value="#{list.contactsFromSelectedGroup}"
 				var="contact" border="1">
 				<f:facet name="header">
-					<h:outputText value="Contacts du groupe #{list.selectedGroup.groupName}" />
+					<h:outputText
+						value="Contacts du groupe #{list.selectedGroup.groupName}" />
 				</f:facet>
 				<h:column>
 					<f:facet name="header">

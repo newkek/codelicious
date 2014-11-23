@@ -23,6 +23,7 @@ public class ListUtil {
 	private ContactGroup selectedGroup;
 	private Contact selectedContact;
 	private List<Contact> contactsFromSelectedGroup = new ArrayList<Contact>();
+	private boolean test=false;
 
 	public List<String> getGroups() {
 		IDAOContact dao = (IDAOContact) AppContextSingleton.getContext()
@@ -40,12 +41,36 @@ public class ListUtil {
 		this.groups = groups;
 	}
 	
-	public List<Contact> getContacts() {
-		IDAOContact dao = (IDAOContact) AppContextSingleton.getContext()
-				.getBean("DAOC");
+	public void resetContacts(){
+		ApplicationContext context = AppContextSingleton.getContext();
+		IDAOContact dao = (IDAOContact)context.getBean("DAOC");
 		this.contacts = dao.getContacts();
+	}
+	
+	public void resetContactsFromGroup(){
+		ApplicationContext context = AppContextSingleton.getContext();
+		IDAOContact dao = (IDAOContact)context.getBean("DAOC");
 
+		/*
+		ContactGroup group = dao.getGroup(this.selectedGroup.getGroupId());
+		System.out.println("list.getContactsFromS... 1       "+group.getContacts().size());
+		this.contactsFromSelectedGroup.addAll(group.getContacts());
+		System.out.println("list.getContactsFromS... 2       "+this.contactsFromSelectedGroup.size());
+		*/
+		this.contactsFromSelectedGroup.addAll(this.selectedGroup.getContacts());
+	}
+	
+	public void resetGroups(){
+		ApplicationContext context = AppContextSingleton.getContext();
+		IDAOContact dao = (IDAOContact)context.getBean("DAOC");
+		this.groups2 = dao.getGroups();
+		if(this.selectedGroup!=null){
+			System.out.println(this.selectedGroup.getGroupName());
+		}
 		
+	}
+	
+	public List<Contact> getContacts() {
 		return contacts;
 	}
 
@@ -61,7 +86,7 @@ public class ListUtil {
 		try{
 			dao.addContact(contact);
 			dao.addContact(contact2);
-			System.out.println("Init servlet done");
+			System.out.println("Init bean done");
 		}
 		catch(Exception e){
 			System.out.println("Contacts already initialized");
@@ -69,23 +94,19 @@ public class ListUtil {
 	}
 
 	public List<ContactGroup> getGroups2() {
-		IDAOContact dao = (IDAOContact) AppContextSingleton.getContext()
-				.getBean("DAOC");
-		groups2 = dao.getGroups();
-		
+		if(!test){
+			this.resetGroups();
+		}
 		return groups2;
 	}
 
 	public void setGroups2(List<ContactGroup> groups2) {
 		this.groups2 = groups2;
 	}
-	
-	public String members(){
-		return "displayContactsFromGroup";
-	}
 
 	public ContactGroup getSelectedGroup() {
-		return selectedGroup;
+		System.out.println(this.selectedGroup.getGroupName());
+		return this.selectedGroup;
 	}
 
 	public void setSelectedGroup(ContactGroup selectedGroup) {
@@ -93,22 +114,15 @@ public class ListUtil {
 	}
 
 	public Contact getSelectedContact() {
-		return selectedContact;
+		return this.selectedContact;
 	}
 
 	public void setSelectedContact(Contact selectedContact) {
 		this.selectedContact = selectedContact;
 	}
 	
+	
 	public List<Contact> getContactsFromSelectedGroup(){
-		ArrayList<Contact> list = new ArrayList<Contact>();
-		ApplicationContext context = AppContextSingleton.getContext();
-		IDAOContact dao = (IDAOContact)context.getBean("DAOC");
-
-		ContactGroup group = dao.getGroup(this.selectedGroup.getGroupId());
-		System.out.println("list.getContactsFromS... 1       "+group.getContacts().size());
-		this.contactsFromSelectedGroup.addAll(group.getContacts());
-		System.out.println("list.getContactsFromS... 2       "+this.contactsFromSelectedGroup.size());
 		return this.contactsFromSelectedGroup;
 	}
 	
