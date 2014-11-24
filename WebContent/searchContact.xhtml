@@ -2,7 +2,8 @@
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
 
 	<ui:define name="title">
         Recherchez un contact
@@ -25,8 +26,8 @@
 				</tr>
 				<tr>
 				<td>
-					<h:commandButton value="Valider" action="#{searchContact.search}" /> 
-					<h:commandButton value="Annuler" action="main" /></td>
+					<b:commandButton value="Valider" action="#{searchContact.search}" /> 
+					<b:commandButton value="Annuler" action="main" /></td>
 				</tr>
 			
 		</table>

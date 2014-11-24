@@ -2,7 +2,8 @@
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
 
 	<ui:define name="title">
         Modification de Contact
@@ -66,8 +67,8 @@
 								value="#{modifyContactB.numSiret}" size="25" /></i></td>
 				</tr>
 				<tr>
-					<td><h:commandButton value="Valider" action="#{modifyContactB.modify}" /> 
-						<h:commandButton value="Annuler" action="main" /></td>
+					<td><b:commandButton value="Valider" action="#{modifyContactB.modify}" /> 
+						<b:commandButton value="Annuler" action="main" /></td>
 				</tr>
 
 			</table>

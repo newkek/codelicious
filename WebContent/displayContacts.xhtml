@@ -2,7 +2,8 @@
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
 
 	<ui:define name="title">
         Liste des contacts
@@ -45,9 +46,9 @@
 					<f:facet name="header">
 						<h:outputText value="Modification" />
 					</f:facet>
-					<h:commandButton value="Modifier" action="modifyContact">
+					<b:commandButton value="Modifier" action="modifyContact">
 						<f:param name="selectedContactId" value="#{contact.id}"/>
-					</h:commandButton>
+					</b:commandButton>
 				</h:column>
 				
 				<h:column>
@@ -55,10 +56,10 @@
 					<f:facet name="header">
 						<h:outputText value="Suppression" />
 					</f:facet>
-					<h:commandButton value="Supprimer" action="#{displayContacts.delete}">
+					<b:commandButton value="Supprimer" action="#{displayContacts.delete}">
 						<f:setPropertyActionListener target="#{displayContacts.contactToDelete}"
 							value="#{contact.id}"/>
-					</h:commandButton>
+					</b:commandButton>
 				
 
 				</h:column>
