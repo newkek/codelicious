@@ -8,53 +8,65 @@
         Résultat de recherche
     </ui:define>
 
-	
+
 	<ui:define name="content">
-		
-			<h:dataTable id="table1" value="#{searchContact.searchResult}" var="contact"
-				border="1">
+
+		<h:dataTable id="table1" value="#{searchContact.searchResult}"
+			var="contact" border="1">
+			<f:facet name="header">
+				<h:outputText value="Liste des résultats" />
+			</f:facet>
+			<h:column>
 				<f:facet name="header">
-					<h:outputText value="Liste des résultats" />
+					<h:outputText value="Id" />
 				</f:facet>
-				<h:column>
+				<h:outputText value="#{contact.id}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Prénom" />
+				</f:facet>
+				<h:outputText value="#{contact.firstName}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Nom" />
+				</f:facet>
+				<h:outputText value="#{contact.lastName}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">
+					<h:outputText value="Email" />
+				</f:facet>
+				<h:outputText value="#{contact.email}" />
+			</h:column>
+
+			<h:column>
+				<h:form>
 					<f:facet name="header">
-						<h:outputText value="Id" />
+						<h:outputText value="Modification" />
 					</f:facet>
-					<h:outputText value="#{contact.id}" />
-				</h:column>
-				<h:column>
+					<h:commandButton value="Modifier" action="modifyContact">
+						<f:param name="selectedContactId" value="#{contact.id}" />
+					</h:commandButton>
+				</h:form>
+			</h:column>
+
+			<h:column>
+				<h:form>
 					<f:facet name="header">
-						<h:outputText value="Prénom" />
-					</f:facet>
-					<h:outputText value="#{contact.firstName}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Nom" />
-					</f:facet>
-					<h:outputText value="#{contact.lastName}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Email" />
-					</f:facet>
-					<h:outputText value="#{contact.email}" />
-				</h:column>
-				
-				<h:column>
-					<h:form>
-					<f:facet name="header">
-						<h:outputText value="Supprimer ?" />
+						<h:outputText value="Suppression" />
 					</f:facet>
 					<h:commandButton value="Supprimer" action="#{searchContact.delete}">
-						<f:setPropertyActionListener target="#{searchContact.contactToDelete}"
-							value="#{contact.id}"/>
+						<f:setPropertyActionListener
+							target="#{searchContact.contactToDelete}" value="#{contact.id}" />
 					</h:commandButton>
-					</h:form>
+				</h:form>
 
-				</h:column>
-			</h:dataTable>
-		
+			</h:column>
+
+		</h:dataTable>
+
 
 	</ui:define>
 </ui:composition>

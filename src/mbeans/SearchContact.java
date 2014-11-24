@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
@@ -91,7 +92,7 @@ public class SearchContact implements Serializable {
 		this.searchResult = searchResult;
 	}
 	
-	public void delete() {
+	public String delete() {
 
 		IDAOContact dao = (IDAOContact) AppContextSingleton.getContext()
 				.getBean("DAOC");
@@ -114,6 +115,15 @@ public class SearchContact implements Serializable {
 			  System.out.println("found the contact to delete" + curContact.getId());
 		    it.remove();
 		  }
+		}
+		
+		if(this.searchResult.size()==0){
+			FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Plus de contact à afficher", null);
+			FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+			
+			return "main";
+		}else{
+			return null;
 		}
 		
 	}

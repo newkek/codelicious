@@ -42,11 +42,24 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header">
-						<h:outputText value="Afficher détails" />
+						<h:outputText value="Modification" />
 					</f:facet>
-					<h:commandButton value="Modify" action="modifyContact">
+					<h:commandButton value="Modifier" action="modifyContact">
 						<f:param name="selectedContactId" value="#{contact.id}"/>
 					</h:commandButton>
+				</h:column>
+				
+				<h:column>
+					
+					<f:facet name="header">
+						<h:outputText value="Suppression" />
+					</f:facet>
+					<h:commandButton value="Supprimer" action="#{displayContacts.delete}">
+						<f:setPropertyActionListener target="#{displayContacts.contactToDelete}"
+							value="#{contact.id}"/>
+					</h:commandButton>
+				
+
 				</h:column>
 			</h:dataTable>
 		</h:form>
