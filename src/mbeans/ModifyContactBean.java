@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
@@ -82,8 +83,7 @@ public class ModifyContactBean implements Serializable {
 			}
 		}
 		
-		System.out.println("taille groupe de contact"+contact.getContactGroups().size());
-		
+		contactGroups.clear();
 		Iterator<ContactGroup> iterator2 = contact.getContactGroups()
 				.iterator();
 		while (iterator2.hasNext()) {
@@ -91,12 +91,11 @@ public class ModifyContactBean implements Serializable {
 			contactGroups.add(contactGroup.getGroupName());
 		}
 		ArrayList<ContactGroup> tempContactGroups = dao.getGroups();
-
+		allGroups.clear();
 		for (ContactGroup temp : tempContactGroups) {
 			allGroups.add(temp.getGroupName());
 		}
-		System.out.println(tempContactGroups.size());
-		System.out.println(allGroups.size());
+
 
 	}
 
@@ -230,11 +229,61 @@ public class ModifyContactBean implements Serializable {
 		System.out.println(businessPhone);
 		System.out.println(homePhone);
 		System.out.println(contactGroups.size());
-		dao.modifyContact(contact, Long.toString(id), firstName, lastName,
+		boolean retour = dao.modifyContact(contact, Long.toString(id), firstName, lastName,
 				email, street, city, zip, country, personalPhone,
 				businessPhone, homePhone, contactGroups, numSiret);
+		
+		if(retour){
+			return ("main");
+		}else{
+			this.contact = dao.getContactById(id);
+			
+			if(this.contact instanceof Company){
+				numSiret = Integer.toString(((Company) contact).getNumSiret());
+			}
+			
+			firstName = contact.getFirstName();
+			lastName = contact.getLastName();
+			email = contact.getEmail();
+			id = contact.getId();
+			zip = contact.getAddress().getZip();
+			street = contact.getAddress().getStreet();
+			city = contact.getAddress().getCity();
+			country = contact.getAddress().getCountry();
+			Iterator<PhoneNumber> iterator = contact.getPhoneNumbers().iterator();
+			while (iterator.hasNext()) {
+				PhoneNumber phone = iterator.next();
+				System.out.println(phone.getPhoneNumber());
+				System.out.println(phone.getPhoneKind());
+				if (phone.getPhoneKind().equals("personalPhone")) {
+					personalPhone = phone.getPhoneNumber();
+				} else if (phone.getPhoneKind().equals("businessPhone")) {
+					businessPhone = phone.getPhoneNumber();
+				} else if (phone.getPhoneKind().equals("homePhone")) {
+					homePhone = phone.getPhoneNumber();
+				}
+			}
+			
+			contactGroups.clear();
+			Iterator<ContactGroup> iterator2 = contact.getContactGroups()
+					.iterator();
+			while (iterator2.hasNext()) {
+				ContactGroup contactGroup = iterator2.next();
+				contactGroups.add(contactGroup.getGroupName());
+			}
+			ArrayList<ContactGroup> tempContactGroups = dao.getGroups();
+			allGroups.clear();
+			for (ContactGroup temp : tempContactGroups) {
+				allGroups.add(temp.getGroupName());
+			}
+			
+			FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Le contact a changé entre temps, vérifiez les nouvelles informations.", null);
+			FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+			
+			return null;
+		}
 
-		return ("main");
+		
 	}
 
 }

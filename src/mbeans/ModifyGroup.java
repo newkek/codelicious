@@ -51,14 +51,25 @@ public class ModifyGroup implements Serializable{
 
 		IDAOContact dao = (IDAOContact) AppContextSingleton.getContext()
 				.getBean("DAOC");
-		
+		if(this.group == null){
+			ExternalContext context = FacesContext.getCurrentInstance()
+					.getExternalContext();
+			String idString = (String) context.getRequestParameterMap().get(
+					"selectedGroupId");
+			if (idString == null || idString.isEmpty()) {
+				return "main";
+			}
+			this.group = dao.getGroup(Long.parseLong(idString));
+			return null;
+		}
+		this.group.setGroupName(groupName);
 		boolean testMod = dao.modifyGroup(this.group); 
 		if(!testMod){
 			FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Impossible de modifier le nom du groupe.", null);
 			FacesContext.getCurrentInstance().addMessage(null, facesMessage);
 		}
 
-		return null;
+		return "displayGroups";
 	}
 
 	public List<Contact> getContacts() {

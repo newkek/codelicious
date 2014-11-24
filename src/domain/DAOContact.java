@@ -1321,8 +1321,12 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			 * temp.getContacts().remove(contact); iteratorGroup.remove(); }
 			 */
 		}
-		this.getHibernateTemplate().merge(contact);
-
+		
+		try{
+			this.getHibernateTemplate().merge(contact);
+		}catch(Exception e){
+			return false;
+		}
 		// this.getHibernateTemplate().saveOrUpdate(contact);
 
 		return true;
@@ -1333,17 +1337,17 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 				.getHibernateTemplate().findByCriteria(
 						DetachedCriteria.forClass(ContactGroup.class).add(
 								Restrictions.like("groupName", groupName)));
-		
+
 		if (listTest != null) {
-			if(listTest.size()>0){
+			if (listTest.size() > 0) {
 				return false;
-			}else{
+			} else {
 				ContactGroup group = new ContactGroup();
 				group.setGroupName(groupName);
 				this.getHibernateTemplate().save(group);
 				return true;
 			}
-			
+
 		} else {
 			ContactGroup group = new ContactGroup();
 			group.setGroupName(groupName);
@@ -1351,10 +1355,25 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			return true;
 		}
 	}
-	
-	public boolean modifyGroup(ContactGroup group){
-		this.getHibernateTemplate().merge(group);
-		
+
+	public boolean modifyGroup(ContactGroup group) {
+
+		ArrayList<ContactGroup> listTest = (ArrayList<ContactGroup>) this
+				.getHibernateTemplate().findByCriteria(
+						DetachedCriteria.forClass(ContactGroup.class).add(
+								Restrictions.like("groupName",
+										group.getGroupName())));
+
+		if (listTest != null) {
+			if (listTest.size() > 0) {
+				return false;
+			} else {
+				this.getHibernateTemplate().merge(group);
+			}
+		} else {
+			this.getHibernateTemplate().merge(group);
+		}
+
 		return true;
 	}
 
