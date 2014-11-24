@@ -5,14 +5,55 @@
       http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
 	version="2.0">
 
-	<!-- <navigation-rule>
+	<navigation-rule>
+		<from-view-id>/main.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>addContact</from-outcome>
+			<to-view-id>/addContact.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/main.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>searchContact</from-outcome>
+			<to-view-id>/searchContact.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/main.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>displayContacts</from-outcome>
+			<to-view-id>/displayContacts.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/main.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>displayGroups</from-outcome>
+			<to-view-id>/displayGroups.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+
+	<navigation-rule>
+		<from-view-id>/displayContacts.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>modifyContact</from-outcome>
+			<to-view-id>/modifyContact.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule>
+
 		<from-view-id>/modifyContact.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>main</from-outcome>
 			<to-view-id>/main.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
-	-->
+
 
 
 </faces-config> 

@@ -10,20 +10,25 @@ import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 
 import utils.AppContextSingleton;
 import domain.Contact;
 import domain.IDAOContact;
 
 @ManagedBean(name = "displayContacts")
+@ViewScoped
 public class DisplayContacts implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private List<Contact> contacts;
 	private Contact selectedContact;
+	
+	public DisplayContacts(){
+		IDAOContact dao = (IDAOContact) AppContextSingleton.getContext()
+				.getBean("DAOC");
+		this.contacts = dao.getContacts();
+	}
 	
 
 	public List<Contact> getContacts() {
@@ -32,13 +37,6 @@ public class DisplayContacts implements Serializable {
 
 	public void setContacts(List<Contact> contacts) {
 		this.contacts = contacts;
-	}
-
-	@PostConstruct
-	public void init() {
-		IDAOContact dao = (IDAOContact) AppContextSingleton.getContext()
-				.getBean("DAOC");
-		this.contacts = dao.getContacts();
 	}
 
 	public Contact getSelectedContact() {

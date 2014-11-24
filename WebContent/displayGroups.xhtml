@@ -9,9 +9,8 @@
     </ui:define>
 
 	<ui:define name="content">
-		#{list.resetGroups()}
-		<h:form>	
-			<h:dataTable id="table1" value="#{list.groups2}" var="group"
+		<h:form>
+			<h:dataTable id="table1" value="#{displayGroups.groups}" var="group"
 				border="1">
 				<f:facet name="header">
 					<h:outputText value="Liste de Groupe" />
@@ -33,10 +32,8 @@
 						<h:outputText value="Afficher liste" />
 					</f:facet>
 					<h:commandButton value="Membres" action="displayContactsFromGroup">
-						<f:setPropertyActionListener target="#{list.selectedGroup}"
-							value="#{group}"/>
+						<f:param name="selectedGroupId" value="#{group.groupId}"/>
 					</h:commandButton>
-
 				</h:column>
 			</h:dataTable>
 		</h:form>
