@@ -16,59 +16,59 @@
 			rendered="#{empty searchContact.searchResult}" />
 
 		<h:dataTable id="table1" value="#{searchContact.searchResult}"
-			var="contact" rendered="#{not empty searchContact.searchResult}">
+			var="contact" rendered="#{not empty searchContact.searchResult}" class="styleClass">
 			<f:facet name="header">
 				<h:outputText value="Liste des résultats" />
 			</f:facet>
 
-			<b:column>
+			<h:column>
 				<f:facet name="header">
 					<h:outputText value="Id" />
 				</f:facet>
 				<h:outputText value="#{contact.id}" />
-			</b:column>
-			<b:column span="4">
+			</h:column>
+			<h:column>
 				<f:facet name="header">
 					<h:outputText value="Prénom" />
 				</f:facet>
 				<h:outputText value="#{contact.firstName}" />
-			</b:column>
-			<b:column>
+			</h:column>
+			<h:column>
 				<f:facet name="header">
 					<h:outputText value="Nom" />
 				</f:facet>
 				<h:outputText value="#{contact.lastName}" />
-			</b:column>
-			<b:column>
+			</h:column>
+			<h:column>
 				<f:facet name="header">
 					<h:outputText value="Email" />
 				</f:facet>
 				<h:outputText value="#{contact.email}" />
-			</b:column>
+			</h:column>
 
-			<b:column>
+			<h:column>
 				<h:form>
 					<f:facet name="header">
 						<h:outputText value="Modification" />
 					</f:facet>
-					<h:commandButton value="Modifier" action="modifyContact">
+					<h:commandButton value="Modifier" action="modifyContact" class="btn btn-default">
 						<f:param name="selectedContactId" value="#{contact.id}" />
 					</h:commandButton>
 				</h:form>
-			</b:column>
+			</h:column>
 
-			<b:column>
+			<h:column>
 				<h:form>
 					<f:facet name="header">
 						<h:outputText value="Suppression" />
 					</f:facet>
-					<b:commandButton value="Supprimer" action="#{searchContact.delete}">
+					<h:commandButton value="Supprimer" action="#{searchContact.delete}" class="btn btn-default">
 						<f:setPropertyActionListener
 							target="#{searchContact.contactToDelete}" value="#{contact.id}" />
-					</b:commandButton>
+					</h:commandButton>
 				</h:form>
 
-			</b:column>
+			</h:column>
 
 		</h:dataTable>
 
