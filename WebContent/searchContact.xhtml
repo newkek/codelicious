@@ -8,29 +8,28 @@
 	<ui:define name="title">
         Recherchez un contact
     </ui:define>
-	
+
 	<ui:define name="content">
-	<h:form>
-		<table>
+		<h:form>
 			
-				<th><h2>Veuillez renseigner ici votre critère de recherche</h2></th>
-			
-				<tr>
-					<td><i>Recherche par First Name: <h:inputText value="#{searchContact.firstName}" size="25"/></i></td>
-				</tr>
-				<tr>
-					<td><i>Recherche par Last Name: <h:inputText value="#{searchContact.lastName}" size="25"/></i></td>
-				</tr>
-				<tr>
-					<td><i>Recherche par Email: <h:inputText value="#{searchContact.email}" size="25"/></i></td>
-				</tr>
-				<tr>
-				<td>
-					<b:commandButton value="Valider" action="#{searchContact.search}" /> 
-					<b:commandButton value="Annuler" action="main" /></td>
-				</tr>
-			
-		</table>
-	</h:form>
+			<h:panelGrid columns="2" cellpadding="8">
+
+				<h:outputText value="Recherche par nom de famille : " />
+				<b:inputText value="#{searchContact.firstName}" />
+
+				<h:outputText value="Recherche par prénom : " />
+				<b:inputText value="#{searchContact.lastName}" />
+
+				<h:outputText value="Recherche par email : " />
+				<b:inputText value="#{searchContact.email}">
+					<f:facet name="prepend">
+						<h:outputText value="@" />
+					</f:facet>
+				</b:inputText>
+				<b:commandButton value="Valider" action="#{searchContact.search}" />
+				<b:commandButton value="Annuler" action="main" />
+			</h:panelGrid>
+
+		</h:form>
 	</ui:define>
 </ui:composition>

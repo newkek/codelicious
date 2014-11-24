@@ -17,37 +17,36 @@
 
 		<h:dataTable id="table1" value="#{searchContact.searchResult}"
 			var="contact" rendered="#{not empty searchContact.searchResult}">
-			<b:row>
 			<f:facet name="header">
 				<h:outputText value="Liste des résultats" />
 			</f:facet>
-			</b:row>
-			<h:column>
+
+			<b:column>
 				<f:facet name="header">
 					<h:outputText value="Id" />
 				</f:facet>
 				<h:outputText value="#{contact.id}" />
-			</h:column>
-			<h:column>
+			</b:column>
+			<b:column span="4">
 				<f:facet name="header">
 					<h:outputText value="Prénom" />
 				</f:facet>
 				<h:outputText value="#{contact.firstName}" />
-			</h:column>
-			<h:column>
+			</b:column>
+			<b:column>
 				<f:facet name="header">
 					<h:outputText value="Nom" />
 				</f:facet>
 				<h:outputText value="#{contact.lastName}" />
-			</h:column>
-			<h:column>
+			</b:column>
+			<b:column>
 				<f:facet name="header">
 					<h:outputText value="Email" />
 				</f:facet>
 				<h:outputText value="#{contact.email}" />
-			</h:column>
+			</b:column>
 
-			<h:column>
+			<b:column>
 				<h:form>
 					<f:facet name="header">
 						<h:outputText value="Modification" />
@@ -56,9 +55,9 @@
 						<f:param name="selectedContactId" value="#{contact.id}" />
 					</h:commandButton>
 				</h:form>
-			</h:column>
+			</b:column>
 
-			<h:column>
+			<b:column>
 				<h:form>
 					<f:facet name="header">
 						<h:outputText value="Suppression" />
@@ -69,7 +68,7 @@
 					</b:commandButton>
 				</h:form>
 
-			</h:column>
+			</b:column>
 
 		</h:dataTable>
 
