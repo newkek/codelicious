@@ -52,6 +52,14 @@
 			<to-view-id>/displayGroups.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/displayGroups.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>modifyGroup</from-outcome>
+			<to-view-id>/modifyGroup.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 
 	<navigation-rule>
 		<from-view-id>/displayContacts.xhtml</from-view-id>

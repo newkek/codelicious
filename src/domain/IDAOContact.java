@@ -18,6 +18,8 @@ public interface IDAOContact{
 	
 	public boolean				addGroup(String groupName);
 	
+	public boolean				modifyGroup(ContactGroup group);
+	
 	public int 					deleteContact(long id);
 	
 	public ArrayList<Contact> 	getContact(String firstname, String lastname, String email);

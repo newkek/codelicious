@@ -9,9 +9,12 @@
     </ui:define>
 
 	<ui:define name="content">
+
+		<h:outputText value="Aucun groupe"
+			rendered="#{empty displayGroups.groups}" />
 		<h:form>
 			<h:dataTable id="table1" value="#{displayGroups.groups}" var="group"
-				border="1">
+				border="1" rendered="#{not empty displayGroups.groups}">
 				<f:facet name="header">
 					<h:outputText value="Liste de Groupe" />
 				</f:facet>
@@ -32,7 +35,27 @@
 						<h:outputText value="Afficher liste" />
 					</f:facet>
 					<h:commandButton value="Membres" action="displayContactsFromGroup">
-						<f:param name="selectedGroupId" value="#{group.groupId}"/>
+						<f:param name="selectedGroupId" value="#{group.groupId}" />
+					</h:commandButton>
+				</h:column>
+				
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Modification" />
+					</f:facet>
+					<h:commandButton value="Modifier" action="modifyGroup">
+						<f:param name="selectedGroupId" value="#{group.groupId}" />
+					</h:commandButton>
+				</h:column>
+
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Suppression" />
+					</f:facet>
+					<h:commandButton value="Supprimer"
+						action="#{displayGroups.delete}">
+						<f:setPropertyActionListener
+							target="#{displayGroups.contactToDelete}" value="#{group.groupId}" />
 					</h:commandButton>
 				</h:column>
 			</h:dataTable>

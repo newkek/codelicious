@@ -1351,5 +1351,11 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			return true;
 		}
 	}
+	
+	public boolean modifyGroup(ContactGroup group){
+		this.getHibernateTemplate().merge(group);
+		
+		return true;
+	}
 
 }

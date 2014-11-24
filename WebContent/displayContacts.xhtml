@@ -9,10 +9,11 @@
     </ui:define>
 	
 	<ui:define name="content">
+		<h:outputText value="Aucun contact" rendered="#{empty displayContacts.contacts}" />
 
 		<h:form>
 			<h:dataTable id="table1" value="#{displayContacts.contacts}"
-				var="contact" border="1">
+				var="contact" border="1" rendered="#{not empty displayContacts.contacts}">
 				<f:facet name="header">
 					<h:outputText value="Liste de Contact" />
 				</f:facet>

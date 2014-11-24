@@ -92,7 +92,7 @@ public class SearchContact implements Serializable {
 		this.searchResult = searchResult;
 	}
 	
-	public String delete() {
+	public void delete() {
 
 		IDAOContact dao = (IDAOContact) AppContextSingleton.getContext()
 				.getBean("DAOC");
@@ -115,15 +115,6 @@ public class SearchContact implements Serializable {
 			  System.out.println("found the contact to delete" + curContact.getId());
 		    it.remove();
 		  }
-		}
-		
-		if(this.searchResult.size()==0){
-			FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, "Plus de contact à afficher", null);
-			FacesContext.getCurrentInstance().addMessage(null, facesMessage);
-			
-			return "main";
-		}else{
-			return null;
 		}
 		
 	}

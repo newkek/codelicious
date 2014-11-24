@@ -103,16 +103,16 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 			<value>kevin</value>
 		</constructor-arg>
 		<constructor-arg type="java.lang.String">
-			<value>toujourskevin</value>
+			<value>gallardo</value>
 		</constructor-arg>
 		<constructor-arg type="java.lang.String">
-			<value>kevin@kevin.com</value>
+			<value>kg@mail.com</value>
 		</constructor-arg>
 		<constructor-arg>
 			<ref bean="SECONDADDRESS" />
 		</constructor-arg>
 		<constructor-arg type="int">
-			<value>42</value>
+			<value>424562</value>
 		</constructor-arg>
 	</bean>
 	

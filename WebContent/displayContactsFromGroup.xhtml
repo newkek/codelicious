@@ -9,10 +9,13 @@
     </ui:define>
 
 	<ui:define name="content">
+	
+	<h:outputText value="Aucun contact dans #{displayCFG.group.groupName}"
+			rendered="#{empty displayCFG.contacts}" />
 		<h:form>
 
 			 <h:dataTable id="table1" value="#{displayCFG.contacts}"
-				var="contact" border="1">
+				var="contact" border="1" rendered="#{not empty displayCFG.contacts}">
 				<f:facet name="header">
 					<h:outputText
 						value="Contacts du groupe #{displayCFG.group.groupName}" />
