@@ -67,9 +67,9 @@ public class SearchContact implements Serializable {
 		//dao calls
 		if(this.searchResult==null){
 			this.searchResult = new ArrayList<Contact>();
-			this.searchResult.clear();
+			
 		}
-		
+		this.searchResult.clear();
 		this.searchResult.addAll(dao.getContact(criteria, "", ""));
 		this.searchResult.addAll(dao.getContact("", criteria, ""));
 		this.searchResult.addAll(dao.getContact("", "", criteria));

@@ -1,10 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
-
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 <h:head>
 	<title><ui:insert name="title">Default title</ui:insert></title>
 </h:head>
@@ -12,54 +13,56 @@
 	<div id="header"></div>
 	<div id="menu">
 		<b:navBar brand="Codelicious" brandHref="main.jsf">
-	    <b:navbarLinks>
-	        
-	        <b:dropMenu value="Ajouter">
-	            <b:navLink value="Nouveau contact" href="addContact.jsf"></b:navLink>
-	            <b:navLink value="Nouveau groupe" href="addGroup.jsf"></b:navLink>
-	        </b:dropMenu>
-	        <b:dropMenu value="Modifier">
-	            <b:navLink value="Modifier un contact existant" href="modifyContact.jsf"></b:navLink>
-	            <b:navLink value="Modifier un groupe existant" href="modifyGroup.jsf"></b:navLink>
-	            <b:navLink value="Supprimer tous les contacts" href="modifyContact.jsf"></b:navLink>
-	            <b:navLink value="Supprimer tous les groupes" href="modifyContact.jsf"></b:navLink>
-	        </b:dropMenu>
-	        <b:dropMenu value="Afficher">
-	            <b:navLink value="Tous les contacts" href="displayAllContacts.jsf"></b:navLink>
-	            <b:navLink value="Tous les groupes" href="displayAllGroups.jsf"></b:navLink>
-	        </b:dropMenu>
-	        <b:dropMenu value="Avancé">
-	            <b:navLink value="Initialisation de contacts" href="initializeContacts.jsf"></b:navLink>
-	            <b:navLink value="Tests de Batch Processing" href="displayAllGroups.jsf"></b:navLink>
-	            
-	        </b:dropMenu>
-	        <b:navLink value="Recherche Avancée" href="searchContact.jsf"></b:navLink>
-	        
-	        <!--<b:dropMenu value="Dropdown">
-	            <b:navLink value="Action" href="#"></b:navLink>
-	            <b:navLink value="Another action" href="#"></b:navLink>
-	            <b:navLink value="Something else here" href="#"></b:navLink>
-	            <b:navLink></b:navLink>
-	            <b:navLink header="Nav header"></b:navLink>
-	            <b:navLink value="Separated link" href="#"></b:navLink>
-	            <b:navLink value="One more separated link" href="#"></b:navLink>
-	        </b:dropMenu>
-	        -->
-	    </b:navbarLinks>
-	    <h:form class="navbar-form navbar-right" role="search" >
-			<div class="form-group">
-				<h:inputText class="form-control" a:placeholder="Recherche rapide" value="#{searchContact.criteria}"/>
-			</div>
-			<h:commandButton size="sm" class="btn btn-default" action="#{searchContact.fastSearch}" value="Submit"/>
-		</h:form>
+			<b:navbarLinks>
+				<b:dropMenu value="Ajouter">
+					<b:navLink value="Nouveau contact" href="addContact.jsf"></b:navLink>
+					<b:navLink value="Nouveau groupe" href="addGroup.jsf"></b:navLink>
+				</b:dropMenu>
+				<b:dropMenu value="Modifier">
+					<b:navLink value="Modifier un contact existant"
+						href="modifyContact.jsf"></b:navLink>
+					<b:navLink value="Modifier un groupe existant"
+						href="modifyGroup.jsf"></b:navLink>
+					<b:navLink value="Supprimer tous les contacts"
+						href="modifyContact.jsf"></b:navLink>
+					<b:navLink value="Supprimer tous les groupes"
+						href="modifyContact.jsf"></b:navLink>
+				</b:dropMenu>
+				<b:dropMenu value="Afficher">
+					<b:navLink value="Tous les contacts" href="displayAllContacts.jsf"></b:navLink>
+					<b:navLink value="Tous les groupes" href="displayAllGroups.jsf"></b:navLink>
+				</b:dropMenu>
+				<b:dropMenu value="Avancé">
+					<b:navLink value="Initialisation de contacts"
+						href="initializeContacts.jsf"></b:navLink>
+					<b:navLink value="Tests de Batch Processing"
+						href="displayAllGroups.jsf"></b:navLink>
+				</b:dropMenu>
+				<b:navLink value="Recherche Avancée" href="searchContact.jsf"></b:navLink>
+				<!--<b:dropMenu value="Dropdown">
+				<b:navLink value="Action" href="#"></b:navLink>
+				<b:navLink value="Another action" href="#"></b:navLink>
+				<b:navLink value="Something else here" href="#"></b:navLink>
+				<b:navLink></b:navLink>
+				<b:navLink header="Nav header"></b:navLink>
+				<b:navLink value="Separated link" href="#"></b:navLink>
+				<b:navLink value="One more separated link" href="#"></b:navLink>
+				</b:dropMenu>
+				-->
+			</b:navbarLinks>
+			<h:form class="navbar-form navbar-right" role="search">
+				<div class="form-group">
+					<h:inputText class="form-control" a:placeholder="Recherche rapide"
+						value="#{searchContact.criteria}" />
+				</div>
+				<h:commandButton size="sm" class="btn btn-default"
+					action="#{searchContact.fastSearch}" value="Submit" />
+			</h:form>
 		</b:navBar>
-	
 	</div>
 	<div id="content">
 		<ui:insert name="content">Default content</ui:insert>
 	</div>
 	<div id="footer"></div>
-	
 </h:body>
-
 </html>
