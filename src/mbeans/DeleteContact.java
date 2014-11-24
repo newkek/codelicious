@@ -25,12 +25,12 @@ public class DeleteContact implements Serializable {
 	
 	public void delete() {
 
-		IDAOContact dao = (IDAOContact) AppContextSingleton.getContext()
-				.getBean("DAOC");
+		//IDAOContact dao = (IDAOContact) AppContextSingleton.getContext()
+				//.getBean("DAOC");
 		
 		//dao calls
 		//delete from database
-		dao.deleteContact(this.contactToDelete);
+		//dao.deleteContact(this.contactToDelete);
 		
 		System.out.println("Call in delete contact, contact to delete is : "+this.contactToDelete);
 		

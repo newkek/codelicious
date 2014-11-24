@@ -10,9 +10,8 @@
 
 	
 	<ui:define name="content">
-		<h:form>
-		<table>
-			<ui:repeat id="table1" value="#{searchContact.searchResult}" var="contact"
+		
+			<h:dataTable id="table1" value="#{searchContact.searchResult}" var="contact"
 				border="1">
 				<f:facet name="header">
 					<h:outputText value="Liste des résultats" />
@@ -43,19 +42,19 @@
 				</h:column>
 				
 				<h:column>
+					<h:form>
 					<f:facet name="header">
 						<h:outputText value="Supprimer ?" />
 					</f:facet>
-					<h:commandButton value="Supprimer" action="searchContact.delete">
-						<!-- <f:setPropertyActionListener target="#{searchContact.contactToDelete}"
-							value="#{contact.id}"/> -->
-							<!-- <f:param name="contactToDelete" value="#{contact.id}" /> -->
+					<h:commandButton value="Supprimer" action="#{searchContact.delete}">
+						<f:setPropertyActionListener target="#{searchContact.contactToDelete}"
+							value="#{contact.id}"/>
 					</h:commandButton>
+					</h:form>
 
 				</h:column>
-			</ui:repeat>
-			</table>
-		</h:form>
+			</h:dataTable>
+		
 
 	</ui:define>
 </ui:composition>

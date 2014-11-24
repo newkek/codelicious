@@ -38,7 +38,7 @@
 	            <b:navLink value="Tests de Batch Processing" href="displayAllGroups.jsf"></b:navLink>
 	            
 	        </b:dropMenu>
-	        <b:navLink value="Recherche Avancée" href="#"></b:navLink>
+	        <b:navLink value="Recherche Avancée" href="searchContact.jsf"></b:navLink>
 	        
 	        <!--<b:dropMenu value="Dropdown">
 	            <b:navLink value="Action" href="#"></b:navLink>
@@ -53,9 +53,9 @@
 	    </b:navbarLinks>
 	    <h:form class="navbar-form navbar-right" role="search" >
 			<div class="form-group">
-				<h:inputText class="form-control" a:placeholder="Recherche rapide" value="#{fastContactSearch.criteria}"/>
+				<h:inputText class="form-control" a:placeholder="Recherche rapide" value="#{searchContact.criteria}"/>
 			</div>
-			<h:commandButton class="btn btn-default" action="#{fastContactSearch.search}" value="Submit"/>
+			<h:commandButton size="sm" class="btn btn-default" action="#{searchContact.fastSearch}" value="Submit"/>
 		</h:form>
 		</b:navBar>
 	
