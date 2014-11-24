@@ -13,42 +13,104 @@
 			<h2>Renseignez les données du nouveau contact</h2>
 			<br />
 
-			<h:panelGrid columns="2" cellpadding="8">
+			<h:panelGrid columns="3" cellpadding="8">
 
 				<h:outputText value="Nom : " />
-				<b:inputText value="#{addContact.firstName}" />
+				<b:inputText value="#{addContact.firstName}" required="true"
+					requiredMessage="Obligatoire" id="nom"
+					validatorMessage="Format non valide">
+					<f:validateRegex pattern="(^[a-zA-Z \-]+$)" />
+				</b:inputText>
+				<h:message for="nom" style="color:red" />
+
 
 				<h:outputText value="Prénom : " />
-				<b:inputText value="#{addContact.lastName}" />
-				
+				<b:inputText value="#{addContact.lastName}" required="true"
+					requiredMessage="Obligatoire" id="prenom"
+					validatorMessage="Format non valide">
+					<f:validateRegex pattern="(^[a-zA-Z\-]+$)" />
+				</b:inputText>
+				<h:message for="prenom" style="color:red" />
+
 				<h:outputText value="e-mail : " />
-				<b:inputText value="#{addContact.email}">
+				<b:inputText value="#{addContact.email}" required="true"
+					requiredMessage="Obligatoire" id="email"
+					validatorMessage="Format non valide">
 					<f:facet name="prepend">
 						<h:outputText value="@" />
 					</f:facet>
+					<f:validateRegex pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" />
 				</b:inputText>
+				<h:message for="email" style="color:red" />
+
 				<h:outputText value="Street : " />
-				<b:inputText value="#{addContact.street}" />
+				<b:inputText value="#{addContact.street}" required="true"
+					requiredMessage="Obligatoire" id="street"
+					validatorMessage="Format non valide">
+				</b:inputText>
+				<h:message for="street" style="color:red" />
+
 				<h:outputText value="City : " />
-				<b:inputText value="#{addContact.city}" />
+				<b:inputText value="#{addContact.city}" required="true"
+					requiredMessage="Obligatoire" id="city"
+					validatorMessage="Format non valide">
+				</b:inputText>
+				<h:message for="city" style="color:red" />
+
+
 				<h:outputText value="Zip : " />
-				<b:inputText value="#{addContact.zip}" />
+				<b:inputText value="#{addContact.zip}" required="true"
+					requiredMessage="Obligatoire" id="zip"
+					validatorMessage="Format non valide">
+					<f:validateRegex pattern="[0-9]+" />
+				</b:inputText>
+				<h:message for="zip" style="color:red" />
+
+				<h:outputText value="Country : " />
+				<b:inputText value="#{addContact.country}" required="true"
+					requiredMessage="Obligatoire" id="country"
+					validatorMessage="Format non valide">
+				</b:inputText>
+				<h:message for="country" style="color:red" />
+
 				<h:outputText value="Téléphone personnel : " />
-				<b:inputText value="#{addContact.personalPhone}" />
+				<b:inputText value="#{addContact.personalPhone}" required="true"
+					requiredMessage="Obligatoire" id="persophone"
+					validatorMessage="Format non valide">
+					<f:validateRegex pattern="[0-9]+" />
+				</b:inputText>
+				<h:message for="persophone" style="color:red" />
+
 				<h:outputText value="Téléphone professionnel : " />
-				<b:inputText value="#{addContact.businessPhone}" />
+				<b:inputText value="#{addContact.businessPhone}" id="busiphone"
+					validatorMessage="Format non valide">
+				<f:validateRegex pattern="[0-9]+" />
+				</b:inputText>
+				<h:message for="busiphone" style="color:red" />
+
 				<h:outputText value="Téléphone domicile : " />
-				<b:inputText value="#{addContact.homePhone}" />
+				<b:inputText value="#{addContact.homePhone}" id="homephone"
+					validatorMessage="Format non valide">
+				<f:validateRegex pattern="[0-9]+" />
+				</b:inputText>
+				<h:message for="homephone" style="color:red" />
 
 				<h:outputText value="Groupe(s) : " />
 				<h:selectManyCheckbox value="#{addContact.contactGroups}">
 					<f:selectItems value="#{addContact.allGroups}" />
 				</h:selectManyCheckbox>
+				<h:message />
 
 				<h:outputText value="Numéro Siret si entreprise : " />
-				<b:inputText value="#{addContact.numSiret}" />
+				<b:inputText value="#{addContact.numSiret}" id="siret"
+					validatorMessage="Format non valide">
+				<f:validateRegex pattern="[0-9]+" />
+				</b:inputText>
+				<h:message for="siret" style="color:red" />
+
 				<b:commandButton value="Valider" action="#{addContact.create}" />
 				<b:commandButton value="Annuler" action="main" />
+				<h:message />
 			</h:panelGrid>
 		</h:form>
 	</ui:define>
