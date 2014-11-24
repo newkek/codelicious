@@ -158,15 +158,38 @@ public class CreateContact implements Serializable {
 
 		IDAOContact dao = (IDAOContact) AppContextSingleton.getContext()
 				.getBean("DAOC");
-		if (numSiret.isEmpty()) {
+		if(dao==null){
+			System.out.println("WTF?");
+			return "main";
+		}
+		System.out.println("modify appelé");
+		System.out.println(firstName);
+		System.out.println(lastName);
+		System.out.println(email);
+		System.out.println(street);
+		System.out.println(city);
+		System.out.println(zip);
+		System.out.println(country);
+		System.out.println(personalPhone);
+		System.out.println(businessPhone);
+		System.out.println(homePhone);
+		System.out.println(contactGroups.size());
+		if(numSiret!=null){
+			if (numSiret.isEmpty()) {
+				dao.addContact(firstName, lastName, email, street, city, zip,
+						country, personalPhone, businessPhone, homePhone,
+						contactGroups);
+			} else {
+				dao.addCompany(firstName, lastName, email, street, city, zip,
+						country, personalPhone, businessPhone, homePhone,
+						contactGroups, numSiret);
+			}
+		}else{
 			dao.addContact(firstName, lastName, email, street, city, zip,
 					country, personalPhone, businessPhone, homePhone,
 					contactGroups);
-		} else {
-			dao.addCompany(firstName, lastName, email, street, city, zip,
-					country, personalPhone, businessPhone, homePhone,
-					contactGroups, numSiret);
 		}
+		
 
 		return ("displayContacts");
 	}

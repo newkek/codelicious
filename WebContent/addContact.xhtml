@@ -14,58 +14,42 @@
 			<br />
 
 			<h:panelGrid columns="2" cellpadding="8">
-			
+
 				<h:outputText value="Nom : " />
-				<b:inputText>
-					<h:outputText value="#{addContact.firstName}" />
-				</b:inputText>
+				<b:inputText value="#{addContact.firstName}" />
+
 				<h:outputText value="Prénom : " />
-				<b:inputText>
-					<h:outputText value="#{addContact.lastName}" />
-				</b:inputText>
+				<b:inputText value="#{addContact.lastName}" />
+				
 				<h:outputText value="e-mail : " />
-				<b:inputText>
+				<b:inputText value="#{addContact.email}">
 					<f:facet name="prepend">
 						<h:outputText value="@" />
 					</f:facet>
-					<h:outputText value="#{addContact.email}" />
 				</b:inputText>
 				<h:outputText value="Street : " />
-				<b:inputText>
-					<h:outputText value="#{addContact.street}" />
-				</b:inputText>
+				<b:inputText value="#{addContact.street}" />
 				<h:outputText value="City : " />
-				<b:inputText>
-					<h:outputText value="#{addContact.city}" />
-				</b:inputText>
+				<b:inputText value="#{addContact.city}" />
 				<h:outputText value="Zip : " />
-				<b:inputText>
-					<h:outputText value="#{addContact.zip}" />
-				</b:inputText>
+				<b:inputText value="#{addContact.zip}" />
 				<h:outputText value="Téléphone personnel : " />
-				<b:inputText>
-					<h:outputText value="#{addContact.personalPhone}" />
-				</b:inputText>
+				<b:inputText value="#{addContact.personalPhone}" />
 				<h:outputText value="Téléphone professionnel : " />
-				<b:inputText>
-					<h:outputText value="#{addContact.businessPhone}" />
-				</b:inputText>
+				<b:inputText value="#{addContact.businessPhone}" />
 				<h:outputText value="Téléphone domicile : " />
-				<b:inputText>
-					<h:outputText value="#{addContact.homePhone}" />
-				</b:inputText>
-				
-				
+				<b:inputText value="#{addContact.homePhone}" />
+
 				<h:outputText value="Groupe(s) : " />
 				<h:selectManyCheckbox value="#{addContact.contactGroups}">
 					<f:selectItems value="#{addContact.allGroups}" />
 				</h:selectManyCheckbox>
 
 				<h:outputText value="Numéro Siret si entreprise : " />
-				<b:inputText>
-					<h:outputText value="#{addContact.numSiret}" />
-				</b:inputText>
+				<b:inputText value="#{addContact.numSiret}" />
 
+				<h:commandButton value="Valider" action="#{addContact.create}" />
+				<h:commandButton value="Annuler" action="main" />
 			</h:panelGrid>
 		</h:form>
 	</ui:define>
