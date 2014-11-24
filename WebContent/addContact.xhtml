@@ -10,82 +10,60 @@
     </ui:define>
 	<ui:define name="content">
 		<h:form>
-			<h:panelGrid columns="2" cellpadding="5">
-				<div class="form-group">
-					<!--<table>
-				<tr>
-					<th>
-						<h2>Veuillez renseigner ici les informations de votre nouveau
-							contact</h2>
-					</th>
-				</tr>
-				<tr>
-					<td><i>Prénom: <h:inputText
-								value="#{addContact.firstName}" size="25" /></i></td>
-				</tr>
-				<tr>
-					<td><i>Nom: <h:inputText value="#{addContact.lastName}"
-								size="25" /></i></td>
-				</tr>
-				<tr>
-					<td><i>email: <h:inputText value="#{addContact.email}"
-								size="25" /></i></td>
-				</tr>
-				<tr>
-					<td><i>N° et Rue: <h:inputText
-								value="#{addContact.street}" size="25" /></i></td>
-				</tr>
-				<tr>
-					<td><i>Ville: <h:inputText value="#{addContact.city}"
-								size="25" /></i></td>
-				</tr>
-				<tr>
-					<td><i>Code postal: <h:inputText value="#{addContact.zip}"
-								size="25" /></i></td>
-				</tr>
-				<tr>
-					<td><i>Pays: <h:inputText value="#{addContact.country}"
-								size="25" /></i></td>
-				</tr>
-				<tr>
-					<td><i>Téléphone mobile: <h:inputText
-								value="#{addContact.personalPhone}" size="25" /></i></td>
-				</tr>
-				<tr>
-					<td><i>Téléphone professionnel: <h:inputText
-								value="#{addContact.businessPhone}" size="25" /></i></td>
-				</tr>
-				
-				<tr>
-					
-					<td><i>Téléphone personnel: <h:inputText
-								value="#{addContact.homePhone}" size="25" class="" /></i></td>
-				</tr>
-				
-				<tr>
-					<h:selectManyCheckbox value="#{addContact.contactGroups}">
-						<f:selectItems value="#{addContact.allGroups}" />
-					</h:selectManyCheckbox>
-				</tr>
-				<tr>
-					<td><i>Numero Siret si entreprise: <h:inputText
-								value="#{addContact.numSiret}" size="12" /></i></td>
-				</tr>
-				<tr>
-					<td><h:commandButton value="Valider" class="btn btn-default"
-							action="#{addContact.create}" /> <h:commandButton class="btn btn-default"
-							value="Annuler" action="main" /></td>
-				</tr>
+			<h2>Renseignez les données du nouveau contact</h2>
+			<br />
 
-			</table>
-			-->
-					<h:outputText value="e-mail:" />
-					<b:inputText>
-						<f:facet name="prepend">
-							<h:outputText value="#{addContact.email}" />
-						</f:facet>
-					</b:inputText>
-				</div>
+			<h:panelGrid columns="2" cellpadding="8">
+				<h:outputText value="Nom : " />
+				<b:inputText>
+					<h:outputText value="#{addContact.firstName}" />
+				</b:inputText>
+				<h:outputText value="Prénom : " />
+				<b:inputText>
+					<h:outputText value="#{addContact.lastName}" />
+				</b:inputText>
+				<h:outputText value="e-mail : " />
+				<b:inputText>
+					<f:facet name="prepend">
+						<h:outputText value="@" />
+					</f:facet>
+					<h:outputText value="#{addContact.email}" />
+				</b:inputText>
+				<h:outputText value="Street : " />
+				<b:inputText>
+					<h:outputText value="#{addContact.street}" />
+				</b:inputText>
+				<h:outputText value="City : " />
+				<b:inputText>
+					<h:outputText value="#{addContact.city}" />
+				</b:inputText>
+				<h:outputText value="Zip : " />
+				<b:inputText>
+					<h:outputText value="#{addContact.zip}" />
+				</b:inputText>
+				<h:outputText value="Téléphone personnel : " />
+				<b:inputText>
+					<h:outputText value="#{addContact.personalPhone}" />
+				</b:inputText>
+				<h:outputText value="Téléphone professionnel : " />
+				<b:inputText>
+					<h:outputText value="#{addContact.businessPhone}" />
+				</b:inputText>
+				<h:outputText value="Téléphone domicile : " />
+				<b:inputText>
+					<h:outputText value="#{addContact.homePhone}" />
+				</b:inputText>
+				<h:outputText value="Groupe(s) : " />
+				<h:selectManyCheckbox value="#{addContact.contactGroups}">
+					<f:selectItems value="#{addContact.allGroups}" />
+				</h:selectManyCheckbox>
+
+				<h:outputText value="Numéro Siret si entreprise : " />
+				<b:inputText>
+					<h:outputText value="#{addContact.numSiret}" />
+				</b:inputText>
+
+
 			</h:panelGrid>
 		</h:form>
 	</ui:define>
