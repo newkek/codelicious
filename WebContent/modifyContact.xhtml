@@ -11,67 +11,47 @@
 
 	<ui:define name="content">
 		<h:form>
-			<table>
-				<tr>
-					<th>
-						<h2>Veuillez modifier les informations de votre contact</h2>
-					</th>
-				</tr>
-				<tr>
-					<td><i>Prénom: <h:inputText
-								value="#{modifyContactB.firstName}" size="25" /></i></td>
-				</tr>
-				<tr>
-					<td><i>Nom: <h:inputText value="#{modifyContactB.lastName}"
-								size="25" /></i></td>
-				</tr>
-				<tr>
-					<td><i>email: <h:inputText value="#{modifyContactB.email}"
-								size="25" /></i></td>
-				</tr>
-				<tr>
-					<td><i>N° et Rue: <h:inputText
-								value="#{modifyContactB.street}" size="25" /></i></td>
-				</tr>
-				<tr>
-					<td><i>Ville: <h:inputText value="#{modifyContactB.city}"
-								size="25" /></i></td>
-				</tr>
-				<tr>
-					<td><i>Code postal: <h:inputText value="#{modifyContactB.zip}"
-								size="25" /></i></td>
-				</tr>
-				<tr>
-					<td><i>Pays: <h:inputText value="#{modifyContactB.country}"
-								size="25" /></i></td>
-				</tr>
-				<tr>
-					<td><i>Téléphone mobile: <h:inputText
-								value="#{modifyContactB.personalPhone}" size="25" /></i></td>
-				</tr>
-				<tr>
-					<td><i>Téléphone professionnel: <h:inputText
-								value="#{modifyContactB.businessPhone}" size="25" /></i></td>
-				</tr>
-				<tr>
-					<td><i>Téléphone personnel: <h:inputText
-								value="#{modifyContactB.homePhone}" size="25" /></i></td>
-				</tr>
-				<tr>
-					<h:selectManyCheckbox value="#{modifyContactB.contactGroups}">
-						<f:selectItems value="#{modifyContactB.allGroups}" />
-					</h:selectManyCheckbox>
-				</tr>
-				<tr>
-					<td><i>Numero Siret si entreprise: <h:inputText
-								value="#{modifyContactB.numSiret}" size="25" /></i></td>
-				</tr>
-				<tr>
-					<td><b:commandButton value="Valider" action="#{modifyContactB.modify}" /> 
-						<b:commandButton value="Annuler" action="main" /></td>
-				</tr>
+			
+			<h2>Veuillez modifier les données de votre contact</h2>
+			<br />
+			<h:panelGrid columns="2" cellpadding="8">
 
-			</table>
+				<h:outputText value="Nom : " />
+				<b:inputText value="#{modifyContactB.firstName}" />
+
+				<h:outputText value="Prénom : " />
+				<b:inputText value="#{modifyContactB.lastName}" />
+
+				<h:outputText value="e-mail : " />
+				<b:inputText value="#{modifyContactB.email}">
+					<f:facet name="prepend">
+						<h:outputText value="@" />
+					</f:facet>
+				</b:inputText>
+				<h:outputText value="Street : " />
+				<b:inputText value="#{modifyContactB.street}" />
+				<h:outputText value="City : " />
+				<b:inputText value="#{modifyContactB.city}" />
+				<h:outputText value="Zip : " />
+				<b:inputText value="#{modifyContactB.zip}" />
+				<h:outputText value="Téléphone personnel : " />
+				<b:inputText value="#{modifyContactB.personalPhone}" />
+				<h:outputText value="Téléphone professionnel : " />
+				<b:inputText value="#{modifyContactB.businessPhone}" />
+				<h:outputText value="Téléphone domicile : " />
+				<b:inputText value="#{modifyContactB.homePhone}" />
+
+				<h:outputText value="Groupe(s) : " />
+				<h:selectManyCheckbox value="#{modifyContactB.contactGroups}">
+					<f:selectItems value="#{modifyContactB.allGroups}" />
+				</h:selectManyCheckbox>
+
+				<h:outputText value="Numéro Siret si entreprise : " />
+				<b:inputText value="#{modifyContactB.numSiret}" />
+				<b:commandButton value="Valider" action="#{modifyContactB.modify}" />
+				<b:commandButton value="Annuler" action="main" />
+			</h:panelGrid>
+
 		</h:form>
 	</ui:define>
 </ui:composition>

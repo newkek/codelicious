@@ -9,6 +9,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -52,6 +53,7 @@ public class ModifyContactBean implements Serializable {
 				.getExternalContext();
 		String idString = (String) context.getRequestParameterMap().get(
 				"selectedContactId");
+		System.out.println("Modify contact bean constructor"+idString);
 		if (idString == null || idString.isEmpty()) {
 			return;
 		}
@@ -108,6 +110,7 @@ public class ModifyContactBean implements Serializable {
 	}
 
 	public String getLastName() {
+		System.out.println("getLastName : " + lastName);
 		return lastName;
 	}
 
