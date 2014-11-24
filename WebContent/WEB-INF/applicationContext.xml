@@ -11,6 +11,7 @@ http://www.springframework.org/schema/aop http://www.springframework.org/schema/
 
 	<aop:aspectj-autoproxy/>
 	<bean class="org.springframework.aop.aspectj.annotation.AnnotationAwareAspectJAutoProxyCreator" />
+	<bean id="searchLogger" class="utils.SearchLogger"/>
 	
 	<aop:config>       
         <!-- <aop:advisor id="managerTx" advice-ref="txAdvice" pointcut="execution(* *..service.manager.*Manager.*(..))" order="1"/> -->
