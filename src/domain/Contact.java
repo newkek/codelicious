@@ -83,5 +83,5 @@ public class Contact {
 	public void setContactGroups(Set<ContactGroup> contactGroups) {
 		this.contactGroups = contactGroups;
 	}
-	
+
 }
