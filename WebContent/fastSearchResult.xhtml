@@ -11,8 +11,8 @@
 	
 	<ui:define name="content">
 		<h:form>
-		<table>
-			<ui:repeat id="table1" value="#{fastContactSearch.searchResult}" var="contact"
+		
+			<h:dataTable id="table1" value="#{fastContactSearch.searchResult}" var="contact"
 				border="1">
 				<f:facet name="header">
 					<h:outputText value="Liste des résultats" />
@@ -46,15 +46,13 @@
 					<f:facet name="header">
 						<h:outputText value="Supprimer ?" />
 					</f:facet>
-					<h:commandButton value="Supprimer" action="searchContact.delete">
-						<!-- <f:setPropertyActionListener target="#{searchContact.contactToDelete}"
-							value="#{contact.id}"/> -->
-							<!-- <f:param name="contactToDelete" value="#{contact.id}" /> -->
+					<h:commandButton value="Supprimer" action="#{fastContactSearch.delete}">
+						<f:setPropertyActionListener target="#{fastContactSearch.contactToDelete}"
+							value="#{contact.id}"/>
 					</h:commandButton>
 
 				</h:column>
-			</ui:repeat>
-			</table>
+			</h:dataTable>
 		</h:form>
 
 	</ui:define>

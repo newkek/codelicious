@@ -1,9 +1,11 @@
 package mbeans;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 
 import org.springframework.context.ApplicationContext;
@@ -16,9 +18,13 @@ import domain.ContactGroup;
 
 
 @ManagedBean(name = "list")
-@ViewScoped
-public class ListUtil {
+@SessionScoped
+public class ListUtil implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<String> groups = new ArrayList<String>();
 	private List<ContactGroup> groups2 = new ArrayList<ContactGroup>();
 	private List<Contact> contacts = new ArrayList<Contact>();

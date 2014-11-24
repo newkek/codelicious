@@ -2,14 +2,17 @@
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
 
 	<ui:define name="title">
         Création de Contact
     </ui:define>
 	<ui:define name="content">
 		<h:form>
-			<table>
+			<h:panelGrid columns="2" cellpadding="5">
+				<div class="form-group">
+					<!--<table>
 				<tr>
 					<th>
 						<h2>Veuillez renseigner ici les informations de votre nouveau
@@ -52,10 +55,13 @@
 					<td><i>Téléphone professionnel: <h:inputText
 								value="#{addContact.businessPhone}" size="25" /></i></td>
 				</tr>
+				
 				<tr>
+					
 					<td><i>Téléphone personnel: <h:inputText
-								value="#{addContact.homePhone}" size="25" /></i></td>
+								value="#{addContact.homePhone}" size="25" class="" /></i></td>
 				</tr>
+				
 				<tr>
 					<h:selectManyCheckbox value="#{addContact.contactGroups}">
 						<f:selectItems value="#{addContact.allGroups}" />
@@ -63,15 +69,24 @@
 				</tr>
 				<tr>
 					<td><i>Numero Siret si entreprise: <h:inputText
-								value="#{addContact.numSiret}" size="25" /></i></td>
+								value="#{addContact.numSiret}" size="12" /></i></td>
 				</tr>
 				<tr>
-					<td><h:commandButton value="Valider"
-							action="#{addContact.create}" /> <h:commandButton
+					<td><h:commandButton value="Valider" class="btn btn-default"
+							action="#{addContact.create}" /> <h:commandButton class="btn btn-default"
 							value="Annuler" action="main" /></td>
 				</tr>
 
 			</table>
+			-->
+					<h:outputText value="e-mail:" />
+					<b:inputText>
+						<f:facet name="prepend">
+							<h:outputText value="#{addContact.email}" />
+						</f:facet>
+					</b:inputText>
+				</div>
+			</h:panelGrid>
 		</h:form>
 	</ui:define>
 </ui:composition>

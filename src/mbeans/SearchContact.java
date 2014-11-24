@@ -16,7 +16,7 @@ import domain.Contact;
 import domain.IDAOContact;
 
 @ManagedBean(name = "searchContact")
-@ViewScoped
+@SessionScoped
 public class SearchContact implements Serializable {
 
 	/**
@@ -27,8 +27,9 @@ public class SearchContact implements Serializable {
 	private String lastName;
 	private String email;
 	private long contactToDelete;
+	private String criteria;
 	
-	private ArrayList<Contact> searchResult;
+	private ArrayList<Contact> searchResult ;
 	
 	public String getFirstName() {
 		return firstName;
@@ -54,11 +55,31 @@ public class SearchContact implements Serializable {
 		IDAOContact dao = (IDAOContact) AppContextSingleton.getContext()
 				.getBean("DAOC");
 		//dao calls
+		this.searchResult.clear();
 		this.searchResult = dao.getContact(firstName, lastName, email);
 		
-		System.out.println("search bean result : "+ searchResult.get(0).getLastName());
 		return ("searchResult");
 	}
+	
+	public String fastSearch(){
+		IDAOContact dao = (IDAOContact) AppContextSingleton.getContext()
+				.getBean("DAOC");
+		//dao calls
+		if(this.searchResult==null){
+			this.searchResult = new ArrayList<Contact>();
+			this.searchResult.clear();
+		}
+		
+		this.searchResult.addAll(dao.getContact(criteria, "", ""));
+		this.searchResult.addAll(dao.getContact("", criteria, ""));
+		this.searchResult.addAll(dao.getContact("", "", criteria));
+		//System.out.println("first"+dao.getContact(criteria, "", ""));
+		//System.out.println("secondt"+dao.getContact("", criteria, ""));
+		//System.out.println("third"+dao.getContact("", "", criteria));
+		//System.out.println(this.searchResult.get(0));
+		return ("searchResult");
+	}
+	
 	
 	public ArrayList<Contact> getSearchResult() {
 		return searchResult;
@@ -75,15 +96,15 @@ public class SearchContact implements Serializable {
 		//dao calls
 		//delete from database
 		
-		long contactRecup = Long.parseLong(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("contactToDelete"));
-		/*
+		//long contactRecup = Long.parseLong(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("contactToDelete"));
+		
 		dao.deleteContact(this.contactToDelete);
-		*/
-		System.out.println("Call in delete contact, contact to delete is : "+contactRecup	);
+		
+		System.out.println("Call in delete contact, contact to delete is : "+this.contactToDelete);
 		
 		
 		//delete from list for MVC change
-		/*Iterator<Contact> it = this.searchResult.iterator();
+		Iterator<Contact> it = this.searchResult.iterator();
 		while (it.hasNext()) {
 		  Contact curContact = it.next();
 		  if (curContact.getId() == this.contactToDelete) {
@@ -91,13 +112,19 @@ public class SearchContact implements Serializable {
 		    it.remove();
 		  }
 		}
-		*/
+		
 	}
 	public long getContactToDelete() {
 		return contactToDelete;
 	}
 	public void setContactToDelete(long contactToDelete) {
 		this.contactToDelete = contactToDelete;
+	}
+	public String getCriteria() {
+		return criteria;
+	}
+	public void setCriteria(String criteria) {
+		this.criteria = criteria;
 	}
 
 }

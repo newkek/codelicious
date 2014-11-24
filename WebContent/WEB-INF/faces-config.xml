@@ -46,6 +46,7 @@
 	</navigation-rule>
 	
 	<navigation-rule>
+
 		<from-view-id>/modifyContact.xhtml</from-view-id>
 		<navigation-case>
 			<from-outcome>main</from-outcome>

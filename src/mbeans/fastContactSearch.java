@@ -32,13 +32,13 @@ public class fastContactSearch implements Serializable {
 		IDAOContact dao = (IDAOContact) AppContextSingleton.getContext()
 				.getBean("DAOC");
 		//dao calls
-		 this.searchResult.addAll(dao.getContact(criteria, "", ""));
-		 this.searchResult.addAll(dao.getContact("", criteria, ""));
-		 this.searchResult.addAll(dao.getContact("", "", criteria));
-		System.out.println("first"+dao.getContact(criteria, "", ""));
-		System.out.println("secondt"+dao.getContact("", criteria, ""));
-		System.out.println("third"+dao.getContact("", "", criteria));
-		System.out.println(this.searchResult.get(0));
+		this.searchResult.addAll(dao.getContact(criteria, "", ""));
+		this.searchResult.addAll(dao.getContact("", criteria, ""));
+		this.searchResult.addAll(dao.getContact("", "", criteria));
+		//System.out.println("first"+dao.getContact(criteria, "", ""));
+		//System.out.println("secondt"+dao.getContact("", criteria, ""));
+		//System.out.println("third"+dao.getContact("", "", criteria));
+		//System.out.println(this.searchResult.get(0));
 		return ("fastSearchResult");
 	}
 	public String getCriteria() {
