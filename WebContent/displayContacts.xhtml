@@ -61,11 +61,11 @@
 					<f:facet name="header">
 						<h:outputText value="Suppression" />
 					</f:facet>
-					<b:commandButton value="Supprimer"
-						action="#{displayContacts.delete}">
+					<h:commandButton value="Supprimer"
+						action="#{displayContacts.delete}" class="btn btn-default">
 						<f:setPropertyActionListener
 							target="#{displayContacts.contactToDelete}" value="#{contact.id}" />
-					</b:commandButton>
+					</h:commandButton>
 
 
 				</h:column>
