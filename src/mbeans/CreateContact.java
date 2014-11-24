@@ -9,12 +9,14 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 
 import utils.AppContextSingleton;
 import domain.ContactGroup;
 import domain.IDAOContact;
 
 @ManagedBean(name = "addContact")
+@ViewScoped
 public class CreateContact implements Serializable {
 
 
@@ -166,7 +168,7 @@ public class CreateContact implements Serializable {
 					contactGroups, numSiret);
 		}
 
-		return ("main");
+		return ("displayContacts");
 	}
 
 }
