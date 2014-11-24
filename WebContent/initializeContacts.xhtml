@@ -6,15 +6,18 @@
 	xmlns:b="http://bootsfaces.net/ui">
 
 <ui:define name="title">
-        Page Principale 
+        Initialisation de contacts 
 </ui:define>
 
 
-<ui:define name="content">
+	<ui:define name="content">
+		#{list.init()}
+		<center><b:label text="Vos contacts ont été initialisés !"></b:label></center>
 
-		<center><b:label text="This is the main"></b:label></center>
+	</ui:define>
 
 
+ 
 
-</ui:define>
+
 </ui:composition>

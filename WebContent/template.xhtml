@@ -16,12 +16,31 @@
 	
 	
 	<div id="menu">
-		<b:navBar brand="Codelicious" brandHref="main.xhtml">
+		<b:navBar brand="Codelicious" brandHref="main.jsf">
 	    <b:navbarLinks>
-	        <b:navLink value="Ajout" href="addContact.jsf"></b:navLink>
-	        <b:navLink value="Link" href="#"></b:navLink>
-	        <b:navLink value="Link" href="#"></b:navLink>
-	        <b:dropMenu value="Dropdown">
+	        
+	        <b:dropMenu value="Ajouter">
+	            <b:navLink value="Nouveau contact" href="addContact.jsf"></b:navLink>
+	            <b:navLink value="Nouveau groupe" href="addGroup.jsf"></b:navLink>
+	        </b:dropMenu>
+	        <b:dropMenu value="Modifier">
+	            <b:navLink value="Modifier un contact existant" href="modifyContact.jsf"></b:navLink>
+	            <b:navLink value="Modifier un groupe existant" href="modifyGroup.jsf"></b:navLink>
+	            <b:navLink value="Supprimer tous les contacts" href="modifyContact.jsf"></b:navLink>
+	            <b:navLink value="Supprimer tous les groupes" href="modifyContact.jsf"></b:navLink>
+	        </b:dropMenu>
+	        <b:dropMenu value="Afficher">
+	            <b:navLink value="Tous les contacts" href="displayAllContacts.jsf"></b:navLink>
+	            <b:navLink value="Tous les groupes" href="displayAllGroups.jsf"></b:navLink>
+	        </b:dropMenu>
+	        <b:dropMenu value="Avancé">
+	            <b:navLink value="Initialisation de contacts" href="initializeContacts.jsf"></b:navLink>
+	            <b:navLink value="Tests de Batch Processing" href="displayAllGroups.jsf"></b:navLink>
+	            
+	        </b:dropMenu>
+	        <b:navLink value="Recherche Avancée" href="#"></b:navLink>
+	        
+	        <!--<b:dropMenu value="Dropdown">
 	            <b:navLink value="Action" href="#"></b:navLink>
 	            <b:navLink value="Another action" href="#"></b:navLink>
 	            <b:navLink value="Something else here" href="#"></b:navLink>
@@ -30,8 +49,9 @@
 	            <b:navLink value="Separated link" href="#"></b:navLink>
 	            <b:navLink value="One more separated link" href="#"></b:navLink>
 	        </b:dropMenu>
+	        -->
 	    </b:navbarLinks>
-	    <h:form class="navbar-form navbar-left" role="search" >
+	    <h:form class="navbar-form navbar-right" role="search" >
 			<div class="form-group">
 				<h:inputText class="form-control" a:placeholder="Recherche rapide" value="#{fastContactSearch.criteria}"/>
 			</div>
@@ -39,22 +59,7 @@
 		</h:form>
 		</b:navBar>
 	
-		<h:form>
-		<h:commandButton value="Ajouter un Contact" action="addContact" />
-		<h:commandButton value="Supprimer un Contact" action="removeContact" />
-		<h:commandButton value="Modifier un Contact" action="modifyContact" />
-		<h:commandButton value="Rechercher un Contact" action="searchContact" />
-		<h:commandButton value="Afficher tous les contacts"
-			action="displayContacts" />
-		<h:commandButton value="Afficher tous les groupes"
-			action="displayGroups" />
-		<h1>Lien de développement</h1>
-		<h:commandButton value="Initialisation" action="#{list.init}" />
-		<h:commandButton value="Tests de batch processing" action="batch" />
-		<h:commandButton value="Supprimer tous les Contacts"
-			action="removeAllContacts" />
-		</h:form>
-		
+
 	</div>
 	
 	

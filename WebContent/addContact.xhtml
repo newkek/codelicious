@@ -9,6 +9,7 @@
     </ui:define>
 	<ui:define name="content">
 		<h:form>
+		<div class="form-group">
 			<table>
 				<tr>
 					<th>
@@ -52,10 +53,13 @@
 					<td><i>Téléphone professionnel: <h:inputText
 								value="#{addContact.businessPhone}" size="25" /></i></td>
 				</tr>
+				
 				<tr>
+					
 					<td><i>Téléphone personnel: <h:inputText
-								value="#{addContact.homePhone}" size="25" /></i></td>
+								value="#{addContact.homePhone}" size="25" class="" /></i></td>
 				</tr>
+				
 				<tr>
 					<h:selectManyCheckbox value="#{addContact.contactGroups}">
 						<f:selectItems value="#{list.groups}" />
@@ -63,15 +67,16 @@
 				</tr>
 				<tr>
 					<td><i>Numero Siret si entreprise: <h:inputText
-								value="#{addContact.numSiret}" size="25" /></i></td>
+								value="#{addContact.numSiret}" size="12" /></i></td>
 				</tr>
 				<tr>
-					<td><h:commandButton value="Valider"
-							action="#{addContact.create}" /> <h:commandButton
+					<td><h:commandButton value="Valider" class="btn btn-default"
+							action="#{addContact.create}" /> <h:commandButton class="btn btn-default"
 							value="Annuler" action="main" /></td>
 				</tr>
 
 			</table>
+			</div>
 		</h:form>
 	</ui:define>
 </ui:composition>
