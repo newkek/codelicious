@@ -55,7 +55,7 @@
 					<h:commandButton value="Supprimer"
 						action="#{displayGroups.delete}">
 						<f:setPropertyActionListener
-							target="#{displayGroups.contactToDelete}" value="#{group.groupId}" />
+							target="#{displayGroups.groupToDelete}" value="#{group}" />
 					</h:commandButton>
 				</h:column>
 			</h:dataTable>

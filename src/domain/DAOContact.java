@@ -1376,5 +1376,29 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 		return true;
 	}
+	
+	public boolean deleteGroup(ContactGroup group){
+
+		ContactGroup contactGroup = (ContactGroup) this.getHibernateTemplate().get(ContactGroup.class, group.getGroupId());
+		//System.out.println(contactGroup.getGroupName());
+		//System.out.println(contactGroup.getContacts().size());
+		
+		//Set<Contact> contacts = group.getContacts();
+		
+		//System.out.println(contacts.size());
+		
+		Iterator<Contact> iterator = contactGroup.getContacts().iterator();
+		
+		while(iterator.hasNext()){
+			Contact contact= iterator.next();
+			contact.getContactGroups().remove(contactGroup);
+			iterator.remove();
+			this.getHibernateTemplate().saveOrUpdate(contact);
+		}
+		
+		this.getHibernateTemplate().delete(contactGroup);
+		
+		return true;
+	}
 
 }

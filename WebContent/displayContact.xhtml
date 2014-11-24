@@ -1,0 +1,80 @@
+<ui:composition template="/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
+
+	<ui:define name="title">
+        Fiche de Contact
+    </ui:define>
+
+	<ui:define name="content">
+
+
+		<h2>Détails de votre contact</h2>
+		<br />
+		<h:panelGrid columns="2" cellpadding="8">
+
+			<h:outputText value="Nom : " />
+			<h:outputText value="#{displayContact.firstName}" />
+
+			<h:outputText value="Prénom : " />
+			<h:outputText value="#{displayContact.lastName}" />
+
+			<h:outputText value="e-mail : " />
+			<h:outputText value="#{displayContact.email}">
+				<f:facet name="prepend">
+					<h:outputText value="@" />
+				</f:facet>
+			</h:outputText>
+
+			<h:outputText value="Street : " />
+			<h:outputText value="#{displayContact.street}" />
+
+			<h:outputText value="City : " />
+			<h:outputText value="#{displayContact.city}" />
+
+			<h:outputText value="Zip : " />
+			<h:outputText value="#{displayContact.zip}" />
+
+			<h:outputText value="Country : " />
+			<h:outputText value="#{displayContact.country}" />
+
+			<h:outputText value="Téléphone personnel : " />
+			<h:outputText value="#{displayContact.personalPhone}" />
+
+			<h:outputText value="Téléphone professionnel : " />
+			<h:outputText value="#{displayContact.businessPhone}" />
+
+			<h:outputText value="Téléphone domicile : " />
+			<h:outputText value="#{displayContact.homePhone}" />
+
+			<h:outputText value="Groupe(s) : " />
+			<h:selectManyCheckbox value="#{displayContact.contactGroups}"
+				readonly="true">
+				<f:selectItems value="#{displayContact.allGroups}"
+					itemDisabled="true" />
+			</h:selectManyCheckbox>
+
+			<h:outputText value="Numéro Siret si entreprise : " />
+			<h:outputText value="#{displayContact.numSiret}" />
+
+
+
+			<h:form>
+
+				<h:commandButton value="Modifier" action="modifyContact"
+					class="btn btn-default">
+					<f:param name="selectedContactId" value="#{displayContact.id}" />
+				</h:commandButton>
+
+				<h:commandButton value="Supprimer" action="#{displayContact.delete}"
+					class="btn btn-default">
+				</h:commandButton>
+			</h:form>
+
+		</h:panelGrid>
+
+	</ui:define>
+</ui:composition>

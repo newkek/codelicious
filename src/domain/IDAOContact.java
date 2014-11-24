@@ -53,5 +53,7 @@ public interface IDAOContact{
 	public ArrayList<ContactGroup> getGroups();
 	
 	public ContactGroup getGroup(long id);
+	
+	public boolean				deleteGroup(ContactGroup group);
 
 }

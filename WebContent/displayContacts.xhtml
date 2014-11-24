@@ -17,8 +17,7 @@
 			<h2>
 				<h:outputText value="Liste de contacts" />
 			</h2>
-			<h:dataTable  
-				value="#{displayContacts.contacts}" var="contact"
+			<h:dataTable value="#{displayContacts.contacts}" var="contact"
 				rendered="#{not empty displayContacts.contacts}" class="styleClass">
 				<h:column cellpadding="20px">
 					<f:facet name="header">
@@ -48,7 +47,18 @@
 				<h:column>
 
 					<f:facet name="header">
-						<h:outputText value="   Modification   " />
+						<h:outputText value="Détails" />
+					</f:facet>
+					<h:commandButton value="Afficher" action="displayContact"
+						class="btn btn-default">
+						<f:param name="selectedContactId" value="#{contact.id}" />
+					</h:commandButton>
+				</h:column>
+
+				<h:column>
+
+					<f:facet name="header">
+						<h:outputText value="Modification" />
 					</f:facet>
 					<h:commandButton value="Modifier" action="modifyContact"
 						class="btn btn-default">
