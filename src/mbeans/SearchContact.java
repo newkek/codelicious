@@ -55,6 +55,9 @@ public class SearchContact implements Serializable {
 		IDAOContact dao = (IDAOContact) AppContextSingleton.getContext()
 				.getBean("DAOC");
 		//dao calls
+		if(this.searchResult==null){
+			this.searchResult = new ArrayList<Contact>();
+		}
 		this.searchResult.clear();
 		this.searchResult = dao.getContact(firstName, lastName, email);
 		
@@ -67,9 +70,9 @@ public class SearchContact implements Serializable {
 		//dao calls
 		if(this.searchResult==null){
 			this.searchResult = new ArrayList<Contact>();
-			this.searchResult.clear();
+			
 		}
-		
+		this.searchResult.clear();
 		this.searchResult.addAll(dao.getContact(criteria, "", ""));
 		this.searchResult.addAll(dao.getContact("", criteria, ""));
 		this.searchResult.addAll(dao.getContact("", "", criteria));

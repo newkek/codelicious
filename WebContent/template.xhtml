@@ -1,10 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:b="http://bootsfaces.net/ui">
+
 
 
 <h:head>
@@ -17,7 +18,6 @@
 	<div id="menu">
 		<b:navBar brand="Codelicious" brandHref="main.jsf">
 			<b:navbarLinks>
-
 				<b:dropMenu value="Ajouter">
 					<b:navLink value="Nouveau contact" href="addContact.jsf"></b:navLink>
 					<b:navLink value="Nouveau groupe" href="addGroup.jsf"></b:navLink>
@@ -27,20 +27,23 @@
 						href="modifyContact.jsf"></b:navLink>
 					<b:navLink value="Modifier un groupe existant"
 						href="modifyGroup.jsf"></b:navLink>
-					<b:navLink value="Supprimer tous les contacts"
-						href="modifyContact.jsf"></b:navLink>
-					<b:navLink value="Supprimer tous les groupes"
-						href="modifyContact.jsf"></b:navLink>
+
 				</b:dropMenu>
 				<b:dropMenu value="Afficher">
-					<b:navLink value="Tous les contacts" href="displayAllContacts.jsf"></b:navLink>
-					<b:navLink value="Tous les groupes" href="displayAllGroups.jsf"></b:navLink>
+					<b:navLink value="Tous les contacts" href="displayContacts.jsf"></b:navLink>
+					<b:navLink value="Tous les groupes" href="displayGroups.jsf"></b:navLink>
+
 				</b:dropMenu>
+
 				<b:dropMenu value="Avancé">
 					<b:navLink value="Initialisation de contacts"
 						href="initializeContacts.jsf"></b:navLink>
 					<b:navLink value="Tests de Batch Processing"
-						href="displayAllGroups.jsf"></b:navLink>
+						href="displayGroups.jsf"></b:navLink>
+					<b:navLink value="Supprimer tous les contacts"
+						href="modifyContact.jsf"></b:navLink>
+					<b:navLink value="Supprimer tous les groupes"
+						href="modifyContact.jsf"></b:navLink>
 
 				</b:dropMenu>
 				<b:navLink value="Recherche Avancée" href="searchContact.jsf"></b:navLink>
@@ -56,18 +59,23 @@
 	        </b:dropMenu>
 	        -->
 			</b:navbarLinks>
-	    <h:form class="navbar-form navbar-right" role="search" >
-			<div class="form-group">
-				<h:inputText class="form-control" value="#{searchContact.criteria}"/>
-			</div>
-			<h:commandButton size="sm" class="btn btn-default" action="#{searchContact.fastSearch}" value="Submit"/>
-		</h:form>
+			<h:form class="navbar-form navbar-right" role="search">
+				<div class="form-group">
+					<h:inputText class="form-control" value="#{searchContact.criteria}" />
+				</div>
+				<h:commandButton size="sm" class="btn btn-default"
+					action="#{searchContact.fastSearch}" value="Submit" />
+			</h:form>
 		</b:navBar>
 
 
 	</div>
 
 
+	<div id="error">
+		<h:messages globalOnly="true" infoStyle="color:darkgreen"
+			errorStyle="color:red" layout="table" />
+	</div>
 	<div id="content">
 		<b:container>
 			<b:jumbotron>
@@ -79,5 +87,4 @@
 
 
 </h:body>
-
 </html>

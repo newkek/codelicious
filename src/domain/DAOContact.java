@@ -507,15 +507,12 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 		return true;
 	}
-	
-	
+
 	public boolean modifyContact(Contact contact, String id, String firstname,
 			String lastname, String email, String street, String city,
 			String zip, String country, String personalPhone,
 			String businessPhone, String homePhone, List<String> contactGroups) {
 		int success;
-		
-		
 
 		System.out.println("The name" + contact.getLastName());
 		contact.setFirstName(firstname);
@@ -610,8 +607,6 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		boolean formGroupIsInContactsGroup = false;
 
 		Set<String> notCreated = new HashSet<String>();
-		
-		
 
 		if (contactGroups != null) {
 
@@ -626,10 +621,12 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 				for (int i = 0; i < contactGroups.size(); i++) {
 
-					if (curContactGroup.getGroupName().equals(contactGroups.get(i))) {
+					if (curContactGroup.getGroupName().equals(
+							contactGroups.get(i))) {
 
-						notCreated.remove(contactGroups.get(i));// group not to be
-															// added
+						notCreated.remove(contactGroups.get(i));// group not to
+																// be
+						// added
 
 						formGroupIsInContactsGroup = true;
 
@@ -639,10 +636,12 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 				if (!formGroupIsInContactsGroup) {
 					// group has been removed from the contact
-					ContactGroup temp = (ContactGroup)this.getHibernateTemplate().get(ContactGroup.class, curContactGroup.getGroupId());
+					ContactGroup temp = (ContactGroup) this
+							.getHibernateTemplate().get(ContactGroup.class,
+									curContactGroup.getGroupId());
 					temp.getContacts().remove(contact);
 					this.getHibernateTemplate().saveOrUpdate(temp);
-					//curContactGroup.getContacts().remove(contact);
+					// curContactGroup.getContacts().remove(contact);
 
 					theContactIteratorGroup.remove();
 
@@ -688,8 +687,8 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			}
 		}
 		this.getHibernateTemplate().merge(contact);
-		
-		//this.getHibernateTemplate().saveOrUpdate(contact);
+
+		// this.getHibernateTemplate().saveOrUpdate(contact);
 
 		return true;
 	}
@@ -744,8 +743,9 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		ArrayList<Contact> contacts = (ArrayList<Contact>) this
 				.getHibernateTemplate().findByCriteria(critere);
 
-		//System.out.println("dao.getContact "+contacts.size() + contacts.get(0).getLastName());
-		
+		// System.out.println("dao.getContact "+contacts.size() +
+		// contacts.get(0).getLastName());
+
 		return contacts;
 	}
 
@@ -1145,8 +1145,9 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 	public ContactGroup getGroup(long id) {
 		// TODO Auto-generated method stub
-		ContactGroup group = (ContactGroup)this.getHibernateTemplate().get(ContactGroup.class, id);
-		System.out.println("dao.getGroup "+group.getContacts().size());
+		ContactGroup group = (ContactGroup) this.getHibernateTemplate().get(
+				ContactGroup.class, id);
+		System.out.println("dao.getGroup " + group.getContacts().size());
 		return group;
 	}
 
@@ -1160,7 +1161,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		contact.setFirstName(firstname);
 		contact.setLastName(lastname);
 		contact.setEmail(email);
-		if(contact instanceof Company){
+		if (contact instanceof Company) {
 			((Company) contact).setNumSiret(Integer.parseInt(numSiret));
 		}
 		Address address = contact.getAddress();
@@ -1252,8 +1253,6 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		boolean formGroupIsInContactsGroup = false;
 
 		Set<String> notCreated = new HashSet<String>();
-		
-		
 
 		if (contactGroups != null) {
 
@@ -1268,10 +1267,12 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 				for (int i = 0; i < contactGroups.size(); i++) {
 
-					if (curContactGroup.getGroupName().equals(contactGroups.get(i))) {
+					if (curContactGroup.getGroupName().equals(
+							contactGroups.get(i))) {
 
-						notCreated.remove(contactGroups.get(i));// group not to be
-															// added
+						notCreated.remove(contactGroups.get(i));// group not to
+																// be
+						// added
 
 						formGroupIsInContactsGroup = true;
 
@@ -1281,10 +1282,12 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 				if (!formGroupIsInContactsGroup) {
 					// group has been removed from the contact
-					ContactGroup temp = (ContactGroup)this.getHibernateTemplate().get(ContactGroup.class, curContactGroup.getGroupId());
+					ContactGroup temp = (ContactGroup) this
+							.getHibernateTemplate().get(ContactGroup.class,
+									curContactGroup.getGroupId());
 					temp.getContacts().remove(contact);
 					this.getHibernateTemplate().merge(temp);
-					//curContactGroup.getContacts().remove(contact);
+					// curContactGroup.getContacts().remove(contact);
 
 					theContactIteratorGroup.remove();
 
@@ -1293,48 +1296,60 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			}
 
 			/*
-			Iterator<String> iteratorNotCreated = notCreated.iterator();
-			while (iteratorNotCreated.hasNext()) {
-				String name = iteratorNotCreated.next();
-				// ContactGroup group = (ContactGroup)
-				// session.createCriteria(ContactGroup.class)
-				// .add(Restrictions.like("groupName", name) )
-				// .uniqueResult();
-				ArrayList<ContactGroup> listgroups = (ArrayList<ContactGroup>) this
-						.getHibernateTemplate().findByCriteria(
-								DetachedCriteria.forClass(ContactGroup.class)
-										.add(Restrictions.like("groupName",
-												name)));
-				ContactGroup group = null;
-				if (listgroups.size() != 0) {
-					System.out.println("PAS DE GROUPS");
-					group = (ContactGroup) listgroups.get(0);
-				}
-
-				if (group == null) {
-					group = new ContactGroup();
-					group.setGroupName(name);
-				}
-				Set<Contact> temp = group.getContacts();
-				temp.add(contact);
-				group.setContacts(temp);
-				listContactGroups.add(group);
-				System.out.println("nom groupe: " + group.getGroupName());
-			}
-		} else {
-			Iterator<ContactGroup> iteratorGroup = listContactGroups.iterator();
-			while (iteratorGroup.hasNext()) {
-				ContactGroup temp = iteratorGroup.next();
-
-				temp.getContacts().remove(contact);
-				iteratorGroup.remove();
-			}*/
+			 * Iterator<String> iteratorNotCreated = notCreated.iterator();
+			 * while (iteratorNotCreated.hasNext()) { String name =
+			 * iteratorNotCreated.next(); // ContactGroup group = (ContactGroup)
+			 * // session.createCriteria(ContactGroup.class) //
+			 * .add(Restrictions.like("groupName", name) ) // .uniqueResult();
+			 * ArrayList<ContactGroup> listgroups = (ArrayList<ContactGroup>)
+			 * this .getHibernateTemplate().findByCriteria(
+			 * DetachedCriteria.forClass(ContactGroup.class)
+			 * .add(Restrictions.like("groupName", name))); ContactGroup group =
+			 * null; if (listgroups.size() != 0) {
+			 * System.out.println("PAS DE GROUPS"); group = (ContactGroup)
+			 * listgroups.get(0); }
+			 * 
+			 * if (group == null) { group = new ContactGroup();
+			 * group.setGroupName(name); } Set<Contact> temp =
+			 * group.getContacts(); temp.add(contact); group.setContacts(temp);
+			 * listContactGroups.add(group); System.out.println("nom groupe: " +
+			 * group.getGroupName()); } } else { Iterator<ContactGroup>
+			 * iteratorGroup = listContactGroups.iterator(); while
+			 * (iteratorGroup.hasNext()) { ContactGroup temp =
+			 * iteratorGroup.next();
+			 * 
+			 * temp.getContacts().remove(contact); iteratorGroup.remove(); }
+			 */
 		}
 		this.getHibernateTemplate().merge(contact);
-		
-		//this.getHibernateTemplate().saveOrUpdate(contact);
+
+		// this.getHibernateTemplate().saveOrUpdate(contact);
 
 		return true;
+	}
+
+	public boolean addGroup(String groupName) {
+		ArrayList<ContactGroup> listTest = (ArrayList<ContactGroup>) this
+				.getHibernateTemplate().findByCriteria(
+						DetachedCriteria.forClass(ContactGroup.class).add(
+								Restrictions.like("groupName", groupName)));
+		
+		if (listTest != null) {
+			if(listTest.size()>0){
+				return false;
+			}else{
+				ContactGroup group = new ContactGroup();
+				group.setGroupName(groupName);
+				this.getHibernateTemplate().save(group);
+				return true;
+			}
+			
+		} else {
+			ContactGroup group = new ContactGroup();
+			group.setGroupName(groupName);
+			this.getHibernateTemplate().save(group);
+			return true;
+		}
 	}
 
 }

@@ -1,0 +1,44 @@
+<ui:composition template="/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
+
+	<ui:define name="title">
+        Création de Groupe
+    </ui:define>
+	<ui:define name="content">
+		<h:form>
+			<h:panelGrid columns="2" cellpadding="5">
+				<div class="form-group">
+					<table>
+				<tr>
+					<th>
+						<h2>Veuillez renseigner ici le nom de votre nouveau
+							groupe</h2>
+					</th>
+				</tr>
+				<tr>
+					<td><i>Nom: <h:inputText value="#{addGroup.groupName}"
+								size="25" /></i></td>
+				</tr>
+				<tr>
+					<td><h:commandButton value="Valider" class="btn btn-default"
+							action="#{addGroup.create}" /> <h:commandButton class="btn btn-default"
+							value="Annuler" action="main" /></td>
+				</tr>
+
+			</table>
+			<!--
+					<h:outputText value="e-mail:" />
+					<b:inputText>
+						<f:facet name="prepend">
+							<h:outputText value="#{addContact.email}" />
+						</f:facet>
+					</b:inputText>-->
+				</div>
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>

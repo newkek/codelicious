@@ -16,6 +16,8 @@ public interface IDAOContact{
 	
 	public Company				addCompany(String firstname, String lastname, String email, String street, String city, String zip, String country, String personnalPhone, String businessPhone, String homePhone, List<String> contactGroups, String numSiret);
 	
+	public boolean				addGroup(String groupName);
+	
 	public int 					deleteContact(long id);
 	
 	public ArrayList<Contact> 	getContact(String firstname, String lastname, String email);

@@ -14,6 +14,7 @@
 			<br />
 
 			<h:panelGrid columns="2" cellpadding="8">
+			
 				<h:outputText value="Nom : " />
 				<b:inputText>
 					<h:outputText value="#{addContact.firstName}" />
@@ -53,6 +54,8 @@
 				<b:inputText>
 					<h:outputText value="#{addContact.homePhone}" />
 				</b:inputText>
+				
+				
 				<h:outputText value="Groupe(s) : " />
 				<h:selectManyCheckbox value="#{addContact.contactGroups}">
 					<f:selectItems value="#{addContact.allGroups}" />
@@ -62,7 +65,6 @@
 				<b:inputText>
 					<h:outputText value="#{addContact.numSiret}" />
 				</b:inputText>
-
 
 			</h:panelGrid>
 		</h:form>
