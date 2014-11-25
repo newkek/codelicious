@@ -31,6 +31,7 @@ public class DisplayContactsFromGroup implements Serializable {
 	private ContactGroup group;
 	private List<Contact> contacts = new ArrayList<Contact>();
 	private String selectedContactId;
+	private Contact contactToDelete;
 
 	public DisplayContactsFromGroup() {
 		IDAOContact dao = (IDAOContact) AppContextSingleton.getContext()
@@ -43,7 +44,14 @@ public class DisplayContactsFromGroup implements Serializable {
 			return;
 		}
 		this.group = dao.getGroup(Long.parseLong(idString));
-		contacts.addAll(this.group.getContacts());
+		if(!(this.group.getContacts()==null)){
+			contacts.clear();
+			Iterator<Contact> it = this.group.getContacts().iterator();
+			while(it.hasNext()){
+				contacts.add(it.next());
+			}
+			//contacts.addAll(this.group.getContacts());
+		}
 	}
 	
 	public ContactGroup getGroup() {
@@ -68,6 +76,36 @@ public class DisplayContactsFromGroup implements Serializable {
 
 	public void setSelectedContactId(String selectedContactId) {
 		this.selectedContactId = selectedContactId;
+	}
+
+	public Contact getContactToDelete() {
+		return contactToDelete;
+	}
+
+	public void setContactToDelete(Contact contactToDelete) {
+		this.contactToDelete = contactToDelete;
+	}
+	
+	public void delete() {
+
+		IDAOContact dao = (IDAOContact) AppContextSingleton.getContext()
+				.getBean("DAOC");
+		
+		//dao calls
+		//delete from database
+		
+		dao.deleteContactFromGroup(this.contactToDelete, this.group);
+			
+		
+		//delete from list for MVC change
+		Iterator<Contact> it = this.contacts.iterator();
+		while (it.hasNext()) {
+		  Contact curContact = it.next();
+		  if (curContact == this.contactToDelete) {
+		    it.remove();
+		  }
+		}
+		
 	}
 
 }

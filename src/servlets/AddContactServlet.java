@@ -64,9 +64,9 @@ public class AddContactServlet extends HttpServlet {
 
 		IDAOContact dao = (IDAOContact)context.getBean("DAOC");
 		if(numSiret.isEmpty()){
-			Contact contact = dao.addContact( prenom, nom, email, street, city, zip, country, personnalPhone, businessPhone, homePhone, contactGroups);
+			//Contact contact = dao.addContact( prenom, nom, email, street, city, zip, country, personnalPhone, businessPhone, homePhone, contactGroups);
 		}else{
-			Company company = dao.addCompany( prenom, nom, email, street, city, zip, country, personnalPhone, businessPhone, homePhone, contactGroups, numSiret);
+			//Company company = dao.addCompany( prenom, nom, email, street, city, zip, country, personnalPhone, businessPhone, homePhone, contactGroups, numSiret);
 		}
 
 		RequestDispatcher rd = request.getRequestDispatcher("main.jsp");

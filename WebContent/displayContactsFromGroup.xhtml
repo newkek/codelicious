@@ -2,35 +2,27 @@
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
 
 	<ui:define name="title">
         Liste des contacts
     </ui:define>
 
 	<ui:define name="content">
-	
-	<h:outputText value="Aucun contact dans #{displayCFG.group.groupName}"
+		<h:outputText value="Aucun contact dans #{displayCFG.group.groupName}"
 			rendered="#{empty displayCFG.contacts}" />
 		<h:form>
-
-			 <h:dataTable id="table1" value="#{displayCFG.contacts}"
-				var="contact" border="1" rendered="#{not empty displayCFG.contacts}">
-				<f:facet name="header">
-					<h:outputText
-						value="Contacts du groupe #{displayCFG.group.groupName}" />
-				</f:facet>
-				<h:column>
+			<h2>
+				<h:outputText value="Contacts du groupe #{displayCFG.group.groupName}" />
+			</h2>
+			<h:dataTable value="#{displayCFG.contacts}" var="contact"
+				rendered="#{not empty displayCFG.contacts}" class="styleClass">
+				<h:column cellpadding="20px">
 					<f:facet name="header">
-						<h:outputText value="id" />
+						<h:outputText value="Id" />
 					</f:facet>
 					<h:outputText value="#{contact.id}" />
-				</h:column>
-				<h:column>
-					<f:facet name="header">
-						<h:outputText value="Nom" />
-					</f:facet>
-					<h:outputText value="#{contact.lastName}" />
 				</h:column>
 				<h:column>
 					<f:facet name="header">
@@ -40,21 +32,54 @@
 				</h:column>
 				<h:column>
 					<f:facet name="header">
+						<h:outputText value="Nom" />
+					</f:facet>
+					<h:outputText value="#{contact.lastName}" />
+				</h:column>
+				<h:column>
+					<f:facet name="header">
 						<h:outputText value="Email" />
 					</f:facet>
 					<h:outputText value="#{contact.email}" />
 				</h:column>
 				<h:column>
+
 					<f:facet name="header">
-						<h:outputText value="Modifier Contact" />
+						<h:outputText value="Détails" />
 					</f:facet>
-					<h:commandButton value="Contact" action="modifyContact">
-						<f:param name="selectedContactId" value="#{contact.id}"/>
+					<h:commandButton value="Afficher" action="displayContact"
+						class="btn btn-default">
+						<f:param name="selectedContactId" value="#{contact.id}" />
 					</h:commandButton>
 				</h:column>
+
+				<h:column>
+
+					<f:facet name="header">
+						<h:outputText value="Modification" />
+					</f:facet>
+					<h:commandButton value="Modifier" action="modifyContact"
+						class="btn btn-default">
+						<f:param name="selectedContactId" value="#{contact.id}" />
+					</h:commandButton>
+				</h:column>
+
+				<h:column>
+
+					<f:facet name="header">
+						<h:outputText value="Suppression du groupe" />
+					</f:facet>
+					<h:commandButton value="Supprimer"
+						action="#{displayCFG.delete}" class="btn btn-default">
+						<f:setPropertyActionListener
+							target="#{displayCFG.contactToDelete}" value="#{contact}" />
+					</h:commandButton>
+
+
+				</h:column>
 			</h:dataTable>
-			
+
 		</h:form>
-		
+
 	</ui:define>
 </ui:composition>

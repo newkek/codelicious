@@ -133,5 +133,17 @@ public class ListUtil implements Serializable{
 	public void setContactsFromSelectedGroup(List<Contact> contactFromSelectedGroup){
 		this.contactsFromSelectedGroup = contactFromSelectedGroup;
 	}
+	
+	public void deleteAllContacts(){
+		ApplicationContext context = AppContextSingleton.getContext();
+		IDAOContact dao = (IDAOContact)context.getBean("DAOC");
+		dao.deleteAllContact();
+	}
+	
+	public void deleteAllGroups(){
+		ApplicationContext context = AppContextSingleton.getContext();
+		IDAOContact dao = (IDAOContact)context.getBean("DAOC");
+		
+	}
 
 }

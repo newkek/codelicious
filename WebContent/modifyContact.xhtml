@@ -46,8 +46,8 @@
 					<f:selectItems value="#{modifyContactB.allGroups}" />
 				</h:selectManyCheckbox>
 
-				<h:outputText value="Numéro Siret si entreprise : " />
-				<b:inputText value="#{modifyContactB.numSiret}" />
+				<h:outputText value="Numéro Siret : " rendered="#{modifyContactB.numSiret != null}"/>
+				<b:inputText value="#{modifyContactB.numSiret}" rendered="#{modifyContactB.numSiret != null}"/>
 				<b:commandButton value="Valider" action="#{modifyContactB.modify}" />
 				<b:commandButton value="Annuler" action="main" />
 			</h:panelGrid>

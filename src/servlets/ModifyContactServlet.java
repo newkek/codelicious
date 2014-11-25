@@ -79,7 +79,7 @@ public class ModifyContactServlet extends HttpServlet {
 			String personnalPhone=request.getParameter("personnalPhone");
 			String businessPhone=request.getParameter("businessPhone");
 			String homePhone=request.getParameter("homePhone");
-			String[] contactGroups = request.getParameterValues("ContactGroup");
+			String[] contactGroups = request.getParameterValues("ContactGroup");/*
 			if(dao.modifyContact(contact, id, prenom, nom, email, street, city, zip, country, personnalPhone, businessPhone, homePhone, contactGroups)){
 				RequestDispatcher rd = request.getRequestDispatcher("modifiedContact.jsp");
 				request.setAttribute("modifiedResult", "1");
@@ -94,7 +94,7 @@ public class ModifyContactServlet extends HttpServlet {
 				request.setAttribute("restart", "true");
 				RequestDispatcher rd = request.getRequestDispatcher("modifyContactS.jsp");
 				rd.forward(request, response);
-			}
+			}*/
 
 			
 		}

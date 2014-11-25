@@ -13,7 +13,7 @@
 			<column name="GROUPNAME" />
 	</property>
 	
-	<set name="contacts" table="PARTICIPATION" inverse="true" cascade="save-update">
+	<set name="contacts" table="PARTICIPATION" inverse="true" cascade="save-update" lazy="false">
 		<key column="ID_CONTACTGROUP"/>
 		<many-to-many class="Contact" column="ID_CONTACT"/>
 	</set>

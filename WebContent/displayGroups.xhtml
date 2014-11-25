@@ -2,23 +2,23 @@
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
 
 	<ui:define name="title">
         Liste des groupes
     </ui:define>
 
 	<ui:define name="content">
-
 		<h:outputText value="Aucun groupe"
 			rendered="#{empty displayGroups.groups}" />
 		<h:form>
-			<h:dataTable id="table1" value="#{displayGroups.groups}" var="group"
-				border="1" rendered="#{not empty displayGroups.groups}">
-				<f:facet name="header">
-					<h:outputText value="Liste de Groupe" />
-				</f:facet>
-				<h:column>
+			<h2>
+				<h:outputText value="Liste de Groupe" />
+			</h2>
+			<h:dataTable value="#{displayGroups.groups}" var="group"
+				rendered="#{not empty displayGroups.groups}" class="styleClass">
+				<h:column cellpadding="20px">
 					<f:facet name="header">
 						<h:outputText value="Id" />
 					</f:facet>
@@ -34,16 +34,16 @@
 					<f:facet name="header">
 						<h:outputText value="Afficher liste" />
 					</f:facet>
-					<h:commandButton value="Membres" action="displayContactsFromGroup">
+					<h:commandButton value="Membres" action="displayContactsFromGroup" class="btn btn-default">
 						<f:param name="selectedGroupId" value="#{group.groupId}" />
 					</h:commandButton>
 				</h:column>
-				
+
 				<h:column>
 					<f:facet name="header">
 						<h:outputText value="Modification" />
 					</f:facet>
-					<h:commandButton value="Modifier" action="modifyGroup">
+					<h:commandButton value="Modifier" action="modifyGroup" class="btn btn-default">
 						<f:param name="selectedGroupId" value="#{group.groupId}" />
 					</h:commandButton>
 				</h:column>
@@ -52,8 +52,7 @@
 					<f:facet name="header">
 						<h:outputText value="Suppression" />
 					</f:facet>
-					<h:commandButton value="Supprimer"
-						action="#{displayGroups.delete}">
+					<h:commandButton value="Supprimer" action="#{displayGroups.delete}" class="btn btn-default">
 						<f:setPropertyActionListener
 							target="#{displayGroups.groupToDelete}" value="#{group}" />
 					</h:commandButton>

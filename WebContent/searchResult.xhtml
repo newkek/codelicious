@@ -16,9 +16,12 @@
 			rendered="#{empty searchContact.searchResult}" />
 
 		<h:dataTable id="table1" value="#{searchContact.searchResult}"
-			var="contact" rendered="#{not empty searchContact.searchResult}" class="styleClass">
+			var="contact" rendered="#{not empty searchContact.searchResult}"
+			class="styleClass">
 			<f:facet name="header">
-				<h:outputText value="Liste des résultats" />
+				<h2>
+					<h:outputText value="Liste des résultats" />
+				</h2>
 			</f:facet>
 
 			<h:column>
@@ -49,9 +52,22 @@
 			<h:column>
 				<h:form>
 					<f:facet name="header">
+						<h:outputText value="Détails" />
+					</f:facet>
+					<h:commandButton value="Afficher" action="displayContact"
+						class="btn btn-default">
+						<f:param name="selectedContactId" value="#{contact.id}" />
+					</h:commandButton>
+				</h:form>
+			</h:column>
+
+			<h:column>
+				<h:form>
+					<f:facet name="header">
 						<h:outputText value="Modification" />
 					</f:facet>
-					<h:commandButton value="Modifier" action="modifyContact" class="btn btn-default">
+					<h:commandButton value="Modifier" action="modifyContact"
+						class="btn btn-default">
 						<f:param name="selectedContactId" value="#{contact.id}" />
 					</h:commandButton>
 				</h:form>
@@ -62,7 +78,8 @@
 					<f:facet name="header">
 						<h:outputText value="Suppression" />
 					</f:facet>
-					<h:commandButton value="Supprimer" action="#{searchContact.delete}" class="btn btn-default">
+					<h:commandButton value="Supprimer" action="#{searchContact.delete}"
+						class="btn btn-default">
 						<f:setPropertyActionListener
 							target="#{searchContact.contactToDelete}" value="#{contact.id}" />
 					</h:commandButton>

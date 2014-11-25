@@ -24,488 +24,11 @@ import org.hibernate.criterion.Restrictions;
 
 public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
-	/**
-	 * Rajoute un contact dans la base de donnees.
-	 * 
-	 * @param firstname
-	 * @param lastname
-	 * @param email
-	 * @param country
-	 * @param zip
-	 * @param city
-	 * @param street
-	 * @param homePhone
-	 * @param businessPhone
-	 * @param personalPhone
-	 * @return renvoit le nouveau contact
-	 */
-
-	public Contact addContact(String firstname, String lastname, String email,
-			String street, String city, String zip, String country,
-			String personalPhone, String businessPhone, String homePhone,
-			String[] contactGroups) {
-
-		Contact contact = new Contact();
-		contact.setFirstName(firstname);
-		contact.setLastName(lastname);
-		contact.setEmail(email);
-		Address address = new Address();
-		address.setStreet(street);
-		address.setCity(city);
-		address.setZip(zip);
-		address.setCountry(country);
-		contact.setAddress(address);
-		Set<PhoneNumber> phoneNumbers = new HashSet<PhoneNumber>();
-		if (!personalPhone.isEmpty()) {
-			PhoneNumber phone = new PhoneNumber();
-			phone.setPhoneKind("personalPhone");
-			phone.setPhoneNumber(personalPhone);
-			phone.setContact(contact);
-			phoneNumbers.add(phone);
-		}
-		if (!businessPhone.isEmpty()) {
-			PhoneNumber phone = new PhoneNumber();
-			phone.setPhoneKind("businessPhone");
-			phone.setPhoneNumber(businessPhone);
-			phone.setContact(contact);
-			phoneNumbers.add(phone);
-		}
-		if (!homePhone.isEmpty()) {
-			PhoneNumber phone = new PhoneNumber();
-			phone.setPhoneKind("homePhone");
-			phone.setPhoneNumber(homePhone);
-			phone.setContact(contact);
-			phoneNumbers.add(phone);
-		}
-		contact.setPhoneNumbers(phoneNumbers);
-
-		/*
-		 * Session session =
-		 * HibernateUtil.getSessionFactory().getCurrentSession(); //d��marrer
-		 * une transaction session.beginTransaction();
-		 */
-		// persister l���objet
-		/*
-		 * Iterator<ContactGroup> iterator = tempcontactGroups.iterator();
-		 * while(iterator.hasNext()){ session.save(iterator.next()); }
-		 */
-
-		Set<ContactGroup> tempcontactGroups = new HashSet<ContactGroup>();
-		for (int i = 0; i < contactGroups.length; i++) {
-			ArrayList<ContactGroup> listgroups = (ArrayList<ContactGroup>) this
-					.getHibernateTemplate().findByCriteria(
-							DetachedCriteria.forClass(ContactGroup.class).add(
-									Restrictions.like("groupName",
-											contactGroups[i])));
-			ContactGroup group = null;
-			if (listgroups.size() != 0) {
-				System.out.println("PAS DE GROUPS");
-				group = (ContactGroup) listgroups.get(0);
-			}
-
-			if (group == null) {
-				group = new ContactGroup();
-				group.setGroupName(contactGroups[i]);
-			}
-			Set<Contact> temp = group.getContacts();
-			temp.add(contact);
-			group.setContacts(temp);
-			tempcontactGroups.add(group);
-		}
-		if (tempcontactGroups.size() != 0) {
-			contact.setContactGroups(tempcontactGroups);
-		}
-
-		// session.close();
-
-		this.getHibernateTemplate().save(contact);
-		// recharger l���objet �� partir de la session
-		// contact=(Contact) session.load(Contact.class,contact.getId());
-		// committer la transaction
-		// session.getTransaction().commit();
-
-		return contact;
-	}
-
-	public Company addCompany(String firstname, String lastname, String email,
-			String street, String city, String zip, String country,
-			String personalPhone, String businessPhone, String homePhone,
-			String[] contactGroups, String numSiret) {
-
-		Company contact = new Company();
-		contact.setFirstName(firstname);
-		contact.setLastName(lastname);
-		contact.setEmail(email);
-		contact.setNumSiret(Integer.parseInt(numSiret));
-		Address address = new Address();
-		address.setStreet(street);
-		address.setCity(city);
-		address.setZip(zip);
-		address.setCountry(country);
-		contact.setAddress(address);
-		Set<PhoneNumber> phoneNumbers = new HashSet<PhoneNumber>();
-		if (!personalPhone.isEmpty()) {
-			PhoneNumber phone = new PhoneNumber();
-			phone.setPhoneKind("personalPhone");
-			phone.setPhoneNumber(personalPhone);
-			phone.setContact(contact);
-			phoneNumbers.add(phone);
-		}
-		if (!businessPhone.isEmpty()) {
-			PhoneNumber phone = new PhoneNumber();
-			phone.setPhoneKind("businessPhone");
-			phone.setPhoneNumber(businessPhone);
-			phone.setContact(contact);
-			phoneNumbers.add(phone);
-		}
-		if (!homePhone.isEmpty()) {
-			PhoneNumber phone = new PhoneNumber();
-			phone.setPhoneKind("homePhone");
-			phone.setPhoneNumber(homePhone);
-			phone.setContact(contact);
-			phoneNumbers.add(phone);
-		}
-		contact.setPhoneNumbers(phoneNumbers);
-
-		/*
-		 * Session session =
-		 * HibernateUtil.getSessionFactory().getCurrentSession(); //d��marrer
-		 * une transaction session.beginTransaction();
-		 */
-
-		// persister l���objet
-		/*
-		 * Iterator<ContactGroup> iterator = tempcontactGroups.iterator();
-		 * while(iterator.hasNext()){ session.save(iterator.next()); }
-		 */
-		/*
-		 * Set<ContactGroup> tempcontactGroups = new HashSet<ContactGroup>();
-		 * for(int i=0;i<contactGroups.length; i++){ ContactGroup group =
-		 * (ContactGroup) session.createCriteria(ContactGroup.class)
-		 * .add(Restrictions.like("groupName", contactGroups[i]) )
-		 * .uniqueResult(); if(group == null){ group = new ContactGroup();
-		 * group.setGroupName(contactGroups[i]); } Set<Contact> temp =
-		 * group.getContacts(); temp.add(contact); group.setContacts(temp);
-		 * tempcontactGroups.add(group); }
-		 * contact.setContactGroups(tempcontactGroups);
-		 */
-
-		this.getHibernateTemplate().save(contact);
-
-		return contact;
-	}
-
 	public Contact addContact(Contact contact) {
-		/*
-		 * Session session =
-		 * HibernateUtil.getSessionFactory().getCurrentSession(); //d��marrer
-		 * une transaction session.beginTransaction();
-		 */
-		// persister l���objet
-		/*
-		 * Iterator<ContactGroup> iterator =
-		 * contact.getContactGroups().iterator(); while(iterator.hasNext()){
-		 * session.save(iterator.next()); }
-		 */
-		/*
-		 * session.save(contact); //recharger l���objet �� partir de la session
-		 * contact=(Contact) session.load(Contact.class,contact.getId());
-		 * //committer la transaction session.getTransaction().commit();
-		 */
+
 		this.getHibernateTemplate().save(contact);
 
 		return contact;
-	}
-
-	public boolean modifyContact(String id, String firstname, String lastname,
-			String email, String street, String city, String zip,
-			String country, String personalPhone, String businessPhone,
-			String homePhone, String[] contactGroups) {
-		int success;/*
-					 * Session session =
-					 * HibernateUtil.getSessionFactory().getCurrentSession();
-					 * session.getTransaction().begin(); // Query q =
-					 * session.createQuery
-					 * ("UPDATE Contact set FIRSTNAME = '"+firstname
-					 * +"' and LASTNAME = '"
-					 * +lastname+"' and EMAIL = '"+email+"' and STREET = '"
-					 * +street+"' and EMAIL = '"+email+"' and "); //
-					 * q.setParameter("id", id); // success=q.executeUpdate();
-					 * String hq1 = "FROM Contact C WHERE C.id=\'"+id+"\'";
-					 * Contact contact = (Contact)
-					 * session.createQuery(hq1).list().get(0); //Contact contact
-					 * = (Contact) session.load(Contact.class, id); //Contact
-					 * contact = (Contact) session.load(Contact.class,
-					 * Long.parseLong(id)); contact.setFirstName(firstname);
-					 * contact.setLastName(lastname); contact.setEmail(email);
-					 * Address address = contact.getAddress();
-					 * address.setStreet(street); address.setCity(city);
-					 * address.setZip(zip); address.setCountry(country);
-					 * Set<PhoneNumber> phoneNumbers =
-					 * contact.getPhoneNumbers(); Iterator<PhoneNumber> iterator
-					 * = phoneNumbers.iterator(); HashMap<String,PhoneNumber>
-					 * map = new HashMap<String, PhoneNumber>();
-					 * while(iterator.hasNext()){ PhoneNumber phone =
-					 * iterator.next(); map.put(phone.getPhoneKind(), phone); }
-					 * 
-					 * if(personalPhone!=null){ if(!personalPhone.isEmpty()){
-					 * if(map.containsKey("personalPhone")){
-					 * if(!map.get("personalPhone"
-					 * ).getPhoneNumber().equals(personalPhone)){
-					 * phoneNumbers.remove(map.get("personalPhone"));
-					 * PhoneNumber phone = new PhoneNumber();
-					 * phone.setPhoneKind("personalPhone");
-					 * phone.setPhoneNumber(personalPhone);
-					 * phone.setContact(contact); phoneNumbers.add(phone); }
-					 * }else{ PhoneNumber phone = new PhoneNumber();
-					 * phone.setPhoneKind("personalPhone");
-					 * phone.setPhoneNumber(personalPhone);
-					 * phone.setContact(contact); phoneNumbers.add(phone); }
-					 * 
-					 * }else if(map.containsKey("personalPhone")){
-					 * phoneNumbers.remove(map.get("personalPhone")); } }
-					 * if(businessPhone!=null){ if(!businessPhone.isEmpty()){
-					 * if(map.containsKey("businessPhone")){
-					 * if(!map.get("businessPhone"
-					 * ).getPhoneNumber().equals(businessPhone)){
-					 * phoneNumbers.remove(map.get("businessPhone"));
-					 * PhoneNumber phone = new PhoneNumber();
-					 * phone.setPhoneKind("businessPhone");
-					 * phone.setPhoneNumber(businessPhone);
-					 * phone.setContact(contact); phoneNumbers.add(phone); }
-					 * }else{ PhoneNumber phone = new PhoneNumber();
-					 * phone.setPhoneKind("businessPhone");
-					 * phone.setPhoneNumber(businessPhone);
-					 * phone.setContact(contact); phoneNumbers.add(phone); }
-					 * }else if(map.containsKey("businessPhone")){
-					 * phoneNumbers.remove(map.get("businessPhone")); } }
-					 * if(homePhone!=null){ if(!homePhone.isEmpty()){
-					 * if(map.containsKey("homePhone")){
-					 * if(!map.get("homePhone")
-					 * .getPhoneNumber().equals(homePhone)){
-					 * phoneNumbers.remove(map.get("homePhone")); PhoneNumber
-					 * phone = new PhoneNumber();
-					 * phone.setPhoneKind("homePhone");
-					 * phone.setPhoneNumber(homePhone);
-					 * phone.setContact(contact); phoneNumbers.add(phone); }
-					 * }else{ PhoneNumber phone = new PhoneNumber();
-					 * phone.setPhoneKind("homePhone");
-					 * phone.setPhoneNumber(homePhone);
-					 * phone.setContact(contact); phoneNumbers.add(phone); }
-					 * }else if(map.containsKey("homePhone")){
-					 * phoneNumbers.remove(map.get("homePhone")); } }
-					 * 
-					 * Set<ContactGroup> tempContactGroups =
-					 * contact.getContactGroups(); Iterator<ContactGroup>
-					 * iteratorGroup = tempContactGroups.iterator(); boolean
-					 * test=false; Set<String> notCreated = new
-					 * HashSet<String>(); Collections.addAll(notCreated,
-					 * contactGroups); while(iteratorGroup.hasNext()){
-					 * ContactGroup temp = iteratorGroup.next();
-					 * 
-					 * for(int i=0;i<contactGroups.length; i++){
-					 * 
-					 * if(temp.getGroupName().equals(contactGroups[i])){
-					 * notCreated.remove(contactGroups[i]); test=true; break; }
-					 * } if(!test){ temp.getContacts().remove(contact);
-					 * iteratorGroup.remove(); } }
-					 * 
-					 * Iterator<String> iteratorNotCreated =
-					 * notCreated.iterator();
-					 * while(iteratorNotCreated.hasNext()){ String name =
-					 * iteratorNotCreated.next(); ContactGroup group =
-					 * (ContactGroup) session.createCriteria(ContactGroup.class)
-					 * .add(Restrictions.like("groupName", name) )
-					 * .uniqueResult(); if(group == null){ group = new
-					 * ContactGroup(); group.setGroupName(name); } Set<Contact>
-					 * temp = group.getContacts(); temp.add(contact);
-					 * group.setContacts(temp); tempContactGroups.add(group);
-					 * System.out.println("nom groupe: "+group.getGroupName());
-					 * }
-					 * 
-					 * //contact.setPhoneNumbers(phoneNumbers);
-					 * //contact.setAddress(address);
-					 * session.saveOrUpdate(contact);
-					 * session.getTransaction().commit();
-					 */
-		return true;
-	}
-
-	public boolean modifyContact(Contact contact, String id, String firstname,
-			String lastname, String email, String street, String city,
-			String zip, String country, String personalPhone,
-			String businessPhone, String homePhone, String[] contactGroups) {
-		int success;
-
-		System.out.println("The name" + contact.getLastName());
-		contact.setFirstName(firstname);
-		contact.setLastName(lastname);
-		contact.setEmail(email);
-		Address address = contact.getAddress();
-		address.setStreet(street);
-		address.setCity(city);
-		address.setZip(zip);
-		address.setCountry(country);
-		Set<PhoneNumber> phoneNumbers = contact.getPhoneNumbers();
-		Iterator<PhoneNumber> iterator = phoneNumbers.iterator();
-		HashMap<String, PhoneNumber> map = new HashMap<String, PhoneNumber>();
-		while (iterator.hasNext()) {
-			PhoneNumber phone = iterator.next();
-			map.put(phone.getPhoneKind(), phone);
-		}
-
-		if (personalPhone != null) {
-			if (!personalPhone.isEmpty()) {
-				if (map.containsKey("personalPhone")) {
-					if (!map.get("personalPhone").getPhoneNumber()
-							.equals(personalPhone)) {
-						phoneNumbers.remove(map.get("personalPhone"));
-						PhoneNumber phone = new PhoneNumber();
-						phone.setPhoneKind("personalPhone");
-						phone.setPhoneNumber(personalPhone);
-						phone.setContact(contact);
-						phoneNumbers.add(phone);
-					}
-				} else {
-					PhoneNumber phone = new PhoneNumber();
-					phone.setPhoneKind("personalPhone");
-					phone.setPhoneNumber(personalPhone);
-					phone.setContact(contact);
-					phoneNumbers.add(phone);
-				}
-
-			} else if (map.containsKey("personalPhone")) {
-				phoneNumbers.remove(map.get("personalPhone"));
-			}
-		}
-		if (businessPhone != null) {
-			if (!businessPhone.isEmpty()) {
-				if (map.containsKey("businessPhone")) {
-					if (!map.get("businessPhone").getPhoneNumber()
-							.equals(businessPhone)) {
-						phoneNumbers.remove(map.get("businessPhone"));
-						PhoneNumber phone = new PhoneNumber();
-						phone.setPhoneKind("businessPhone");
-						phone.setPhoneNumber(businessPhone);
-						phone.setContact(contact);
-						phoneNumbers.add(phone);
-					}
-				} else {
-					PhoneNumber phone = new PhoneNumber();
-					phone.setPhoneKind("businessPhone");
-					phone.setPhoneNumber(businessPhone);
-					phone.setContact(contact);
-					phoneNumbers.add(phone);
-				}
-			} else if (map.containsKey("businessPhone")) {
-				phoneNumbers.remove(map.get("businessPhone"));
-			}
-		}
-		if (homePhone != null) {
-			if (!homePhone.isEmpty()) {
-				if (map.containsKey("homePhone")) {
-					if (!map.get("homePhone").getPhoneNumber()
-							.equals(homePhone)) {
-						phoneNumbers.remove(map.get("homePhone"));
-						PhoneNumber phone = new PhoneNumber();
-						phone.setPhoneKind("homePhone");
-						phone.setPhoneNumber(homePhone);
-						phone.setContact(contact);
-						phoneNumbers.add(phone);
-					}
-				} else {
-					PhoneNumber phone = new PhoneNumber();
-					phone.setPhoneKind("homePhone");
-					phone.setPhoneNumber(homePhone);
-					phone.setContact(contact);
-					phoneNumbers.add(phone);
-				}
-			} else if (map.containsKey("homePhone")) {
-				phoneNumbers.remove(map.get("homePhone"));
-			}
-		}
-
-		Set<ContactGroup> listContactGroups = contact.getContactGroups();
-
-		boolean formGroupIsInContactsGroup = false;
-
-		Set<String> notCreated = new HashSet<String>();
-
-		if (contactGroups != null) {
-
-			Collections.addAll(notCreated, contactGroups);
-
-			Iterator<ContactGroup> theContactIteratorGroup = listContactGroups
-					.iterator();
-
-			while (theContactIteratorGroup.hasNext()) {
-
-				ContactGroup curContactGroup = theContactIteratorGroup.next();
-
-				for (int i = 0; i < contactGroups.length; i++) {
-
-					if (curContactGroup.getGroupName().equals(contactGroups[i])) {
-
-						notCreated.remove(contactGroups[i]);// group not to be
-															// added
-
-						formGroupIsInContactsGroup = true;
-
-						break;
-					}
-				}
-
-				if (!formGroupIsInContactsGroup) {
-					// group has been removed from the contact
-					curContactGroup.getContacts().remove(contact);
-
-					theContactIteratorGroup.remove();
-
-				}
-
-			}
-
-			Iterator<String> iteratorNotCreated = notCreated.iterator();
-			while (iteratorNotCreated.hasNext()) {
-				String name = iteratorNotCreated.next();
-				// ContactGroup group = (ContactGroup)
-				// session.createCriteria(ContactGroup.class)
-				// .add(Restrictions.like("groupName", name) )
-				// .uniqueResult();
-				ArrayList<ContactGroup> listgroups = (ArrayList<ContactGroup>) this
-						.getHibernateTemplate().findByCriteria(
-								DetachedCriteria.forClass(ContactGroup.class)
-										.add(Restrictions.like("groupName",
-												name)));
-				ContactGroup group = null;
-				if (listgroups.size() != 0) {
-					System.out.println("PAS DE GROUPS");
-					group = (ContactGroup) listgroups.get(0);
-				}
-
-				if (group == null) {
-					group = new ContactGroup();
-					group.setGroupName(name);
-				}
-				Set<Contact> temp = group.getContacts();
-				temp.add(contact);
-				group.setContacts(temp);
-				listContactGroups.add(group);
-				System.out.println("nom groupe: " + group.getGroupName());
-			}
-		} else {
-			Iterator<ContactGroup> iteratorGroup = listContactGroups.iterator();
-			while (iteratorGroup.hasNext()) {
-				ContactGroup temp = iteratorGroup.next();
-
-				temp.getContacts().remove(contact);
-				iteratorGroup.remove();
-			}
-		}
-
-		this.getHibernateTemplate().saveOrUpdate(contact);
-
-		return true;
 	}
 
 	public boolean modifyContact(Contact contact, String id, String firstname,
@@ -514,7 +37,6 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			String businessPhone, String homePhone, List<String> contactGroups) {
 		int success;
 
-		System.out.println("The name" + contact.getLastName());
 		contact.setFirstName(firstname);
 		contact.setLastName(lastname);
 		contact.setEmail(email);
@@ -659,11 +181,11 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 				ArrayList<ContactGroup> listgroups = (ArrayList<ContactGroup>) this
 						.getHibernateTemplate().findByCriteria(
 								DetachedCriteria.forClass(ContactGroup.class)
-										.add(Restrictions.like("groupName",
+										.add(Restrictions.eq("groupName",
 												name)));
 				ContactGroup group = null;
 				if (listgroups.size() != 0) {
-					System.out.println("PAS DE GROUPS");
+					//System.out.println("PAS DE GROUPS");
 					group = (ContactGroup) listgroups.get(0);
 				}
 
@@ -675,7 +197,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 				temp.add(contact);
 				group.setContacts(temp);
 				listContactGroups.add(group);
-				System.out.println("nom groupe: " + group.getGroupName());
+				//System.out.println("nom groupe: " + group.getGroupName());
 			}
 		} else {
 			Iterator<ContactGroup> iteratorGroup = listContactGroups.iterator();
@@ -699,21 +221,12 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	 * @param id
 	 * @return vrai si la suppression a bien ete effectuee
 	 */
-
 	public int deleteContact(long id) {
 		int success = 0;
 
 		Contact contact = (Contact) this.getHibernateTemplate().get(
 				Contact.class, id);
-		/*
-		 * Session session =
-		 * HibernateUtil.getSessionFactory().getCurrentSession();
-		 * session.beginTransaction(); Contact contact = (Contact)
-		 * session.get(Contact.class, id); //Query q =
-		 * session.createQuery("DELETE FROM Contact WHERE id = :id");
-		 * //q.setParameter("id", id); //success=q.executeUpdate();
-		 * session.delete(contact); session.getTransaction().commit();
-		 */
+
 		this.getHibernateTemplate().delete(contact);
 		return success;
 	}
@@ -724,7 +237,6 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	 * @param id
 	 * @return
 	 */
-
 	public ArrayList<Contact> getContact(String firstname, String lastname,
 			String email) {
 
@@ -743,51 +255,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		ArrayList<Contact> contacts = (ArrayList<Contact>) this
 				.getHibernateTemplate().findByCriteria(critere);
 
-		// System.out.println("dao.getContact "+contacts.size() +
-		// contacts.get(0).getLastName());
-
 		return contacts;
-	}
-
-	/**
-	 * Methode qui modifie les coordonees d'un contact
-	 * 
-	 * @param id
-	 * @param firstname
-	 * @param alstname
-	 * @param email
-	 * @return
-	 */
-	public boolean modifyContact(long id, String firstname, String lastname,
-			String email) {
-		boolean success = false;
-		Connection con = null;
-		// try{
-		// Class.forName(Messages.getString("driver"));
-		// con = DriverManager.getConnection(Messages.getString("database"),
-		// Messages.getString("username"), Messages.getString("password"));
-		// Statement stmt = con.createStatement();
-		// String sqlFirstName =
-		// "UPDATE contacts SET firstname = "+"'"+firstname+"'"+" WHERE id = "+id
-		// ;
-		// String sqlLastName =
-		// "UPDATE contacts SET lastname = "+"'"+lastname+"'"+" WHERE id = "+id
-		// ;
-		// String sqlEmail =
-		// "UPDATE contacts SET email = "+"'"+email+"'"+" WHERE id = "+id ;
-		//
-		// if(firstname != "")stmt.executeUpdate(sqlFirstName);
-		// if(lastname != "")stmt.executeUpdate(sqlLastName);
-		// if(email != "")stmt.executeUpdate(sqlEmail);
-		//
-		// success = true;
-		// stmt.close();
-		// con.close();
-		//
-		// } catch( Exception e ){
-		// e.printStackTrace();
-		// }
-		return success;
 	}
 
 	/**
@@ -797,7 +265,6 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	 * @return
 	 */
 	public ArrayList<Contact> getContactByFirstName(String firstname) {
-		// String hq1 = "FROM Contact C WHERE C.firstName=\'"+firstname+"\'";
 
 		ArrayList<Contact> contacts = (ArrayList<Contact>) this
 				.getHibernateTemplate().findByCriteria(
@@ -805,22 +272,6 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 								Restrictions.eq("firstName", firstname)));
 
 		return contacts;
-	}
-
-	public Contact getContactById(long id) {
-		Contact c = (Contact) this.getHibernateTemplate()
-				.get(Contact.class, id);
-		/*
-		 * Session session =
-		 * HibernateUtil.getSessionFactory().getCurrentSession();
-		 * session.beginTransaction(); //Contact c = (Contact)
-		 * session.load(Contact.class, id); String hq1 =
-		 * "FROM Contact C WHERE C.id=\'"+id+"\'"; Contact c = (Contact)
-		 * session.createQuery(hq1).list().get(0);
-		 * session.getTransaction().commit();
-		 * System.out.println(c.getPhoneNumbers().size());
-		 */
-		return c;
 	}
 
 	/**
@@ -831,24 +282,12 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	 */
 	public ArrayList<Contact> getContactByLastName(String lastname) {
 
-		/*
-		 * Session session =
-		 * HibernateUtil.getSessionFactory().getCurrentSession();
-		 * session.beginTransaction();
-		 */
-
-		/*
-		 * ArrayList<Contact> contacts = (ArrayList<Contact>)
-		 * session.createCriteria(Contact.class)
-		 * .add(Restrictions.like("lastName", lastname)).list();
-		 */
-
 		ArrayList<Contact> contacts = (ArrayList<Contact>) this
 				.getHibernateTemplate().findByCriteria(
 						DetachedCriteria.forClass(Contact.class).add(
 								Restrictions.eq("lastName", lastname)));
 
-		// session.getTransaction().commit();
+
 		return contacts;
 	}
 
@@ -859,33 +298,16 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	 * @return
 	 */
 	public ArrayList<Contact> getContactByEmail(String email) {
-		/*
-		 * Session session =
-		 * HibernateUtil.getSessionFactory().getCurrentSession();
-		 * session.beginTransaction();
-		 * 
-		 * ArrayList<Contact> contacts = (ArrayList<Contact>)
-		 * session.createCriteria(Contact.class) .add(Restrictions.like("email",
-		 * email)).list();
-		 */
+
 		ArrayList<Contact> contacts = (ArrayList<Contact>) this
 				.getHibernateTemplate().findByCriteria(
 						DetachedCriteria.forClass(Contact.class).add(
 								Restrictions.like("email", email + "%")));
 
-		// session.getTransaction().commit();
 		return contacts;
 	}
 
 	public ArrayList<Contact> getContacts() {
-		// TODO Auto-generated method stub
-		/*
-		 * Session session =
-		 * HibernateUtil.getSessionFactory().getCurrentSession();
-		 * session.beginTransaction(); String hq1 = "FROM Contact C";
-		 * ArrayList<Contact> contacts = (ArrayList<Contact>)
-		 * session.createQuery(hq1).list(); session.getTransaction().commit();
-		 */
 
 		ArrayList<Contact> contacts = (ArrayList<Contact>) this
 				.getHibernateTemplate().find("FROM Contact C");
@@ -898,15 +320,26 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 		List<Contact> contacts = (ArrayList<Contact>) this
 				.getHibernateTemplate().find("FROM Contact C");
+		
+		List<ContactGroup> groups = (ArrayList<ContactGroup>)this.getHibernateTemplate().find("FROM ContactGroup G");
+		
+		Iterator<ContactGroup> itGroup = groups.iterator();
+		while(itGroup.hasNext()){
+			ContactGroup c = itGroup.next();
+			c.getContacts().clear();
+			
+			Iterator<Contact> itContact = contacts.iterator();
+			while(itContact.hasNext()){
+				Contact contact = itContact.next();
+				if(contact.getContactGroups().contains(c)){
+					contact.getContactGroups().remove(c);
+				}
+			}
+			this.getHibernateTemplate().saveOrUpdate(c);
+		}
+		
 		this.getHibernateTemplate().deleteAll(contacts);
 
-		/*
-		 * Session session =
-		 * HibernateUtil.getSessionFactory().getCurrentSession();
-		 * session.beginTransaction(); Query q =
-		 * session.createQuery("DELETE FROM Contact"); q.executeUpdate();
-		 * session.getTransaction().commit();
-		 */
 	}
 
 	public void addManyContacts() {
@@ -926,28 +359,6 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			address.setCountry("country" + Integer.toString(i));
 			contact.setAddress(address);
 			Set<PhoneNumber> phoneNumbers = new HashSet<PhoneNumber>();
-			/*
-			 * if(!personalPhone.isEmpty()){ PhoneNumber phone = new
-			 * PhoneNumber(); phone.setPhoneKind("personalPhone");
-			 * phone.setPhoneNumber(personalPhone); phone.setContact(contact);
-			 * phoneNumbers.add(phone); } if(!businessPhone.isEmpty()){
-			 * PhoneNumber phone = new PhoneNumber();
-			 * phone.setPhoneKind("businessPhone");
-			 * phone.setPhoneNumber(businessPhone); phone.setContact(contact);
-			 * phoneNumbers.add(phone); } if(!homePhone.isEmpty()){ PhoneNumber
-			 * phone = new PhoneNumber(); phone.setPhoneKind("homePhone");
-			 * phone.setPhoneNumber(homePhone); phone.setContact(contact);
-			 * phoneNumbers.add(phone); } contact.setPhoneNumbers(phoneNumbers);
-			 */
-			/*
-			 * Set<ContactGroup> tempcontactGroups = new
-			 * HashSet<ContactGroup>(); for(int i=0;i<contactGroups.length;
-			 * i++){ ContactGroup group = new ContactGroup();
-			 * group.setGroupName(contactGroups[i]); Set<Contact> temp =
-			 * group.getContacts(); temp.add(contact); group.setContacts(temp);
-			 * tempcontactGroups.add(group); }
-			 * contact.setContactGroups(tempcontactGroups);
-			 */
 			System.out.println("adding contact " + i);
 			session.save(contact);
 			if ((i % 20) == 0) {
@@ -962,9 +373,6 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 		ArrayList<ContactGroup> res = (ArrayList<ContactGroup>) this
 				.getHibernateTemplate().find("FROM ContactGroup C");
-		for (int i = 0; i < res.size(); i++) {
-			System.out.println("Group : " + res.get(i).getGroupName());
-		}
 
 		return res;
 	}
@@ -1008,27 +416,17 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		}
 		contact.setPhoneNumbers(phoneNumbers);
 
-		/*
-		 * Session session =
-		 * HibernateUtil.getSessionFactory().getCurrentSession(); //d��marrer
-		 * une transaction session.beginTransaction();
-		 */
-		// persister l���objet
-		/*
-		 * Iterator<ContactGroup> iterator = tempcontactGroups.iterator();
-		 * while(iterator.hasNext()){ session.save(iterator.next()); }
-		 */
-
 		Set<ContactGroup> tempcontactGroups = new HashSet<ContactGroup>();
+		// pour chaque groupe coché par le client
 		for (int i = 0; i < contactGroups.size(); i++) {
+			// on récupère le groupe en base
 			ArrayList<ContactGroup> listgroups = (ArrayList<ContactGroup>) this
 					.getHibernateTemplate().findByCriteria(
 							DetachedCriteria.forClass(ContactGroup.class).add(
-									Restrictions.like("groupName",
+									Restrictions.eq("groupName",
 											contactGroups.get(i))));
 			ContactGroup group = null;
 			if (listgroups.size() != 0) {
-				System.out.println("PAS DE GROUPS");
 				group = (ContactGroup) listgroups.get(0);
 			}
 
@@ -1040,18 +438,14 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			temp.add(contact);
 			group.setContacts(temp);
 			tempcontactGroups.add(group);
+			
 		}
 		if (tempcontactGroups.size() != 0) {
 			contact.setContactGroups(tempcontactGroups);
 		}
 
-		// session.close();
-
+		
 		this.getHibernateTemplate().save(contact);
-		// recharger l���objet �� partir de la session
-		// contact=(Contact) session.load(Contact.class,contact.getId());
-		// committer la transaction
-		// session.getTransaction().commit();
 
 		return contact;
 	}
@@ -1060,8 +454,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			String street, String city, String zip, String country,
 			String personalPhone, String businessPhone, String homePhone,
 			List<String> contactGroups, String numSiret) {
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
+
 		Company contact = new Company();
 		contact.setFirstName(firstname);
 		contact.setLastName(lastname);
@@ -1097,27 +490,15 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		}
 		contact.setPhoneNumbers(phoneNumbers);
 
-		/*
-		 * Session session =
-		 * HibernateUtil.getSessionFactory().getCurrentSession(); //d��marrer
-		 * une transaction session.beginTransaction();
-		 */
-		// persister l���objet
-		/*
-		 * Iterator<ContactGroup> iterator = tempcontactGroups.iterator();
-		 * while(iterator.hasNext()){ session.save(iterator.next()); }
-		 */
-
 		Set<ContactGroup> tempcontactGroups = new HashSet<ContactGroup>();
 		for (int i = 0; i < contactGroups.size(); i++) {
 			ArrayList<ContactGroup> listgroups = (ArrayList<ContactGroup>) this
 					.getHibernateTemplate().findByCriteria(
 							DetachedCriteria.forClass(ContactGroup.class).add(
-									Restrictions.like("groupName",
+									Restrictions.eq("groupName",
 											contactGroups.get(i))));
 			ContactGroup group = null;
 			if (listgroups.size() != 0) {
-				System.out.println("PAS DE GROUPS");
 				group = (ContactGroup) listgroups.get(0);
 			}
 
@@ -1135,19 +516,13 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		}
 
 		this.getHibernateTemplate().save(contact);
-		// recharger l���objet �� partir de la session
-		// contact=(Contact) session.load(Contact.class,contact.getId());
-		// committer la transaction
-		// session.getTransaction().commit();
 
 		return contact;
 	}
 
 	public ContactGroup getGroup(long id) {
-		// TODO Auto-generated method stub
 		ContactGroup group = (ContactGroup) this.getHibernateTemplate().get(
 				ContactGroup.class, id);
-		System.out.println("dao.getGroup " + group.getContacts().size());
 		return group;
 	}
 
@@ -1156,8 +531,8 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			String zip, String country, String personalPhone,
 			String businessPhone, String homePhone, List<String> contactGroups,
 			String numSiret) {
-		// TODO Auto-generated method stub
-		System.out.println("The name" + contact.getLastName());
+		
+		//System.out.println("The name" + contact.getLastName());
 		contact.setFirstName(firstname);
 		contact.setLastName(lastname);
 		contact.setEmail(email);
@@ -1248,25 +623,28 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			}
 		}
 
+		// ancien groupe du contact
 		Set<ContactGroup> listContactGroups = contact.getContactGroups();
 
 		boolean formGroupIsInContactsGroup = false;
 
 		Set<String> notCreated = new HashSet<String>();
 
+		// s'il existe des groupes cochés
 		if (contactGroups != null) {
 
+			// on les met tous dans notCreated
 			notCreated.addAll(contactGroups);
 
 			Iterator<ContactGroup> theContactIteratorGroup = listContactGroups
 					.iterator();
-
+			// on parcourt les anciens groups
 			while (theContactIteratorGroup.hasNext()) {
 
 				ContactGroup curContactGroup = theContactIteratorGroup.next();
 
 				for (int i = 0; i < contactGroups.size(); i++) {
-
+					// si on trouve la correspondance, le groupe n'a pas été modifié
 					if (curContactGroup.getGroupName().equals(
 							contactGroups.get(i))) {
 
@@ -1286,40 +664,49 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 							.getHibernateTemplate().get(ContactGroup.class,
 									curContactGroup.getGroupId());
 					temp.getContacts().remove(contact);
+					theContactIteratorGroup.remove();
 					this.getHibernateTemplate().merge(temp);
 					// curContactGroup.getContacts().remove(contact);
-
-					theContactIteratorGroup.remove();
-
+				}
+			}
+			
+			// on crée la correspondance avec tous les groupes qui restent de notCreated
+			Iterator<String> itNewAssoc = notCreated.iterator();
+			while(itNewAssoc.hasNext()){
+				String gpName = itNewAssoc.next();
+				ArrayList<ContactGroup> listgroups = (ArrayList<ContactGroup>) this
+						.getHibernateTemplate().findByCriteria(
+								DetachedCriteria.forClass(ContactGroup.class).add(
+										Restrictions.eq("groupName",
+												gpName)));
+				
+				ContactGroup group = null;
+				if (listgroups.size() != 0) {
+					group = (ContactGroup) listgroups.get(0);
 				}
 
+				if (group == null) {
+					group = new ContactGroup();
+					group.setGroupName(gpName);
+				}
+				Set<Contact> temp = group.getContacts();
+				temp.add(contact);
+				group.setContacts(temp);
+				contact.getContactGroups().add(group);
+				this.getHibernateTemplate().merge(group);
 			}
 
-			/*
-			 * Iterator<String> iteratorNotCreated = notCreated.iterator();
-			 * while (iteratorNotCreated.hasNext()) { String name =
-			 * iteratorNotCreated.next(); // ContactGroup group = (ContactGroup)
-			 * // session.createCriteria(ContactGroup.class) //
-			 * .add(Restrictions.like("groupName", name) ) // .uniqueResult();
-			 * ArrayList<ContactGroup> listgroups = (ArrayList<ContactGroup>)
-			 * this .getHibernateTemplate().findByCriteria(
-			 * DetachedCriteria.forClass(ContactGroup.class)
-			 * .add(Restrictions.like("groupName", name))); ContactGroup group =
-			 * null; if (listgroups.size() != 0) {
-			 * System.out.println("PAS DE GROUPS"); group = (ContactGroup)
-			 * listgroups.get(0); }
-			 * 
-			 * if (group == null) { group = new ContactGroup();
-			 * group.setGroupName(name); } Set<Contact> temp =
-			 * group.getContacts(); temp.add(contact); group.setContacts(temp);
-			 * listContactGroups.add(group); System.out.println("nom groupe: " +
-			 * group.getGroupName()); } } else { Iterator<ContactGroup>
-			 * iteratorGroup = listContactGroups.iterator(); while
-			 * (iteratorGroup.hasNext()) { ContactGroup temp =
-			 * iteratorGroup.next();
-			 * 
-			 * temp.getContacts().remove(contact); iteratorGroup.remove(); }
-			 */
+		// pas de groupes coché et le contact a des anciens groupes, il faut les remove
+		}else if(listContactGroups.size()!=0){
+			Iterator<ContactGroup> itGroup = listContactGroups.iterator();
+			while(itGroup.hasNext()){
+				ContactGroup temp = (ContactGroup) this
+						.getHibernateTemplate().get(ContactGroup.class,
+								itGroup.next().getGroupId());
+				temp.getContacts().remove(contact);
+				itGroup.remove();
+				this.getHibernateTemplate().merge(temp);
+			}
 		}
 		
 		try{
@@ -1327,7 +714,6 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		}catch(Exception e){
 			return false;
 		}
-		// this.getHibernateTemplate().saveOrUpdate(contact);
 
 		return true;
 	}
@@ -1336,7 +722,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		ArrayList<ContactGroup> listTest = (ArrayList<ContactGroup>) this
 				.getHibernateTemplate().findByCriteria(
 						DetachedCriteria.forClass(ContactGroup.class).add(
-								Restrictions.like("groupName", groupName)));
+								Restrictions.eq("groupName", groupName)));
 
 		if (listTest != null) {
 			if (listTest.size() > 0) {
@@ -1361,7 +747,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		ArrayList<ContactGroup> listTest = (ArrayList<ContactGroup>) this
 				.getHibernateTemplate().findByCriteria(
 						DetachedCriteria.forClass(ContactGroup.class).add(
-								Restrictions.like("groupName",
+								Restrictions.eq("groupName",
 										group.getGroupName())));
 
 		if (listTest != null) {
@@ -1380,12 +766,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 	public boolean deleteGroup(ContactGroup group){
 
 		ContactGroup contactGroup = (ContactGroup) this.getHibernateTemplate().get(ContactGroup.class, group.getGroupId());
-		//System.out.println(contactGroup.getGroupName());
-		//System.out.println(contactGroup.getContacts().size());
 		
-		//Set<Contact> contacts = group.getContacts();
-		
-		//System.out.println(contacts.size());
 		
 		Iterator<Contact> iterator = contactGroup.getContacts().iterator();
 		
@@ -1397,6 +778,22 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		}
 		
 		this.getHibernateTemplate().delete(contactGroup);
+		
+		return true;
+	}
+
+	public Contact getContactById(long id) {
+		Contact c = (Contact) this.getHibernateTemplate()
+		.get(Contact.class, id);
+
+		return c;
+		}
+	
+	public boolean deleteContactFromGroup(Contact contact, ContactGroup group){
+		contact.getContactGroups().remove(group);
+		group.getContacts().remove(contact);
+		this.getHibernateTemplate().merge(contact);
+		this.getHibernateTemplate().merge(group);
 		
 		return true;
 	}
