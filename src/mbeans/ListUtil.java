@@ -99,6 +99,16 @@ public class ListUtil implements Serializable{
 			System.out.println("Contacts already initialized");
 		}
 	}
+	
+	public void batch(){
+		ApplicationContext context = AppContextSingleton.getContext();
+		IDAOContact dao = (IDAOContact)context.getBean("DAOC");
+		try{
+			dao.addManyContacts();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 
 	public List<ContactGroup> getGroups2() {
 		return groups2;

@@ -1,0 +1,24 @@
+<ui:composition template="/template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:b="http://bootsfaces.net/ui">
+
+<ui:define name="title">
+        Batch Processing 
+</ui:define>
+
+
+	<ui:define name="content">
+		#{list.batch()}
+		<center><b:label text="Batch Processing Done !"></b:label></center>
+		
+
+	</ui:define>
+
+
+ 
+
+
+</ui:composition>

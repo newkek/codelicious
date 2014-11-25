@@ -91,6 +91,14 @@
 			<to-view-id>/main.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
+	
+	<navigation-rule>
+		<from-view-id>/main.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>batchProcessing</from-outcome>
+			<to-view-id>/batchProcessing.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 
 
 

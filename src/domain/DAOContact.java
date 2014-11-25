@@ -354,10 +354,7 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 
 	public void addManyContacts() {
 
-		Session session = this.getHibernateTemplate().getSessionFactory()
-				.getCurrentSession();
-		Transaction tx = session.beginTransaction();
-		for (int i = 0; i < 100000; i++) {
+		for (int i = 0; i < 50; i++) {
 			Contact contact = new Contact();
 			contact.setFirstName("firstname" + Integer.toString(i));
 			contact.setLastName("lastnamename" + Integer.toString(i));
@@ -370,13 +367,12 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 			contact.setAddress(address);
 			Set<PhoneNumber> phoneNumbers = new HashSet<PhoneNumber>();
 			System.out.println("adding contact " + i);
-			session.save(contact);
+			this.getHibernateTemplate().save(contact);
 			if ((i % 20) == 0) {
-				session.flush();
-				session.clear();
+				this.getHibernateTemplate().flush();
+				this.getHibernateTemplate().clear();
 			}
 		}
-		tx.commit();
 	}
 
 	public ArrayList<ContactGroup> getGroups() {
