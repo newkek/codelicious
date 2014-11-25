@@ -7,7 +7,6 @@
 	xmlns:b="http://bootsfaces.net/ui">
 
 
-
 <h:head>
 	<h:outputStylesheet library="css" name="styleTable.css"></h:outputStylesheet>
 	<title><ui:insert name="title">Default title</ui:insert></title>
@@ -19,27 +18,30 @@
 	<div id="menu">
 		<b:navBar brand="Codelicious" brandHref="main.jsf">
 			<b:navbarLinks>
-				<b:dropMenu value="Ajouter">
-					<b:navLink value="Nouveau contact" href="addContact.jsf"></b:navLink>
-					<b:navLink value="Nouveau groupe" href="addGroup.jsf"></b:navLink>
+				<b:dropMenu value="#{msg['template.add']}">
+					<b:navLink value="#{msg['template.addContact']}"
+						href="addContact.jsf"></b:navLink>
+					<b:navLink value="#{msg['template.addGroup']}" href="addGroup.jsf"></b:navLink>
 				</b:dropMenu>
-				<b:dropMenu value="Modifier">
-					<b:navLink value="Modifier un contact existant"
+				<b:dropMenu value="#{msg['template.modify']}">
+					<b:navLink value="#{msg['template.modifyContact']}"
 						href="searchContact.jsf"></b:navLink>
-					<b:navLink value="Modifier un groupe existant"
+					<b:navLink value="#{msg['template.modifyGroup']}"
 						href="displayGroups.jsf"></b:navLink>
 
 				</b:dropMenu>
-				<b:dropMenu value="Afficher">
-					<b:navLink value="Tous les contacts" href="displayContacts.jsf"></b:navLink>
-					<b:navLink value="Tous les groupes" href="displayGroups.jsf"></b:navLink>
+				<b:dropMenu value="#{msg['template.display']}">
+					<b:navLink value="#{msg['template.displayContacts']}"
+						href="displayContacts.jsf"></b:navLink>
+					<b:navLink value="#{msg['template.displayGroups']}"
+						href="displayGroups.jsf"></b:navLink>
 
 				</b:dropMenu>
 
-				<b:dropMenu value="Avancé">
-					<b:navLink value="Initialisation de contacts"
+				<b:dropMenu value="#{msg['template.advanced']}">
+					<b:navLink value="#{msg['template.advancedInit']}"
 						href="initializeContacts.jsf"></b:navLink>
-					<b:navLink value="Tests de Batch Processing"
+					<b:navLink value="#{msg['template.advancedBatch']}"
 						href="displayGroups.jsf"></b:navLink>
 					<!-- <b:navLink value="Supprimer tous les contacts"
 						href="modifyContact.jsf"></b:navLink>
@@ -47,7 +49,8 @@
 						href="modifyContact.jsf"></b:navLink>-->
 
 				</b:dropMenu>
-				<b:navLink value="Recherche Avancée" href="searchContact.jsf"></b:navLink>
+				<b:navLink value="#{msg['template.search']}"
+					href="searchContact.jsf"></b:navLink>
 
 				<!--<b:dropMenu value="Dropdown">
 	            <b:navLink value="Action" href="#"></b:navLink>
@@ -65,7 +68,15 @@
 					<h:inputText class="form-control" value="#{searchContact.criteria}" />
 				</div>
 				<h:commandButton size="sm" class="btn btn-default"
-					action="#{searchContact.fastSearch}" value="Submit" />
+					action="#{searchContact.fastSearch}"
+					value="#{msg['template.quickSearch']}" />
+			</h:form>
+
+			<h:form class="navbar-form navbar-right">
+				<h:selectOneMenu value="#{localeManagedBean.language}"
+					onchange="submit()">
+					<f:selectItems value="#{localeManagedBean.locales}" />
+				</h:selectOneMenu>
 			</h:form>
 		</b:navBar>
 

@@ -228,6 +228,16 @@ public class DAOContact extends HibernateDaoSupport implements IDAOContact {
 		Contact contact = (Contact) this.getHibernateTemplate().get(
 				Contact.class, id);
 		System.out.println("find simple");
+		
+		Set<ContactGroup> groups = (Set<ContactGroup>) contact.getContactGroups();
+		Iterator<ContactGroup> it = groups.iterator();
+		
+		while(it.hasNext()){
+			ContactGroup group = it.next();
+			group.getContacts().remove(contact);
+			this.getHibernateTemplate().merge(group);
+		}
+		
 		this.getHibernateTemplate().delete(contact);
 		return success;
 	}

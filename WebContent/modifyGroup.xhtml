@@ -9,27 +9,17 @@
         Modification de Groupe
     </ui:define>
 	<ui:define name="content">
+		<h2>Veuillez renseigner ici le nouveau nom de votre groupe</h2>
+		<br/>
 		<h:form>
-			<h:panelGrid columns="2" cellpadding="5">
-				<div class="form-group">
-					<table>
-				<tr>
-					<th>
-						<h2>Veuillez renseigner ici le nouveau nom de votre groupe</h2>
-					</th>
-				</tr>
-				<tr>
-					<td><i>Nom: <h:inputText value="#{modifyGroup.groupName}"
-								size="25" /></i></td>
-				</tr>
-				<tr>
-					<td><h:commandButton value="Valider" class="btn btn-default"
-							action="#{modifyGroup.modify}" /> <h:commandButton class="btn btn-default"
-							value="Annuler" action="main" /></td>
-				</tr>
 
-			</table>
-				</div>
+			<h:panelGrid columns="2" cellpadding="5" class="styleClass">
+					<h:outputText value="Nom: " />
+					<b:inputText value="#{modifyGroup.groupName}" size="25" />
+					<h:commandButton value="Valider" class="btn btn-default"
+						action="#{modifyGroup.modify}" />
+					<h:commandButton class="btn btn-default" value="Annuler"
+						action="main" />
 			</h:panelGrid>
 		</h:form>
 	</ui:define>
